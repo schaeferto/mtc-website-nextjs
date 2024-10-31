@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navigation from '@/app/navigation';
-import Footer from '@/app/footer';
-import Header from '@/app/header';
+import Navigation from "@/app/navigation";
+import Footer from "@/app/footer";
+import Header from "@/app/header";
 
 const findel = localFont({
   src: "./fonts/Findel-Display-Regular.otf",
@@ -26,8 +26,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${findel.variable} ${montserrat.variable} antialiased`}>
-      <body>
+    <html
+      lang="en"
+      className={`${findel.variable} ${montserrat.variable} antialiased`}
+    >
+      <body className={"font-montserrat"}>
         <Header />
         <Navigation />
         {children}

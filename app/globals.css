@@ -5,12 +5,18 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --mtc-yellow: #FDE480;
+  --mtc-black: #464646;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    --mtc-yellow: #FDE480;
+    --mtc-black: #464646;
   }
 }
 
