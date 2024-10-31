@@ -9,14 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        findel: ['var(--font-findel)'],
-        montserrat: ['var(--font-montserrat)'],
+        findel: ["var(--font-findel)"],
+        montserrat: ["var(--font-montserrat)"],
       },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        "mtc-black": "#2A2A2A",
-        "mtc-yellow": "#fee581",
+        "mtc-black": "#464646",
+        "mtc-yellow": "#FDE480",
       },
     },
   },

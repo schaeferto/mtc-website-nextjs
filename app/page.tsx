@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className={`flex h-screen w-full`}>
+    <div className={`flex h-screen w-full relative`}>
       <h1
         className={`absolute inset-0 flex items-center justify-center text-4xl text-center text-white font-bold font-findel`}
       >
