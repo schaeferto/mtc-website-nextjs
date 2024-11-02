@@ -10,7 +10,7 @@ export default function Footer() {
           src={footerImage}
           alt={"footer"}
           className={
-            "w-full h-full object-cover object-top bg-mtc-black saturate-[0.2]"
+            "w-full h-full object-cover object-top bg-mtc-black saturate-[0.6]"
           }
         ></Image>
       </div>
