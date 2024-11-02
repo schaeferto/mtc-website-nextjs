@@ -1,6 +1,7 @@
 import coverImage from "../public/cover_2.webp";
 import Image from "next/image";
 import "./globals.css";
+import Link from "next/link";
 
 const Overlay = () => {
   return (
@@ -22,11 +23,11 @@ const Overlay = () => {
           Herzlich Willkommen im Biber-Club!
         </div>
       </div>
-      <button
-        className={"bg-mtc-yellow py-3 px-8 mb-40 rounded-full text-black self"}
-      >
-        JETZT MITMACHEN
-      </button>
+      <div className={"mb-40 mt-12"}>
+        <button className={"bg-mtc-yellow py-3 px-8 rounded-full text-black"}>
+          JETZT MITMACHEN
+        </button>
+      </div>
     </div>
   );
 };

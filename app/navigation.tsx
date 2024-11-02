@@ -41,9 +41,15 @@ const NavIconList = () => {
   return (
     <IconContext.Provider value={{ color: "#FDE480", size: "36" }}>
       <div className={"flex gap-2 lg:mr-12 mr-8"}>
-        <PiInstagramLogoThin />
-        <PiFacebookLogoThin />
-        <PiEnvelopeThin />
+        <Link href={"https://www.instagram.com/mtc_munich/"} target={"_blank"}>
+          <PiInstagramLogoThin />{" "}
+        </Link>
+        <Link href={"https://www.facebook.com/mtcmunich/"} target={"_blank"}>
+          <PiFacebookLogoThin />
+        </Link>
+        <Link href={"mailto:munichtriathlonclub@gmail.com"}>
+          <PiEnvelopeThin />
+        </Link>
       </div>
     </IconContext.Provider>
   );
