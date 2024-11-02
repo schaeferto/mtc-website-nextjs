@@ -29,3 +29,7 @@ body {
 .no-scroll {
   overflow: hidden;
 }
+
+.display-height {
+  height: calc(100vh - 96px - 40px);
+}

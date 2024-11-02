@@ -1,15 +1,17 @@
 import Image from "next/image";
-import footerImage from "../public/footer-test.png";
+import footerImage from "../public/free-footer.webp";
 
 export default function Footer() {
   return (
     <footer className={`bg-mtc-black`}>
-      <div className={"bg-mtc-black w-full h-28"}></div>
-      <div className={"flex w-full h-[240px] bg-mtc-black"}>
+      <div className={"bg-mtc-black w-full h-[500px]"}></div>
+      <div className={"flex w-full bg-mtc-black"} style={{ height: "55vw" }}>
         <Image
           src={footerImage}
           alt={"footer"}
-          className={"w-full h-full object-cover object-top bg-mtc-black"}
+          className={
+            "w-full h-full object-cover object-top bg-mtc-black saturate-[0.2]"
+          }
         ></Image>
       </div>
       <div className="flex flex-col justify-center items-center text-sm gap-4 py-6">
