@@ -23,7 +23,7 @@ const Overlay = () => {
         </div>
       </div>
       <button
-        className={"bg-mtc-yellow py-3 px-8 mb-20 rounded-full text-black self"}
+        className={"bg-mtc-yellow py-3 px-8 mb-40 rounded-full text-black self"}
       >
         JETZT MITMACHEN
       </button>
