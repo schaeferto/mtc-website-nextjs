@@ -1,7 +1,6 @@
 import coverImage from "../public/cover_2.webp";
 import Image from "next/image";
 import "./globals.css";
-import Link from "next/link";
 
 const Overlay = () => {
   return (
