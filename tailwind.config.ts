@@ -17,6 +17,7 @@ const config: Config = {
         foreground: "var(--foreground)",
         "mtc-black": "#464646",
         "mtc-yellow": "#FDE480",
+        "mtc-background": "#ECECEC",
       },
     },
   },
