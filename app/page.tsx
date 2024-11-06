@@ -36,7 +36,7 @@ const Overlay = () => {
   );
 };
 
-export function CoverImage() {
+const CoverImage = () => {
   return (
     <Image
       className={`h-full w-full object-cover`}
@@ -44,18 +44,18 @@ export function CoverImage() {
       alt={"Home Background"}
     />
   );
-}
+};
 
-export function Cover() {
+const Cover = () => {
   return (
     <div className={`flex w-full relative first-content-height`}>
       <Overlay />
       <CoverImage />
     </div>
   );
-}
+};
 
-export function Motto() {
+const Motto = () => {
   return (
     <div
       className={
@@ -83,9 +83,9 @@ export function Motto() {
       </p>
     </div>
   );
-}
+};
 
-function ImageWithTextAndLink({
+const ImageWithTextAndLink = ({
   src,
   alt,
   text,
@@ -95,7 +95,7 @@ function ImageWithTextAndLink({
   alt: string;
   text: string;
   href: string;
-}) {
+}) => {
   return (
     <Link href={href} className={"relative w-full"}>
       <Image src={src} alt={alt}></Image>
@@ -110,9 +110,9 @@ function ImageWithTextAndLink({
       </div>
     </Link>
   );
-}
+};
 
-function SectionLinks() {
+const SectionLinks = () => {
   return (
     <div
       className={
@@ -139,9 +139,9 @@ function SectionLinks() {
       />
     </div>
   );
-}
+};
 
-function News() {
+const News = () => {
   return (
     <div className={"bg-mtc-background text-mtc-black"}>
       <div className={"text-xl font-bold text-center pb-8"}>UNSERE NEWS</div>
@@ -149,7 +149,7 @@ function News() {
       <div className={"h-12"}></div>
     </div>
   );
-}
+};
 
 export default function Home() {
   return (
