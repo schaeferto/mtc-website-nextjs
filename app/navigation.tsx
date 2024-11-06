@@ -42,7 +42,7 @@ const NavIconList = () => {
     <IconContext.Provider value={{ color: "#FDE480", size: "36" }}>
       <div className={"flex gap-2 lg:mr-12 mr-8"}>
         <Link href={"https://www.instagram.com/mtc_munich/"} target={"_blank"}>
-          <PiInstagramLogoThin />{" "}
+          <PiInstagramLogoThin />
         </Link>
         <Link href={"https://www.facebook.com/mtcmunich/"} target={"_blank"}>
           <PiFacebookLogoThin />
@@ -123,13 +123,15 @@ export default function Navigation() {
   return (
     <header className="bg-mtc-black text-white h-24 flex items-center w-full justify-between">
       <div>
-        <Image
-          src="/logo-transparent.png"
-          alt="Logo"
-          width={84}
-          height={84}
-          className={`ml-3`}
-        />
+        <Link href={"/"}>
+          <Image
+            src="/logo-transparent.png"
+            alt="Logo"
+            width={84}
+            height={84}
+            className={`ml-3`}
+          />
+        </Link>
       </div>
       {isSmartphone ? (
         <DesktopMenu />

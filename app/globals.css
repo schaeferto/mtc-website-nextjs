@@ -30,6 +30,6 @@ body {
   overflow: hidden;
 }
 
-.display-height {
+.first-content-height {
   height: calc(100vh - 96px - 40px);
 }
