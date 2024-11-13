@@ -1,11 +1,18 @@
+"use client";
+
 import coverImage from "../public/cover_2.webp";
 import mottoImage from "../public/motto.jpg";
 import homeLeagueImage from "../public/home_liga.jpg";
 import homeContactImage from "../public/home_contact.jpg";
 import homeTrainingImage from "../public/home_training.jpg";
+import newsAllgaeuImage from "../public/allgaeu_news.jpg";
+import newsSchongauImage from "../public/schongau_news.jpg";
+import newsChallengeImage from "../public/challenge_news.jpg";
 import Image, { StaticImageData } from "next/image";
 import "./globals.css";
 import Link from "next/link";
+import { useMediaQuery } from "react-responsive";
+import { useEffect, useState } from "react";
 
 const Overlay = () => {
   return (
@@ -116,7 +123,7 @@ const SectionLinks = () => {
   return (
     <div
       className={
-        "flex w-full items-stretch bg-mtc-background p-2 md:p-12 gap-2 md:gap-6 pb-8"
+        "flex w-full items-stretch bg-mtc-background p-2 md:p-12 gap-2 md:gap-6 pb-12"
       }
     >
       <ImageWithTextAndLink
@@ -142,11 +149,70 @@ const SectionLinks = () => {
 };
 
 const News = () => {
+  const [isClient, setIsClient] = useState(false);
+  const isBigScreen = useMediaQuery({ query: "(min-width: 768px)" });
+
+  // Set isClient to true, when this component is in client
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null; // or a loading spinner
+  }
+
+  const newsShort = [
+    {
+      image: newsAllgaeuImage,
+      header: "Allgäu Triathlon 2024",
+      text: "Es war ein Spektakel. Der Allgäu Triathlon 2024. Unsere Biber waren auf der Mitteldistanz und der Olympischen Distanz unterwegs. Was alle gemeinsam hatten: Sie wurden plörre nass. Inklusive der Biber-Fans am Rand. Da half die beste Regenjacke nicht. Am Ende schafften es drei Biber sogar aufs Podium!",
+    },
+    {
+      image: newsSchongauImage,
+      header: "Landesliga Süd Damen Schongau",
+      text: "Unsere Biber-Damen haben die Ligasaison eröffnet und am vergangenen Wochenende haben sie sie auch in Schongau beendet. Es war uns ein Fest! Bei strahlendem Sonnenschein und unter stürmischem Biber-Jubel gingen Janet, Lisa, Vicky und Anne an den Start. Die dritte Person im Ziel wurde gewertet, also war eine Team-Strategie gefragt. Wie so oft, musste die flexibel noch einmal angepasst werden. Ins Ziel gekommen sind sie aber alle!",
+    },
+    {
+      image: newsChallengeImage,
+      header: " Challenge Roth 2024",
+      text: "Am ersten Juli-Wochenende stand für einige unserer Biber das Saisonhighlight an. Bei der Challenge Roth gingen Valentin, Jens und Anne an den Start. Valentin schaffte seine Bestzeit auf der Langdistanz und Jens feierte in Roth sein Langdistanz-Debüt. Wo ginge das besser, als bei dem weltweit größten Wettkampf auf der Triathlon-Langdistanz.",
+    },
+  ];
+
   return (
-    <div className={"bg-mtc-background text-mtc-black"}>
-      <div className={"text-xl font-bold text-center pb-8"}>UNSERE NEWS</div>
-      <hr className={"border-mtc-black mx-4"} />
-      <div className={"h-12"}></div>
+    <div className={"bg-mtc-background text-mtc-black px-0 md:px-20"}>
+      <div className={"text-3xl font-bold text-center pb-4"}>UNSERE NEWS</div>
+      <hr className={"border-mtc-black pb-4"} />
+      {newsShort.map((news, index) => (
+        <div key={index}>
+          {isBigScreen ? (
+            <div className={"flex"}>
+              <Image
+                src={news.image}
+                alt={"News Image"}
+                className={"mb-8 object-cover w-1/4 grow-2"}
+              ></Image>
+              <div className={"flex flex-col p-8 shrink"}>
+                <h3 className={"text-xl font-bold mb-8"}>{news.header}</h3>
+                <p className={"mb-8"}>{news.text}</p>
+              </div>
+            </div>
+          ) : (
+            <div className={"flex flex-col"}>
+              <h3 className={"text-xl font-bold mb-8 text-center"}>
+                {news.header}
+              </h3>
+              <Image
+                src={news.image}
+                alt={"News Image"}
+                className={"mb-8"}
+              ></Image>
+              <p className={"text-center mb-8"}>{news.text}</p>
+            </div>
+          )}
+          <hr className={"border-mtc-black pb-4"} />
+        </div>
+      ))}
     </div>
   );
 };
