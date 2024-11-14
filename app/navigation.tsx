@@ -121,9 +121,9 @@ export default function Navigation() {
     setIsSideMenuOpen(false);
   };
 
-  let prevScrollpos = window.pageYOffset;
+  let prevScrollpos = window.scrollY;
   window.onscroll = function () {
-    const currentScrollPos = window.pageYOffset;
+    const currentScrollPos = window.scrollY;
     const elementById = document.getElementById("navigation");
     assert(elementById);
     if (prevScrollpos > currentScrollPos) {
