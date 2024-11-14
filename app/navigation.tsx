@@ -13,6 +13,7 @@ import { IconContext } from "react-icons";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import assert from "node:assert";
 
 const DesktopMenu = () => (
   <nav className={"flex items-center"}>
@@ -120,8 +121,24 @@ export default function Navigation() {
     setIsSideMenuOpen(false);
   };
 
+  let prevScrollpos = window.pageYOffset;
+  window.onscroll = function () {
+    const currentScrollPos = window.pageYOffset;
+    const elementById = document.getElementById("navigation");
+    assert(elementById);
+    if (prevScrollpos > currentScrollPos) {
+      elementById.style.top = "40px";
+    } else {
+      elementById.style.top = "-56px";
+    }
+    prevScrollpos = currentScrollPos;
+  };
+
   return (
-    <header className="bg-mtc-black text-white h-24 flex items-center w-full justify-between">
+    <nav
+      className="bg-mtc-black text-white h-24 flex items-center w-full justify-between fixed top-[40px] z-10"
+      id={"navigation"}
+    >
       <div>
         <Link href={"/"}>
           <Image
@@ -139,6 +156,6 @@ export default function Navigation() {
         <MobileMenu onMenuClick={handleMenuClick} />
       )}
       {isSideMenuOpen && <SideMenu onClose={handleCloseMenu} />}
-    </header>
+    </nav>
   );
 }

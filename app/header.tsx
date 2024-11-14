@@ -1,5 +1,9 @@
 export default function Header() {
   return (
-    <div className={`bg-mtc-black border-b-2 border-mtc-yellow flex justify-center items-center h-10`}> 🔧 👷🏽‍ Under construction 👷🏽‍ 🔨</div>
+    <header
+      className={`bg-mtc-black border-b-2 border-mtc-yellow flex justify-center items-center h-10 sticky top-0 z-20`}
+    >
+      🔧 👷🏽‍ Under construction 👷🏽‍ 🔨
+    </header>
   );
 }
