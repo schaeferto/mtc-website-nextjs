@@ -13,7 +13,6 @@ import { IconContext } from "react-icons";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import assert from "node:assert";
 
 const DesktopMenu = () => (
   <nav className={"flex items-center"}>
@@ -125,7 +124,9 @@ export default function Navigation() {
   window.onscroll = function () {
     const currentScrollPos = window.scrollY;
     const elementById = document.getElementById("navigation");
-    assert(elementById);
+    if(!elementById) {
+      throw new Error('navigation not found');
+    }
     if (prevScrollpos > currentScrollPos) {
       elementById.style.top = "40px";
     } else {
