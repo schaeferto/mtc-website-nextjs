@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 const Overlay = () => {
   return (
-    <div className={"absolute h-full w-full flex flex-col items-center"}>
+    <div className={"absolute h-full w-full flex flex-col items-center mt-20"}>
       <div className={"grow flex flex-col items-center"}>
         <div
           className={`text-[80px]  md:text-[140px] mt-12 text-center text-white font-findel`}
@@ -34,8 +34,10 @@ const Overlay = () => {
           Herzlich Willkommen im Biber-Club!
         </div>
       </div>
-      <div className={"mb-40 mt-12"}>
-        <button className={"bg-mtc-yellow py-3 px-8 rounded-full text-black "}>
+      <div className={"mb-60 mt-12"}>
+        <button
+          className={"bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black "}
+        >
           JETZT MITMACHEN
         </button>
       </div>
@@ -180,7 +182,11 @@ const News = () => {
   ];
 
   return (
-    <div className={"bg-mtc-background text-mtc-black px-0 md:px-20"}>
+    <div
+      className={
+        "bg-mtc-background text-mtc-black px-0 md:px-20 flex flex-col pb-12"
+      }
+    >
       <div className={"text-3xl font-bold text-center pb-4"}>UNSERE NEWS</div>
       <hr className={"border-mtc-black pb-4"} />
       {newsShort.map((news, index) => (
@@ -199,7 +205,7 @@ const News = () => {
             </div>
           ) : (
             <div className={"flex flex-col"}>
-              <h3 className={"text-xl font-bold mb-8 text-center"}>
+              <h3 className={"text-xl font-bold mb-8 mx-4 text-center"}>
                 {news.header}
               </h3>
               <Image
@@ -207,12 +213,19 @@ const News = () => {
                 alt={"News Image"}
                 className={"mb-8"}
               ></Image>
-              <p className={"text-center mb-8"}>{news.text}</p>
+              <p className={"text-center mb-8 mx-4"}>{news.text}</p>
             </div>
           )}
-          <hr className={"border-mtc-black pb-4"} />
+          <hr className={"border-mtc-black mb-8"} />
         </div>
       ))}
+      <button
+        className={
+          "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black w-[300px] h-[50px] self-center"
+        }
+      >
+        MEHR BERICHTE
+      </button>
     </div>
   );
 };
