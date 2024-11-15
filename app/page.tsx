@@ -29,14 +29,16 @@ const Overlay = () => {
           Munich Triathlon Club
         </div>
         <div
-          className={`text-xl mt-16 md:w-full w-2/3 text-center text-white font-montserrat`}
+          className={`md:text-3xl text-xl mt-16 md:w-full w-2/3 text-center text-white font-montserrat`}
         >
           Herzlich Willkommen im Biber-Club!
         </div>
       </div>
       <div className={"mb-60 mt-12"}>
         <button
-          className={"bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black "}
+          className={
+            "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-mtc-black font-medium"
+          }
         >
           JETZT MITMACHEN
         </button>
@@ -57,7 +59,7 @@ const CoverImage = () => {
 
 const Cover = () => {
   return (
-    <div className={`flex w-full relative first-content-height`}>
+    <div className={`flex w-full relative first-content-height mb-12`}>
       <Overlay />
       <CoverImage />
     </div>
@@ -67,29 +69,28 @@ const Cover = () => {
 const Motto = () => {
   return (
     <div
-      className={
-        "bg-mtc-background text-mtc-black flex flex-col items-center p-8"
-      }
+      className={"bg-mtc-background text-mtc-black flex flex-col items-center"}
     >
-      <h2 className={"text-2xl md:text-4xl font-bold my-8"}>Unser Motto</h2>
+      <h2 className={"text-2xl md:text-4xl font-bold mb-8"}>Unser Motto</h2>
+      <hr className={"border-mtc-black mb-8 w-5/6"}></hr>
       <Image
         src={mottoImage}
         alt={"The Team cheering."}
-        className="w-[300px] md:w-[600px]"
+        className="w-full md:w-[600px] mb-8"
       ></Image>
-      <div className={"font-bold mt-8"}>#biberfieber</div>
-      <p className={"text-center"}>
+      <div className={"font-bold mb-2 mx-4"}>#biberfieber</div>
+      <div className={"text-center mx-4 mb-8"}>
         Willkommen beim MTC München, dem Munich Triathlon Club. Wir sind ein
         junger, dynamischer Verein, der es sich zur Aufgabe gemacht hat, durch
         Zusammenhalt, Freundschaft, Transparenz und Sportsgeist das Vereinsleben
         gemeinsam zu gestalten. Wir möchten gemeinsam wachsen, sportliche
         Erfahrungen sammeln und alle, die es möchten, mit unserem #biberfieber
         anstecken.
-      </p>
-      <p className={"mt-8 text-center"}>
+      </div>
+      <div className={"text-center mx-4 mb-12"}>
         Warum Biber? Warum denn nicht, oder habt ihr noch nie etwas von den
         Bibern an der Isar gehört? 😉
-      </p>
+      </div>
     </div>
   );
 };
@@ -106,7 +107,7 @@ const ImageWithTextAndLink = ({
   href: string;
 }) => {
   return (
-    <Link href={href} className={"relative w-full"}>
+    <Link href={href} className={"relative w-[47%] md:w-full"}>
       <Image src={src} alt={alt}></Image>
       <div className={"absolute inset-0 w-full h-full flex"}>
         <div
@@ -125,7 +126,7 @@ const SectionLinks = () => {
   return (
     <div
       className={
-        "flex w-full items-stretch bg-mtc-background p-2 md:p-12 gap-2 md:gap-6 pb-12"
+        "flex w-full flex-wrap md:flex-nowrap items-stretch justify-center bg-mtc-background gap-2 md:p-12 md:gap-6 pb-12"
       }
     >
       <ImageWithTextAndLink
@@ -187,8 +188,8 @@ const News = () => {
         "bg-mtc-background text-mtc-black px-0 md:px-20 flex flex-col pb-12"
       }
     >
-      <div className={"text-3xl font-bold text-center pb-4"}>UNSERE NEWS</div>
-      <hr className={"border-mtc-black pb-4"} />
+      <div className={"text-3xl font-bold text-center mb-8"}>UNSERE NEWS</div>
+      <hr className={"border-mtc-black pb-4 mx-4 md:mx-0"} />
       {newsShort.map((news, index) => (
         <div key={index}>
           {isBigScreen ? (
@@ -216,12 +217,12 @@ const News = () => {
               <p className={"text-center mb-8 mx-4"}>{news.text}</p>
             </div>
           )}
-          <hr className={"border-mtc-black mb-8"} />
+          <hr className={"border-mtc-black mb-8 mx-4 md:mx-0"} />
         </div>
       ))}
       <button
         className={
-          "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black w-[300px] h-[50px] self-center"
+          "bg-mtc-yellow py-3 px-8 mt-8 mb-8 text-xl rounded-full text-black w-[300px] font-medium self-center"
         }
       >
         MEHR BERICHTE
@@ -230,13 +231,52 @@ const News = () => {
   );
 };
 
+const Apply = () => {
+  return (
+    <div className={`bg-mtc-background text-mtc-black pb-12`}>
+      <h1 className={"text-2xl md:text-4xl font-extrabold text-center mb-8"}>
+        INTERESSE GEWECKT?
+      </h1>
+      <div
+        className={
+          "flex md:flex-row flex-col items-center justify-center gap-8"
+        }
+      >
+        <div
+          className={
+            "flex border-b-2 border-mtc-yellow w-[340px] bg-white py-4 px-2"
+          }
+        >
+          <div>IMAGE</div>
+          <div>
+            <div className={"font-bold"}>Probetraining</div>
+            <div className={"text-xs"}>Komm vorbei und lerne uns kennen.</div>
+          </div>
+        </div>
+        <div
+          className={
+            "flex  border-b-2 border-mtc-yellow w-[340px] bg-white py-4 px-2"
+          }
+        >
+          <div>IMAGE</div>
+          <div>
+            <div className={"font-bold"}>Mitglied werden</div>
+            <div className={"text-xs"}>Genauere Infos gibt es hier.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
   return (
-    <>
+    <div className={"bg-mtc-background"}>
       <Cover />
       <Motto />
       <SectionLinks />
       <News />
-    </>
+      <Apply />
+    </div>
   );
 }

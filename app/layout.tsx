@@ -10,8 +10,11 @@ const findel = localFont({
   variable: "--font-findel",
   display: "swap",
 });
-const montserrat = localFont({
-  src: "./fonts/Montserrat-Regular.ttf",
+
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
   variable: "--font-montserrat",
   display: "swap",
 });
