@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import {
-  PiFacebookLogoThin,
-  PiInstagramLogoThin,
-  PiEnvelopeThin,
-  PiListLight,
+  PiFacebookLogo,
+  PiInstagramLogo,
+  PiEnvelope,
+  PiList,
   PiXLight,
 } from "react-icons/pi";
 import "./globals.css";
@@ -32,7 +32,7 @@ const MobileMenu = ({ onMenuClick }: { onMenuClick: () => void }) => {
   return (
     <div className={"flex items-center mr-4"}>
       <NavIconList />
-      <PiListLight size={40} onClick={onMenuClick} />
+      <PiList size={40} onClick={onMenuClick} />
     </div>
   );
 };
@@ -42,13 +42,13 @@ const NavIconList = () => {
     <IconContext.Provider value={{ color: "#FDE480", size: "36" }}>
       <div className={"flex gap-2 lg:mr-12 mr-8"}>
         <Link href={"https://www.instagram.com/mtc_munich/"} target={"_blank"}>
-          <PiInstagramLogoThin />
+          <PiInstagramLogo />
         </Link>
         <Link href={"https://www.facebook.com/mtcmunich/"} target={"_blank"}>
-          <PiFacebookLogoThin />
+          <PiFacebookLogo />
         </Link>
         <Link href={"mailto:munichtriathlonclub@gmail.com"}>
-          <PiEnvelopeThin />
+          <PiEnvelope />
         </Link>
       </div>
     </IconContext.Provider>
@@ -57,7 +57,7 @@ const NavIconList = () => {
 
 const SideMenu = ({ onClose }: { onClose: () => void }) => {
   return (
-    <div className="fixed top-0 right-0 bg-transparent z-10 w-full h-full flex overflow-auto">
+    <div className="fixed top-0 mt-[40px] right-0 bg-transparent z-10 w-full h-full flex overflow-auto">
       <div onClick={onClose} className={"grow backdrop-blur-sm"}></div>
       <div
         className={
