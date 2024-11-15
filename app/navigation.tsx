@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import {
-  PiFacebookLogo,
-  PiInstagramLogo,
-  PiEnvelope,
-  PiList,
+  PiFacebookLogoLight,
+  PiInstagramLogoLight,
+  PiEnvelopeLight,
+  PiListLight,
   PiXLight,
 } from "react-icons/pi";
 import "./globals.css";
@@ -32,7 +32,7 @@ const MobileMenu = ({ onMenuClick }: { onMenuClick: () => void }) => {
   return (
     <div className={"flex items-center mr-4"}>
       <NavIconList />
-      <PiList size={40} onClick={onMenuClick} />
+      <PiListLight size={40} onClick={onMenuClick} />
     </div>
   );
 };
@@ -42,13 +42,13 @@ const NavIconList = () => {
     <IconContext.Provider value={{ color: "#FDE480", size: "36" }}>
       <div className={"flex gap-2 lg:mr-12 mr-8"}>
         <Link href={"https://www.instagram.com/mtc_munich/"} target={"_blank"}>
-          <PiInstagramLogo />
+          <PiInstagramLogoLight />
         </Link>
         <Link href={"https://www.facebook.com/mtcmunich/"} target={"_blank"}>
-          <PiFacebookLogo />
+          <PiFacebookLogoLight />
         </Link>
         <Link href={"mailto:munichtriathlonclub@gmail.com"}>
-          <PiEnvelope />
+          <PiEnvelopeLight />
         </Link>
       </div>
     </IconContext.Provider>
@@ -124,8 +124,8 @@ export default function Navigation() {
   window.onscroll = function () {
     const currentScrollPos = window.scrollY;
     const elementById = document.getElementById("navigation");
-    if(!elementById) {
-      throw new Error('navigation not found');
+    if (!elementById) {
+      throw new Error("navigation not found");
     }
     if (prevScrollpos > currentScrollPos) {
       elementById.style.top = "40px";

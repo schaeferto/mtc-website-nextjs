@@ -13,6 +13,8 @@ import "./globals.css";
 import Link from "next/link";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
+import { PiIdentificationCardLight } from "react-icons/pi";
+import { PiPersonSimpleRunLight } from "react-icons/pi";
 
 const Overlay = () => {
   return (
@@ -244,22 +246,22 @@ const Apply = () => {
       >
         <div
           className={
-            "flex border-b-2 border-mtc-yellow w-[340px] bg-white py-4 px-2"
+            "flex border-b-2 border-mtc-yellow w-[320px] bg-white p-2 px-4 gap-4"
           }
         >
-          <div>IMAGE</div>
-          <div>
+          <PiPersonSimpleRunLight size={46} />
+          <div className={"flex flex-col justify-center"}>
             <div className={"font-bold"}>Probetraining</div>
             <div className={"text-xs"}>Komm vorbei und lerne uns kennen.</div>
           </div>
         </div>
         <div
           className={
-            "flex  border-b-2 border-mtc-yellow w-[340px] bg-white py-4 px-2"
+            "flex border-b-2 border-mtc-yellow w-[320px] bg-white p-2 px-4 gap-4"
           }
         >
-          <div>IMAGE</div>
-          <div>
+          <PiIdentificationCardLight size={46} />
+          <div className={"flex flex-col justify-center"}>
             <div className={"font-bold"}>Mitglied werden</div>
             <div className={"text-xs"}>Genauere Infos gibt es hier.</div>
           </div>
