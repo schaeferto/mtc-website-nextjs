@@ -12,9 +12,10 @@ import Image, { StaticImageData } from "next/image";
 import "./globals.css";
 import Link from "next/link";
 import { useMediaQuery } from "react-responsive";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PiIdentificationCardLight } from "react-icons/pi";
 import { PiPersonSimpleRunLight } from "react-icons/pi";
+import useEmblaCarousel from "embla-carousel-react";
 
 const Overlay = () => {
   return (
@@ -109,12 +110,12 @@ const ImageWithTextAndLink = ({
   href: string;
 }) => {
   return (
-    <Link href={href} className={"relative w-[47%] md:w-full"}>
+    <Link href={href} className={"relative md:w-full"}>
       <Image src={src} alt={alt}></Image>
       <div className={"absolute inset-0 w-full h-full flex"}>
         <div
           className={
-            "backdrop-blur-sm m-auto px-3 md:px-8 py-1 md:py-2 bg-mtc-black bg-opacity-60 md:text-3xl font-bold"
+            "backdrop-blur-sm m-auto px-3 md:px-8 py-1 md:py-2 bg-mtc-black bg-opacity-60 md:text-4xl text-2xl font-bold"
           }
         >
           {text}
@@ -125,30 +126,52 @@ const ImageWithTextAndLink = ({
 };
 
 const SectionLinks = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
   return (
-    <div
-      className={
-        "flex w-full flex-wrap md:flex-nowrap items-stretch justify-center bg-mtc-background gap-2 md:p-12 md:gap-6 pb-12"
-      }
-    >
-      <ImageWithTextAndLink
-        href={"/league"}
-        src={homeLeagueImage}
-        alt={"Liga"}
-        text={"Liga"}
-      />
-      <ImageWithTextAndLink
-        href={"/training"}
-        src={homeTrainingImage}
-        alt={"Training"}
-        text={"Training"}
-      />
-      <ImageWithTextAndLink
-        href={"/contact"}
-        src={homeContactImage}
-        alt={"Kontakt"}
-        text={"Kontakt"}
-      />
+    <div className="embla">
+      <div className="embla__viewport overflow-hidden pb-12 " ref={emblaRef}>
+        <div className="embla__container flex">
+          <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0 ">
+            <ImageWithTextAndLink
+              href={"/league"}
+              src={homeLeagueImage}
+              alt={"Liga"}
+              text={"Liga"}
+            />
+          </div>
+          <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
+            <ImageWithTextAndLink
+              href={"/training"}
+              src={homeTrainingImage}
+              alt={"Training"}
+              text={"Training"}
+            />
+          </div>
+          <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
+            <ImageWithTextAndLink
+              href={"/contact"}
+              src={homeContactImage}
+              alt={"Kontakt"}
+              text={"Kontakt"}
+            />
+          </div>
+        </div>
+      </div>
+      <button className="embla__prev text-black" onClick={scrollPrev}>
+        Prev
+      </button>
+      <button className="embla__next text-black" onClick={scrollNext}>
+        Next
+      </button>
     </div>
   );
 };
@@ -235,13 +258,13 @@ const News = () => {
 
 const Apply = () => {
   return (
-    <div className={`bg-mtc-background text-mtc-black pb-12`}>
-      <h1 className={"text-2xl md:text-4xl font-extrabold text-center mb-8"}>
+    <div className={`bg-mtc-background text-mtc-black pb-28`}>
+      <h1 className={"text-2xl md:text-4xl font-extrabold text-center mb-20"}>
         INTERESSE GEWECKT?
       </h1>
       <div
         className={
-          "flex md:flex-row flex-col items-center justify-center gap-8"
+          "flex md:flex-row flex-col items-center justify-center gap-12"
         }
       >
         <div
