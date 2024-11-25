@@ -32,7 +32,11 @@ const MobileMenu = ({ onMenuClick }: { onMenuClick: () => void }) => {
   return (
     <div className={"flex items-center mr-4"}>
       <NavIconList />
-      <PiListLight size={40} onClick={onMenuClick} />
+      <PiListLight
+        size={40}
+        onClick={onMenuClick}
+        className={"cursor-pointer"}
+      />
     </div>
   );
 };
@@ -67,7 +71,7 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
         <PiXLight
           size={40}
           onClick={onClose}
-          className={"shrink-0 self-end m-6"}
+          className={"shrink-0 self-end m-6 cursor-pointer"}
         >
           Close
         </PiXLight>
@@ -127,7 +131,7 @@ export default function Navigation() {
     if (!elementById) {
       throw new Error("navigation not found");
     }
-    if (prevScrollpos > currentScrollPos) {
+    if (prevScrollpos > currentScrollPos || currentScrollPos <= 20) {
       elementById.style.top = "40px";
     } else {
       elementById.style.top = "-56px";
