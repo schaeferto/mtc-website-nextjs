@@ -38,13 +38,15 @@ const Overlay = () => {
         </div>
       </div>
       <div className={"mb-60 mt-12"}>
-        <button
-          className={
-            "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-mtc-black font-medium"
-          }
-        >
-          JETZT MITMACHEN
-        </button>
+        <Link href={"/join"}>
+          <button
+            className={
+              "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-mtc-black font-medium"
+            }
+          >
+            JETZT MITMACHEN
+          </button>
+        </Link>
       </div>
     </div>
   );
