@@ -41,7 +41,7 @@ const Overlay = () => {
         <Link href={"/join"}>
           <button
             className={
-              "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-mtc-black font-medium"
+              "bg-mtc-yellow py-3 px-8 text-xl rounded-full font-medium"
             }
           >
             JETZT MITMACHEN
@@ -55,7 +55,7 @@ const Overlay = () => {
 const CoverImage = () => {
   return (
     <Image
-      className={`h-full w-full object-cover`}
+      className={`object-cover`}
       src={coverImage}
       alt={"Home Background"}
     />
@@ -64,7 +64,7 @@ const CoverImage = () => {
 
 const Cover = () => {
   return (
-    <div className={`flex w-full relative first-content-height mb-12`}>
+    <div className={`flex relative first-content mb-12`}>
       <Overlay />
       <CoverImage />
     </div>
@@ -73,9 +73,7 @@ const Cover = () => {
 
 const Motto = () => {
   return (
-    <div
-      className={"bg-mtc-background text-mtc-black flex flex-col items-center"}
-    >
+    <div className={"flex flex-col items-center"}>
       <h2 className={"text-2xl md:text-4xl font-bold mb-8"}>Unser Motto</h2>
       <hr className={"border-mtc-black mb-8 w-5/6"}></hr>
       <Image
@@ -298,7 +296,7 @@ const Apply = () => {
 
 export default function Home() {
   return (
-    <div className={"bg-mtc-background"}>
+    <div>
       <Cover />
       <Motto />
       <SectionLinks />

@@ -5,13 +5,13 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className={`bg-mtc-black pt-[80px]`}>
+    <footer className={`bg-mtc-black pt-[80px] text-mtc-background`}>
       <div className={"flex w-full bg-mtc-black"} style={{ height: "55vw" }}>
         <Image
           src={footerImage}
           alt={"footer"}
           className={
-            "w-full h-full object-cover object-top bg-mtc-black saturate-[0.6]"
+            "w-full h-full object-cover object-top bg-mtc-black saturate-[0.5]"
           }
         ></Image>
       </div>
