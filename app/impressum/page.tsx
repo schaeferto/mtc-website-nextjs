@@ -4,9 +4,7 @@ import logo from "../../public/logo-rounded.svg";
 export default function Impressum() {
   return (
     <div
-      className={
-        "bg-mtc-background flex-col flex first-content-height items-center"
-      }
+      className={"bg-mtc-background flex-col flex first-content items-center"}
     >
       <div className="text-mtc-black flex flex-col items-center">
         <div className={"mt-8 font-bold text-xl"}>Impressum</div>

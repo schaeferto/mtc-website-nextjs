@@ -22,7 +22,7 @@ const DesktopMenu = () => (
       </Link>
       <Link href={"/news"}>News</Link>
       <Link href={"/verein"}>Verein</Link>
-      <Link href={"/sponsoren"}>Sponsoren</Link>
+      <Link href={"/sponsors"}>Sponsoren</Link>
     </div>
     <NavIconList />
   </nav>
@@ -85,7 +85,7 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
           <Link href="/verein" onClick={onClose}>
             Verein
           </Link>
-          <Link href="/sponsoren" onClick={onClose}>
+          <Link href="/sponsors" onClick={onClose}>
             Sponsoren
           </Link>
         </nav>
