@@ -31,7 +31,7 @@ body {
 }
 
 .first-content {
-  height: calc(100vh - 136px);
+  min-height: calc(100vh - 136px);
   margin-top: 96px;
 }
 
@@ -44,3 +44,4 @@ body {
     @apply text-2xl font-bold text-center mb-8;
   }
 }
+
