@@ -7,6 +7,7 @@ import {
   PiEnvelopeLight,
   PiListLight,
   PiXLight,
+  PiCaretDown,
 } from "react-icons/pi";
 import "./globals.css";
 import { IconContext } from "react-icons";
@@ -14,19 +15,49 @@ import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-const DesktopMenu = () => (
-  <nav className={"flex items-center"}>
-    <div className={"flex mr-24 gap-8 text-xl"}>
-      <Link href={"/"} className={""}>
-        Home
-      </Link>
-      <Link href={"/news"}>News</Link>
-      <Link href={"/verein"}>Verein</Link>
-      <Link href={"/sponsors"}>Sponsoren</Link>
-    </div>
-    <NavIconList />
-  </nav>
-);
+const DesktopMenu = () => {
+  const [display, setDisplay] = useState("block");
+  return (
+    <nav className={"flex items-center"}>
+      <div className={"flex mr-24 gap-8 text-xl"}>
+        <Link href={"/"} className={""}>
+          Home
+        </Link>
+        <Link href={"/news"}>News</Link>
+        <div
+          className={"relative cursor-pointer"}
+          onMouseOver={() => setDisplay("block")}
+          onMouseOut={() => setDisplay("hidden")}
+        >
+          <div className={"cursor-pointer flex gap-2 items-start"}>
+            <span>Verein</span>
+            <PiCaretDown size={22} className={"self-center"}></PiCaretDown>
+          </div>
+          <div
+            className={`${display} absolute z-10 bg-mtc-black px-6 py-3 whitespace-nowrap cursor-default`}
+            onMouseOut={() => setDisplay("hidden")}
+            onClick={() => setDisplay("hidden")}
+          >
+            <Link href={"/training"} className={"block"}>
+              Training
+            </Link>
+            <Link href={"/league"} className={"block"}>
+              Liga
+            </Link>
+            <Link href={"/board"} className={"block"}>
+              Vorstand
+            </Link>
+            <Link href={"/join"} className={"block"}>
+              Mitglied werden
+            </Link>
+          </div>
+        </div>
+        <Link href={"/sponsors"}>Sponsoren</Link>
+      </div>
+      <NavIconList />
+    </nav>
+  );
+};
 
 const MobileMenu = ({ onMenuClick }: { onMenuClick: () => void }) => {
   return (
