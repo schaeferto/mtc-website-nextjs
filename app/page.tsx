@@ -55,16 +55,17 @@ const Overlay = () => {
 const CoverImage = () => {
   return (
     <Image
-      className={`object-cover`}
+      className={`object-cover first-content`}
       src={coverImage}
       alt={"Home Background"}
+      priority={true}
     />
   );
 };
 
 const Cover = () => {
   return (
-    <div className={`flex relative first-content mb-12 h-full w-full`}>
+    <div className={`relative first-content mb-12`}>
       <Overlay />
       <CoverImage />
     </div>
