@@ -117,16 +117,16 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
           onClick={() => setShowClubSubNav(false)}
         ></PiCaretLeft>
       </div>
-      <Link href={"/training"} className={"block"}>
+      <Link href={"/training"} className={"block"} onClick={onClose}>
         Training
       </Link>
-      <Link href={"/league"} className={"block"}>
+      <Link href={"/league"} className={"block"} onClick={onClose}>
         Liga
       </Link>
-      <Link href={"/board"} className={"block"}>
+      <Link href={"/board"} className={"block"} onClick={onClose}>
         Vorstand
       </Link>
-      <Link href={"/join"} className={"block"}>
+      <Link href={"/join"} className={"block"} onClick={onClose}>
         Mitglied werden
       </Link>
     </nav>
