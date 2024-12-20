@@ -53,13 +53,7 @@ const Overlay = () => {
 };
 
 const CoverImage = () => {
-  return (
-    <Image
-      className={`object-cover`}
-      src={coverImage}
-      alt={"Home Background"}
-    />
-  );
+  return <Image className={``} src={coverImage} alt={"Home Background"} />;
 };
 
 const Cover = () => {
