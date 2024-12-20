@@ -8,6 +8,7 @@ import {
   PiListLight,
   PiXLight,
   PiCaretDown,
+  PiCaretLeft,
 } from "react-icons/pi";
 import "./globals.css";
 import { IconContext } from "react-icons";
@@ -16,7 +17,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const DesktopMenu = () => {
-  const [display, setDisplay] = useState("block");
+  const [display, setDisplay] = useState("hidden");
   return (
     <nav className={"flex items-center"}>
       <div className={"flex mr-24 gap-8 text-xl"}>
@@ -91,12 +92,52 @@ const NavIconList = () => {
 };
 
 const SideMenu = ({ onClose }: { onClose: () => void }) => {
+  const [showClubSubNav, setShowClubSubNav] = useState(false);
+  const rootNav = (
+    <nav className={"grid grid-cols-1 gap-6 text-2xl mt-16"}>
+      <div className={"col-start-1"}>&nbsp;</div>
+      <Link href="/" onClick={onClose}>
+        Home
+      </Link>
+      <Link href="/news" onClick={onClose}>
+        News
+      </Link>
+      <div onClick={() => setShowClubSubNav(true)}>Verein</div>
+      <Link href="/sponsors" onClick={onClose}>
+        Sponsoren
+      </Link>
+    </nav>
+  );
+
+  const clubSubNav = (
+    <nav className={"grid grid-cols-1 gap-6 text-2xl mt-16"}>
+      <div>
+        <PiCaretLeft
+          size={32}
+          onClick={() => setShowClubSubNav(false)}
+        ></PiCaretLeft>
+      </div>
+      <Link href={"/training"} className={"block"}>
+        Training
+      </Link>
+      <Link href={"/league"} className={"block"}>
+        Liga
+      </Link>
+      <Link href={"/board"} className={"block"}>
+        Vorstand
+      </Link>
+      <Link href={"/join"} className={"block"}>
+        Mitglied werden
+      </Link>
+    </nav>
+  );
+
   return (
     <div className="fixed top-0 mt-[40px] right-0 bg-transparent z-10 w-full h-full flex overflow-auto">
       <div onClick={onClose} className={"grow backdrop-blur-sm"}></div>
       <div
         className={
-          "flex flex-col w-60 h-full bg-mtc-black overflow-auto items-center"
+          "flex flex-col w-9/12 h-full bg-mtc-black overflow-auto pl-10"
         }
       >
         <PiXLight
@@ -106,20 +147,7 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
         >
           Close
         </PiXLight>
-        <nav className={"flex flex-col gap-6 text-2xl mt-32"}>
-          <Link href="/" onClick={onClose}>
-            Home
-          </Link>
-          <Link href="/news" onClick={onClose}>
-            News
-          </Link>
-          <Link href="/verein" onClick={onClose}>
-            Verein
-          </Link>
-          <Link href="/sponsors" onClick={onClose}>
-            Sponsoren
-          </Link>
-        </nav>
+        {showClubSubNav ? clubSubNav : rootNav}
       </div>
     </div>
   );
