@@ -12,7 +12,7 @@ import { useCallback } from "react";
 import { PiIdentificationCardLight } from "react-icons/pi";
 import { PiPersonSimpleRunLight } from "react-icons/pi";
 import useEmblaCarousel from "embla-carousel-react";
-import { NewsContent } from "@/app/news/page";
+import { NewsContent } from "@/app/news/news-content";
 
 const Overlay = () => {
   return (
