@@ -19,7 +19,7 @@ import useEmblaCarousel from "embla-carousel-react";
 
 const Overlay = () => {
   return (
-    <div className={"absolute h-full w-full flex flex-col items-center mt-20"}>
+    <div className={"absolute h-full w-full flex flex-col items-center mt-6"}>
       <div className={"grow flex flex-col items-center"}>
         <div
           className={`text-[80px]  md:text-[140px] mt-12 text-center text-white font-findel`}
