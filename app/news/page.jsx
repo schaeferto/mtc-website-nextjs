@@ -1,7 +1,7 @@
-export default function League() {
+export default function News() {
   return (
     <div className={"first-content"}>
-      <h1>League</h1>;
+      <h1>News</h1>;
     </div>
   );
 }
