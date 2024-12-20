@@ -64,7 +64,7 @@ const CoverImage = () => {
 
 const Cover = () => {
   return (
-    <div className={`flex relative first-content mb-12 h-full w-full`}>
+    <div className={`flex flex-row relative first-content mb-12`}>
       <Overlay />
       <CoverImage />
     </div>
