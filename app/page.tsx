@@ -53,12 +53,19 @@ const Overlay = () => {
 };
 
 const CoverImage = () => {
-  return <Image className={``} src={coverImage} alt={"Home Background"} />;
+  return (
+    <Image
+      className={`object-cover first-content`}
+      src={coverImage}
+      alt={"Home Background"}
+      priority={true}
+    />
+  );
 };
 
 const Cover = () => {
   return (
-    <div className={`flex flex-row relative first-content mb-12`}>
+    <div className={`relative first-content mb-12`}>
       <Overlay />
       <CoverImage />
     </div>
