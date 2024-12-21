@@ -8,52 +8,6 @@ import travel from "../../public/travel.jpg";
 import swim from "../../public/swim.jpg";
 
 export default function Training() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const calender = (
-    <div className={"grid grid-cols-8 auto-cols-max grid-rows-5 "}>
-      <div></div>
-      <div>Mo</div>
-      <div>Di</div>
-      <div>Mi</div>
-      <div>Do</div>
-      <div>Fr</div>
-      <div>Sa</div>
-      <div>So</div>
-      <div className={"whitespace-nowrap"}>6:00 pm</div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div>7:00 pm</div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div>8:00 pm</div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div>9:00 pm</div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div>10:00 pm</div>
-    </div>
-  );
   return (
     <div
       className={"first-content text-mtc-black flex flex-col items-center px-8"}
@@ -107,7 +61,7 @@ export default function Training() {
       <div className={"grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"}>
         <Image src={travel} alt={"Travel"}></Image>
         <div className={"md:mt-4"}>
-          <h2 className={"text-xl font-medium"}>Kroatien</h2>
+          <h2 className={"text-xl font-medium mb-4"}>Kroatien</h2>
           <div>
             Der Auftakt soll voraussichtlich im Frühjahr 2025 in Kroatien sein.
             Gemeinsames Radeln, Laufen und Schwimmen - wir machen uns zusammen
@@ -118,7 +72,7 @@ export default function Training() {
       <div className={"grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"}>
         <Image src={swim} alt={"Swim"}></Image>
         <div className={"md:mt-4"}>
-          <h2 className={"text-xl font-medium"}>
+          <h2 className={"text-xl font-medium mb-4"}>
             Schwimm-Trainingslager München
           </h2>
           <div>
