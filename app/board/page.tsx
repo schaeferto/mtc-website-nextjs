@@ -11,37 +11,44 @@ import Link from "next/link";
 export default function Board() {
   const boardMembers: {
     image: StaticImageData;
-    name: string;
+    surname: string;
+    lastname: string;
     position: string;
   }[] = [
     {
       image: valentin,
-      name: "Valentin Müller",
+      surname: "Valentin",
+      lastname: "Müller",
       position: "1. Vorsitzender",
     },
     {
       image: max,
-      name: "Max Meurer",
+      surname: "Max",
+      lastname: "Meurer",
       position: "2. Vorsitzender",
     },
     {
       image: carsten,
-      name: "Carsten Friedmann",
+      surname: "Carsten",
+      lastname: "Friedmann",
       position: "Kassenwart",
     },
     {
       image: eva,
-      name: "Eva Dörrbaum",
+      surname: "Eva",
+      lastname: "Dörrbaum",
       position: "Schriftführerin",
     },
     {
       image: lisa,
-      name: "Lisa Montag",
+      surname: "Lisa",
+      lastname: "Montag",
       position: "Beisitzende",
     },
     {
       image: eckart,
-      name: "Eckart Sußenburger",
+      surname: "Eckart",
+      lastname: "Sußenburger",
       position: "Beisitzender",
     },
   ];
@@ -63,11 +70,12 @@ export default function Board() {
           <div key={index}>
             <Image
               src={member.image}
-              alt={member.name}
+              alt={member.surname}
               height={200}
               className={"rounded-ee-full mb-4"}
             ></Image>
-            <div className={"text-xl font-bold"}>{member.name}</div>
+            <div className={"text-xl font-bold"}>{member.surname}</div>
+            <div className={"text-xl font-bold"}>{member.lastname}</div>
             <div className={"font-medium"}>{member.position}</div>
           </div>
         ))}
