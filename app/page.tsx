@@ -9,7 +9,11 @@ import Image, { StaticImageData } from "next/image";
 import "./globals.css";
 import Link from "next/link";
 import { useCallback } from "react";
-import { PiIdentificationCardLight } from "react-icons/pi";
+import {
+  PiCaretLeft,
+  PiCaretRight,
+  PiIdentificationCardLight,
+} from "react-icons/pi";
 import { PiPersonSimpleRunLight } from "react-icons/pi";
 import useEmblaCarousel from "embla-carousel-react";
 import { NewsContent } from "@/app/news/news-content";
@@ -62,7 +66,7 @@ const CoverImage = () => {
 
 const Cover = () => {
   return (
-    <div className={`relative first-content mb-12`}>
+    <div className={`relative first-content mb-16`}>
       <Overlay />
       <CoverImage />
     </div>
@@ -73,14 +77,14 @@ const Motto = () => {
   return (
     <div className={"flex flex-col items-center"}>
       <h2 className={"text-2xl md:text-4xl font-bold mb-8"}>Unser Motto</h2>
-      <hr className={"border-mtc-black mb-8 w-5/6"}></hr>
+      <hr className={"border-mtc-black mb-8 w-5/6 md:max-w-3xl"}></hr>
       <Image
         src={mottoImage}
         alt={"The Team cheering."}
         className="w-full md:w-[600px] mb-8"
       ></Image>
       <div className={"font-bold mb-2 mx-4"}>#biberfieber</div>
-      <div className={"text-center mx-4 mb-8"}>
+      <div className={"text-center mx-4 mb-8 max-w-3xl"}>
         Willkommen beim MTC München, dem Munich Triathlon Club. Wir sind ein
         junger, dynamischer Verein, der es sich zur Aufgabe gemacht hat, durch
         Zusammenhalt, Freundschaft, Transparenz und Sportsgeist das Vereinsleben
@@ -88,7 +92,7 @@ const Motto = () => {
         Erfahrungen sammeln und alle, die es möchten, mit unserem #biberfieber
         anstecken.
       </div>
-      <div className={"text-center mx-4 mb-12"}>
+      <div className={"text-center mx-4 max-w-3xl"}>
         Warum Biber? Warum denn nicht, oder habt ihr noch nie etwas von den
         Bibern an der Isar gehört? 😉
       </div>
@@ -108,12 +112,14 @@ const ImageWithTextAndLink = ({
   href: string;
 }) => {
   return (
-    <Link href={href} className={"relative md:w-full"}>
+    <Link href={href} className={"relative w-full h-full"}>
       <Image src={src} alt={alt}></Image>
-      <div className={"absolute inset-0 w-full h-full flex"}>
+      <div
+        className={"inset-0 absolute flex flex-col items-center justify-center"}
+      >
         <div
           className={
-            "backdrop-blur-sm m-auto px-3 md:px-8 py-1 md:py-2 bg-mtc-black bg-opacity-60 md:text-4xl text-2xl font-bold"
+            "backdrop-blur-sm px-3 md:px-8 py-1 md:py-2 bg-mtc-black bg-opacity-60 md:text-4xl text-2xl font-bold text-white"
           }
         >
           {text}
@@ -124,7 +130,7 @@ const ImageWithTextAndLink = ({
 };
 
 const SectionLinks = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -135,54 +141,64 @@ const SectionLinks = () => {
   }, [emblaApi]);
 
   return (
-    <div className="embla">
-      <div className="embla__viewport overflow-hidden pb-12 " ref={emblaRef}>
-        <div className="embla__container flex">
-          <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0 ">
-            <ImageWithTextAndLink
-              href={"/league"}
-              src={homeLeagueImage}
-              alt={"Liga"}
-              text={"Liga"}
-            />
-          </div>
-          <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
-            <ImageWithTextAndLink
-              href={"/training"}
-              src={homeTrainingImage}
-              alt={"Training"}
-              text={"Training"}
-            />
-          </div>
-          <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
-            <ImageWithTextAndLink
-              href={"/contact"}
-              src={homeContactImage}
-              alt={"Kontakt"}
-              text={"Kontakt"}
-            />
+    <div className={"flex flex-col items-center my-16 "}>
+      <div className="embla md:max-w-[768px]">
+        <div className="embla__viewport overflow-hidden" ref={emblaRef}>
+          <div className="embla__container flex">
+            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0 ">
+              <ImageWithTextAndLink
+                href={"/league"}
+                src={homeLeagueImage}
+                alt={"Liga"}
+                text={"Liga"}
+              />
+            </div>
+            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
+              <ImageWithTextAndLink
+                href={"/training"}
+                src={homeTrainingImage}
+                alt={"Training"}
+                text={"Training"}
+              />
+            </div>
+            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
+              <ImageWithTextAndLink
+                href={"/join"}
+                src={homeContactImage}
+                alt={"Kontakt"}
+                text={"Kontakt"}
+              />
+            </div>
           </div>
         </div>
       </div>
-      <button className="embla__prev text-black" onClick={scrollPrev}>
-        Prev
-      </button>
-      <button className="embla__next text-black" onClick={scrollNext}>
-        Next
-      </button>
+      <div className={"hidden md:flex items-center ml-16 mt-4 gap-4"}>
+        <button
+          className="embla__prev text-black border-solid border-mtc-black border-2 rounded-full"
+          onClick={scrollPrev}
+        >
+          <PiCaretLeft size={30} />
+        </button>
+        <button
+          className="embla__next text-black border-solid border-mtc-black border-2 rounded-full"
+          onClick={scrollNext}
+        >
+          <PiCaretRight size={30} />
+        </button>
+      </div>
     </div>
   );
 };
 
 const Apply = () => {
   return (
-    <div className={`bg-mtc-background text-mtc-black pb-28`}>
-      <h1 className={"text-2xl md:text-4xl font-extrabold text-center mb-20"}>
+    <div className={`bg-mtc-background text-mtc-black mb-16`}>
+      <h1 className={"text-2xl md:text-4xl font-extrabold text-center mb-8"}>
         INTERESSE GEWECKT?
       </h1>
       <div
         className={
-          "flex md:flex-row flex-col items-center justify-center gap-12"
+          "flex md:flex-row flex-col items-center justify-center gap-6"
         }
       >
         <Link href={"/training"}>
