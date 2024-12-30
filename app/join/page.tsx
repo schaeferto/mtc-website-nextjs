@@ -6,7 +6,7 @@ export default function Join() {
       <h1 className={"text-2xl font-bold text-center mb-8"}>MITGLIED WERDEN</h1>
       <div className={"flex flex-col gap-8"}>
         <p>
-          Du bist auf der Suche nach einem Triathlon-Verein und möchtest uns
+          Du bist auf der Suche nach einem Triathlonverein und möchtest uns
           einmal kennen lernen? Na klar! Schreib uns einfach eine E-Mail und wir
           vereinbaren alles weitere. Wir freuen uns auf dich!
         </p>
