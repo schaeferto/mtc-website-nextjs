@@ -6,9 +6,10 @@ export default function Join() {
       <h1 className={"text-2xl font-bold text-center mb-8"}>MITGLIED WERDEN</h1>
       <div className={"flex flex-col gap-8"}>
         <p>
-          Du bist auf der Suche nach einem Triathlonverein und möchtest uns
-          einmal kennen lernen? Na klar! Schreib uns einfach eine E-Mail und wir
-          vereinbaren alles weitere. Wir freuen uns auf dich!
+          Du bist auf der Suche nach einem Triathlonverein und möchtest uns - den MTC - gerne kennenlernen?
+          Komm zu unsererm Probetraining und erlebe, was uns ausmacht!
+          Schreib uns einfach eine E-Mail, und wir melden uns schnellstmöglich bei dir zurück. 
+          Wir freuen uns darauf, dich persönlich kennenzulernen!
         </p>
         <div className={"flex flex-col"}>
           <p>Munich Triathlon Club e.V.</p>

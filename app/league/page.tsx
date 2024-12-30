@@ -53,7 +53,7 @@ export default function League() {
     >
       <h1 className={"text-center mb-4 text-3xl font-bold uppercase"}>Liga</h1>
       <div className={"text-center"}>
-        Wir bieten 3 Mannschaften an, zwei Herren- und eine Damenmannschaften.
+        Wir starten in der Saison 2025 mit drei Teams - einer Damen und zwei Herrenmannschaften.
       </div>
       {annualResults.map((annualResult, index) => (
         <div key={index}>

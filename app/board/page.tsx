@@ -60,7 +60,7 @@ export default function Board() {
       <h1 className={"text-center mb-4 text-3xl font-bold uppercase"}>
         Vorstand
       </h1>
-      <div className={"mb-8"}>Unsere Ansprechpartner:</div>
+      <div className={"mb-8"}>Unsere Ansprechpartner*innen:</div>
       <div
         className={
           "grid grid-cols-2 md:grid-cols-3 gap-y-16 gap-x-8 md:gap-x-16 mb-8"
@@ -81,7 +81,7 @@ export default function Board() {
         ))}
       </div>
 
-      <div className={"self-start font-bold text-xl mt-8"}>Kontakt</div>
+      <div className={"self-start font-bold text-xl mt-8"}>Fragen? Schreib uns eine Mail:</div>
       <div className={"self-start flex gap-2 items-center"}>
         <PiEnvelopeLight size={25}></PiEnvelopeLight>
         <Link href={"mailto:munichtriathlonclub@gmail.com"}>
