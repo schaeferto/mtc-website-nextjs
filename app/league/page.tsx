@@ -9,10 +9,30 @@ export default function League() {
     teams: {
       image?: StaticImageData;
       name: string;
-      overall: string;
+      overall?: string;
       results: string[];
     }[];
   }[] = [
+    {
+      year: "2025",
+      teams: [
+        {
+          image: women_1_2024,
+          name: "Bayernliga Damen",
+          results: ["Triathlon Weiden: 10.05.2025, Supersprint mit Mannschaftsverfolgung", "GEALAN Triathlon der IfL Hof: 12. (Team Relay mit Wertung zur Bayrischen Meisterschaft) und 13.07.2025 (Kurzdistanz mit Winschattenfreigabe)", "Schongau Triathlon: 27.07.2025 (Mannschaftssprint)"],
+        },
+        {
+          image: men_2_2024,
+          name: "Bayernliga Herren",
+          results: ["Triathlon Weiden: 10.05.2025 (Supersprint mit Mannschaftsverfolgung)", "GEALAN Triathlon der IfL Hof: 12. (Team Relay mit Wertung zur Bayrischen Meisterschaft) und 13.07.2025 (Kurzdistanz mit Winschattenfreigabe)", "Schongau Triathlon: 27.07.2025 (Mannschaftssprint)"],
+        },
+        {
+          image: men_1_2024,
+          name: "Langesliga Süd Herren",
+          results: ["triathlon.de CUP München/Oberschleißheim: 25.05.2025 (Mannschaftswettkampf)", "Stadttriathlon Erding: 01.06.2025 (Kurzdistanz mit Windschattenverbot)", "triathlon.de CUP Landshut 22.06.2025 (Sprintdistanz mit Windschattenverbot)", "Ammersee Triathlon: 12.07.2025 (Sprintdistanz mit Windschattenfreigabe)"],
+        }
+      ]
+    },
     {
       year: "2024",
       teams: [
@@ -36,13 +56,7 @@ export default function League() {
             "16. Juni 2024 - Erding: 2. Platz",
             "13. Juli 2024 - Ammersee: 2 Platz",
           ],
-        },
-        {
-          image: men_1_2024,
-          name: "Bayernliga Herren",
-          overall: "-",
-          results: ["-"],
-        },
+        }
       ],
     },
   ];
@@ -82,6 +96,7 @@ export default function League() {
               </div>
             ))}
           </div>
+          <hr className={"my-8 border-mtc-black"} />
         </div>
       ))}
     </div>
