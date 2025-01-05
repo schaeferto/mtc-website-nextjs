@@ -172,7 +172,7 @@ const SectionLinks = () => {
           </div>
         </div>
       </div>
-      <div className={"hidden md:flex items-center ml-16 mt-4 gap-4"}>
+      <div className={"hidden md:flex items-center mt-4 gap-4"}>
         <button
           className="embla__prev text-black border-solid border-mtc-black border-2 rounded-full"
           onClick={scrollPrev}
