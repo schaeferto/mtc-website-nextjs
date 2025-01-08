@@ -4,6 +4,8 @@ import "../globals.css";
 import pac from "../../public/pac.png";
 import runningPoint from "../../public/running_point.png";
 import trek from "../../public/trek.png";
+import dstr from "../../public/dstr.png";
+import hoppe from "../../public/hoppe.jpeg";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
@@ -17,6 +19,12 @@ export default function Sponsors() {
       link: "www.running-point.de",
     },
     {
+      image: dstr,
+      header: "DSTR",
+      text: "Unterstützt das Triathlon-Team mit einem jährlichen Spendenbeitrag.",
+      link: "dstr-plan.de",
+    },
+    {
       image: pac,
       header: "P.A.C.",
       text: "Unterstützt das Triathlon-Team mit einem jährlichen Spendenbeitrag.",
@@ -27,6 +35,12 @@ export default function Sponsors() {
       header: "TREK",
       text: "Unterstützt das Triathlon-Team mit Rabatten und Ausstattung für Wettkämpfe.",
       link: "www.trekbikes.com/de/de_DE",
+    },
+    {
+      image: hoppe,
+      header: "Hoppebräu",
+      text: "Unterstützt das Triathlon-Team mit hopfigen Getränken.",
+      link: "www.hoppebraeu.de",
     },
   ];
   const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
@@ -42,7 +56,9 @@ export default function Sponsors() {
   }
 
   return (
-    <div className={"first-content pt-12 px-24  mb-24"}>
+    <div
+      className={"first-content pt-12 px-24 mb-24 flex-col flex items-center"}
+    >
       <div className={"header text-center"}>Sponsoren & Partner</div>
       <div className={"text-center mb-12"}>
         Wir bedanken uns für eure biberstarke Unterstützung!
@@ -60,7 +76,7 @@ export default function Sponsors() {
             }
           >
             {isDesktop && (
-              <Image src={sponsor.image} alt={"Logo"} width={200}></Image>
+              <Image src={sponsor.image} alt={"Logo"} width={140}></Image>
             )}
             <div className={"flex flex-col items-center md:items-start"}>
               <div className={"font-bold text-xl"}>{sponsor.header}</div>
@@ -68,7 +84,7 @@ export default function Sponsors() {
                 <Image
                   src={sponsor.image}
                   alt={"Logo"}
-                  width={140}
+                  width={120}
                   className={"my-4"}
                 ></Image>
               )}
