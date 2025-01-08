@@ -8,8 +8,9 @@ import {
   PiListLight,
   PiXLight,
   PiCaretDown,
-  PiCaretLeft, PiCaretRight
-} from 'react-icons/pi';
+  PiCaretLeft,
+  PiCaretRight,
+} from "react-icons/pi";
 import "./globals.css";
 import { IconContext } from "react-icons";
 import { useMediaQuery } from "react-responsive";
@@ -102,9 +103,12 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
       <Link href="/news" onClick={onClose}>
         News
       </Link>
-      <div onClick={() => setShowClubSubNav(true)} className={'flex items-center justify-between'}>
+      <div
+        onClick={() => setShowClubSubNav(true)}
+        className={"flex items-center justify-between"}
+      >
         <span>Verein</span>
-        <PiCaretRight size={26} className={'mr-8'}></PiCaretRight>
+        <PiCaretRight size={26} className={"mr-8"}></PiCaretRight>
       </div>
       <Link href="/sponsors" onClick={onClose}>
         Sponsoren
@@ -114,12 +118,12 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
 
   const clubSubNav = (
     <nav className={"grid grid-cols-1 gap-6 text-2xl mt-4"}>
-      <div className={'flex content-center items-center'} onClick={() => setShowClubSubNav(false)}>
-        <PiCaretLeft
-          size={26}
-          className={'text-gray-400'}
-        ></PiCaretLeft>
-        <span className={'text-sm text-gray-400'}>Zurück</span>
+      <div
+        className={"flex content-center items-center"}
+        onClick={() => setShowClubSubNav(false)}
+      >
+        <PiCaretLeft size={26} className={"text-gray-400"}></PiCaretLeft>
+        <span className={"text-sm text-gray-400"}>Zurück</span>
       </div>
       <Link href={"/training"} className={"block"} onClick={onClose}>
         Training
@@ -204,7 +208,7 @@ export default function Navigation() {
 
   return (
     <nav
-      className="bg-mtc-black text-white h-24 flex items-center w-full justify-between fixed top-[40px] z-10"
+      className="bg-mtc-black text-white h-24 flex items-center w-full justify-between fixed top-[40px] z-50"
       id={"navigation"}
     >
       <div>
