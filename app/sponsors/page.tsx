@@ -16,31 +16,26 @@ export default function Sponsors() {
       image: runningPoint,
       header: "Running Point",
       text: "Unterstützt das Triathlon-Team mit einem jährlichen Spendenbeitrag.",
-      link: "www.running-point.de",
     },
     {
       image: dstr,
       header: "DSTR",
       text: "Unterstützt das Triathlon-Team mit einem jährlichen Spendenbeitrag.",
-      link: "dstr-plan.de",
     },
     {
       image: pac,
       header: "P.A.C.",
       text: "Unterstützt das Triathlon-Team mit einem jährlichen Spendenbeitrag.",
-      link: "www.pac-original.de",
     },
     {
       image: trek,
       header: "TREK",
       text: "Unterstützt das Triathlon-Team mit Rabatten und Ausstattung für Wettkämpfe.",
-      link: "www.trekbikes.com/de/de_DE",
     },
     {
       image: hoppe,
       header: "Hoppebräu",
       text: "Unterstützt das Triathlon-Team mit hopfigen Getränken.",
-      link: "www.hoppebraeu.de",
     },
   ];
   const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
@@ -89,9 +84,6 @@ export default function Sponsors() {
                 ></Image>
               )}
               <div className={""}>{sponsor.text}</div>
-              <a href={sponsor.link}>
-                <u>{sponsor.link}</u>
-              </a>
             </div>
           </div>
         ))}

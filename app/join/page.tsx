@@ -12,7 +12,7 @@ export default function Join() {
         <div className={"flex flex-col gap-8"}>
           <p>
             Du bist auf der Suche nach einem Triathlonverein und möchtest uns -
-            den MTC - gerne kennenlernen? Komm zu unsererm{" "}
+            den MTC - gerne kennenlernen? Komm zu unserem{" "}
             <Link href={"/training"}>
               <span className={"font-bold"}>Probetraining</span>
             </Link>{" "}
