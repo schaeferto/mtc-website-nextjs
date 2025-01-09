@@ -22,7 +22,7 @@ export function ImageWithTextAndLink({
       >
         <div
           className={
-            "backdrop-blur-sm px-3 md:px-8 py-1 md:py-2 bg-mtc-black bg-opacity-60 md:text-4xl text-2xl font-bold text-white"
+            "backdrop-blur-sm px-3 md:px-8 py-1 md:py-2 bg-mtc-black bg-opacity-60 md:text-4xl text-2xl font-bold text-white grow-1"
           }
         >
           {text}
