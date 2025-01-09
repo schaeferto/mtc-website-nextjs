@@ -3,9 +3,7 @@
 import "../globals.css";
 import pac from "../../public/pac.png";
 import runningPoint from "../../public/running_point.png";
-import trek from "../../public/trek.png";
 import dstr from "../../public/dstr.png";
-import hoppe from "../../public/hoppe.jpeg";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
@@ -15,27 +13,14 @@ export default function Sponsors() {
     {
       image: runningPoint,
       header: "Running Point",
-      text: "Unterstützt das Triathlon-Team mit einem jährlichen Spendenbeitrag.",
     },
     {
       image: dstr,
       header: "DSTR",
-      text: "Unterstützt das Triathlon-Team mit einem jährlichen Spendenbeitrag.",
     },
     {
       image: pac,
       header: "P.A.C.",
-      text: "Unterstützt das Triathlon-Team mit einem jährlichen Spendenbeitrag.",
-    },
-    {
-      image: trek,
-      header: "TREK",
-      text: "Unterstützt das Triathlon-Team mit Rabatten und Ausstattung für Wettkämpfe.",
-    },
-    {
-      image: hoppe,
-      header: "Hoppebräu",
-      text: "Unterstützt das Triathlon-Team mit hopfigen Getränken.",
     },
   ];
   const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
@@ -83,7 +68,6 @@ export default function Sponsors() {
                   className={"my-4"}
                 ></Image>
               )}
-              <div className={""}>{sponsor.text}</div>
             </div>
           </div>
         ))}
