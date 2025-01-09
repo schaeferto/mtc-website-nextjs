@@ -1,3 +1,5 @@
+'use client';
+
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
 import Image from "next/image";

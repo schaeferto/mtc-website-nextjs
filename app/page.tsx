@@ -1,26 +1,18 @@
-"use client";
-
-import coverImage from "../public/cover_2.webp";
 import mottoImage from "../public/motto.jpg";
-import homeLeagueImage from "../public/home_liga.jpg";
-import homeContactImage from "../public/home_contact.jpg";
-import homeTrainingImage from "../public/home_training.jpg";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import "./globals.css";
 import Link from "next/link";
-import { useCallback } from "react";
 import {
-  PiCaretLeft,
-  PiCaretRight,
   PiIdentificationCardLight,
+  PiPersonSimpleRunLight,
 } from "react-icons/pi";
-import { PiPersonSimpleRunLight } from "react-icons/pi";
-import useEmblaCarousel from "embla-carousel-react";
 import { NewsContent } from "@/app/news/news-content";
+import { Video } from "@/app/video";
+import { SectionLinks } from "@/app/section-links";
 
 const Overlay = () => {
   return (
-    <div className={"absolute h-full w-full flex flex-col items-center mt-6"}>
+    <div className={"absolute h-full w-full flex flex-col items-center mt-6 z-10"}>
       <div className={"grow flex flex-col items-center"}>
         <div
           className={`text-[80px]  md:text-[140px] text-center text-white font-findel`}
@@ -53,22 +45,11 @@ const Overlay = () => {
   );
 };
 
-const CoverImage = () => {
-  return (
-    <Image
-      className={`object-cover first-content`}
-      src={coverImage}
-      alt={"Home Background"}
-      priority={true}
-    />
-  );
-};
-
 const Cover = () => {
   return (
     <div className={`relative first-content mb-16`}>
       <Overlay />
-      <CoverImage />
+      <Video fileName={'header-video'}/>
     </div>
   );
 };
@@ -95,96 +76,6 @@ const Motto = () => {
       <div className={"text-center mx-4 max-w-3xl"}>
         Warum Biber? Warum denn nicht, oder habt ihr noch nie etwas von den
         Bibern an der Isar gehört? 😉
-      </div>
-    </div>
-  );
-};
-
-const ImageWithTextAndLink = ({
-  src,
-  alt,
-  text,
-  href,
-}: {
-  src: StaticImageData;
-  alt: string;
-  text: string;
-  href: string;
-}) => {
-  return (
-    <Link href={href} className={"relative w-full h-full"}>
-      <Image src={src} alt={alt}></Image>
-      <div
-        className={"inset-0 absolute flex flex-col items-center justify-center"}
-      >
-        <div
-          className={
-            "backdrop-blur-sm px-3 md:px-8 py-1 md:py-2 bg-mtc-black bg-opacity-60 md:text-4xl text-2xl font-bold text-white"
-          }
-        >
-          {text}
-        </div>
-      </div>
-    </Link>
-  );
-};
-
-const SectionLinks = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
-  return (
-    <div className={"flex flex-col items-center my-16 "}>
-      <div className="embla md:max-w-[768px]">
-        <div className="embla__viewport overflow-hidden" ref={emblaRef}>
-          <div className="embla__container flex">
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0 ">
-              <ImageWithTextAndLink
-                href={"/league"}
-                src={homeLeagueImage}
-                alt={"Liga"}
-                text={"Liga"}
-              />
-            </div>
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
-              <ImageWithTextAndLink
-                href={"/training"}
-                src={homeTrainingImage}
-                alt={"Training"}
-                text={"Training"}
-              />
-            </div>
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
-              <ImageWithTextAndLink
-                href={"/join"}
-                src={homeContactImage}
-                alt={"Kontakt"}
-                text={"Kontakt"}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={"hidden md:flex items-center ml-16 mt-4 gap-4"}>
-        <button
-          className="embla__prev text-black border-solid border-mtc-black border-2 rounded-full"
-          onClick={scrollPrev}
-        >
-          <PiCaretLeft size={30} />
-        </button>
-        <button
-          className="embla__next text-black border-solid border-mtc-black border-2 rounded-full"
-          onClick={scrollNext}
-        >
-          <PiCaretRight size={30} />
-        </button>
       </div>
     </div>
   );
