@@ -16,7 +16,9 @@ export function ImageWithTextAndLink({
     <Link href={href} className={"relative w-full h-full"}>
       <Image src={src} alt={alt}></Image>
       <div
-        className={"inset-0 absolute flex flex-col items-center justify-center"}
+        className={
+          "absolute top-0 w-full h-full flex flex-col items-center justify-center"
+        }
       >
         <div
           className={
