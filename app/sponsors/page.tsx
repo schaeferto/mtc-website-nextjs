@@ -64,7 +64,7 @@ export default function Sponsors() {
                 <Image
                   src={sponsor.image}
                   alt={"Logo"}
-                  width={120}
+                  height={140}
                   className={"my-4"}
                 ></Image>
               )}
