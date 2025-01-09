@@ -198,17 +198,18 @@ export default function Navigation() {
     if (!elementById) {
       throw new Error("navigation not found");
     }
-    if (prevScrollpos > currentScrollPos || currentScrollPos <= 20) {
-      elementById.style.top = "40px";
+
+    if (prevScrollpos > currentScrollPos || currentScrollPos <= 96) {
+      elementById.style.top = "0px";
     } else {
-      elementById.style.top = "-56px";
+      elementById.style.top = "-96px";
     }
     prevScrollpos = currentScrollPos;
   };
 
   return (
     <nav
-      className="bg-mtc-black text-white h-24 flex items-center w-full justify-between fixed top-[40px] z-50"
+      className="bg-mtc-black text-white h-24 flex items-center w-full justify-between fixed top-0 z-50"
       id={"navigation"}
     >
       <div>
