@@ -29,7 +29,7 @@ export default function Training() {
         </div>
 
         <h1 className={"my-8 text-3xl font-bold uppercase text-center"}>
-          Gemeinsame Traininszeiten
+          Gemeinsame Trainingszeiten
         </h1>
         <div className={"text-center"}>
           Wir treffen uns jede Woche zu abwechslungsreichen Trainingseinheiten,
@@ -88,7 +88,7 @@ export default function Training() {
               Triathlon-Trainingslager in der Toskana
             </h2>
             <div>
-              Der Auftakt wird im Früjhahr 2025 in der Toskana in Italien
+              Der Auftakt wird im Frühjahr 2025 in der Toskana in Italien
               stattfinden. Gemeinsames Radeln, Laufen und Schwimmen - wir machen
               uns zusammen fit für die neue Saison!
             </div>
