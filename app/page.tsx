@@ -12,7 +12,9 @@ import { SectionLinks } from "@/app/section-links";
 
 const Overlay = () => {
   return (
-    <div className={"absolute h-full w-full flex flex-col items-center mt-6 z-10"}>
+    <div
+      className={"absolute h-full w-full flex flex-col items-center mt-6 z-10"}
+    >
       <div className={"grow flex flex-col items-center"}>
         <div
           className={`text-[80px]  md:text-[140px] text-center text-white font-findel`}
@@ -49,7 +51,7 @@ const Cover = () => {
   return (
     <div className={`relative first-content mb-16`}>
       <Overlay />
-      <Video fileName={'header-video'}/>
+      <Video fileName={"header-video"} />
     </div>
   );
 };
@@ -58,11 +60,11 @@ const Motto = () => {
   return (
     <div className={"flex flex-col items-center"}>
       <h2 className={"text-2xl md:text-4xl font-bold mb-8"}>Unser Motto</h2>
-      <hr className={"border-mtc-black mb-8 w-5/6 md:max-w-3xl"}></hr>
+      <hr className={"border-mtc-black w-5/6 md:max-w-3xl"}></hr>
       <Image
         src={mottoImage}
         alt={"The Team cheering."}
-        className="w-full md:w-[600px] mb-8"
+        className="w-full md:w-[600px] my-16"
       ></Image>
       <div className={"font-bold mb-2 mx-4"}>#biberfieber</div>
       <div className={"text-center mx-4 mb-8 max-w-3xl"}>
