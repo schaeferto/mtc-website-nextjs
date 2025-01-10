@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback } from "react";
@@ -24,7 +24,7 @@ export function SectionLinks() {
       <div className="embla md:max-w-[768px]">
         <div className="embla__viewport overflow-hidden" ref={emblaRef}>
           <div className="embla__container flex">
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0 ">
+            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0">
               <ImageWithTextAndLink
                 href={"/league"}
                 src={homeLeagueImage}
@@ -32,7 +32,7 @@ export function SectionLinks() {
                 text={"Liga"}
               />
             </div>
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
+            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0">
               <ImageWithTextAndLink
                 href={"/training"}
                 src={homeTrainingImage}
@@ -40,7 +40,7 @@ export function SectionLinks() {
                 text={"Training"}
               />
             </div>
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 min-w-0">
+            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0">
               <ImageWithTextAndLink
                 href={"/join"}
                 src={homeContactImage}

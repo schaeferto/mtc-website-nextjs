@@ -36,7 +36,7 @@ const DesktopMenu = () => {
             <PiCaretDown size={22} className={"self-center"}></PiCaretDown>
           </div>
           <div
-            className={`${display} absolute z-10 bg-mtc-black px-6 py-3 whitespace-nowrap cursor-default`}
+            className={`${display} absolute z-10 bg-mtc-black px-6 py-3 whitespace-nowrap cursor-default flex flex-col gap-2`}
             onMouseOut={() => setDisplay("hidden")}
             onClick={() => setDisplay("hidden")}
           >
