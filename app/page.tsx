@@ -86,12 +86,12 @@ const Motto = () => {
 const Apply = () => {
   return (
     <div className={`bg-mtc-background text-mtc-black mb-16`}>
-      <h1 className={"text-2xl md:text-4xl font-extrabold text-center mb-8"}>
+      <h1 className={"text-2xl md:text-4xl font-extrabold text-center"}>
         INTERESSE GEWECKT?
       </h1>
       <div
         className={
-          "flex md:flex-row flex-col items-center justify-center gap-6"
+          "flex md:flex-row flex-col items-center justify-center gap-6 py-16"
         }
       >
         <Link href={"/training"}>
