@@ -24,7 +24,7 @@ export function SectionLinks() {
       <div className="embla md:max-w-[768px]">
         <div className="embla__viewport overflow-hidden" ref={emblaRef}>
           <div className="embla__container flex">
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0 ">
+            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0">
               <ImageWithTextAndLink
                 href={"/league"}
                 src={homeLeagueImage}

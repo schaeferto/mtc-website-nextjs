@@ -13,21 +13,21 @@ export function ImageWithTextAndLink({
   href: string;
 }) {
   return (
-    <Link href={href} className={"relative w-full h-full"}>
-      <Image src={src} alt={alt}></Image>
-      <div
-        className={
-          "absolute top-0 w-full h-full flex flex-col items-center justify-center"
-        }
-      >
+      <Link href={href} className={"w-full h-full block"}>
+        <Image src={src} alt={alt}></Image>
         <div
           className={
-            "backdrop-blur-sm px-3 md:px-8 py-1 md:py-2 bg-mtc-black bg-opacity-60 md:text-4xl text-2xl font-bold text-white grow-1"
+            "absolute flex flex-col items-center justify-center w-full h-full top-0 left-0"
           }
         >
-          {text}
+          <div
+            className={
+              "backdrop-blur-sm px-3 md:px-8 py-1 md:py-2 bg-mtc-black bg-opacity-60 md:text-4xl text-2xl font-bold text-white"
+            }
+          >
+            {text}
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
   );
 }
