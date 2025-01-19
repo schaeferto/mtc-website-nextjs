@@ -42,7 +42,7 @@ export const annualResults: AnnualResult[] = [
           {
             text: "GEALAN Triathlon der IfL Hof",
             date: "12. und 13. Juli 2025",
-            type: "Team Relay mit Wertung zur Bayrischen Meisterschaft und Kurzdistanz mit Winschatten",
+            type: "Team Relay mit Wertung zur Bayrischen Meisterschaft und Kurzdistanz mit Windschatten",
           },
           {
             text: "Schongau Triathlon",
@@ -63,7 +63,7 @@ export const annualResults: AnnualResult[] = [
           {
             text: "GEALAN Triathlon der IfL Hof",
             date: "12. und 13. Juli 2025",
-            type: "Team Relay mit Wertung zur Bayrischen Meisterschaft und Kurzdistanz mit Winschattenfreigabe",
+            type: "Team Relay mit Wertung zur Bayrischen Meisterschaft und Kurzdistanz mit Windschattenfreigabe",
           },
           {
             text: "Schongau Triathlon",
@@ -74,7 +74,7 @@ export const annualResults: AnnualResult[] = [
       },
       {
         image: men_1_2025,
-        name: "Langesliga Süd Herren",
+        name: "Landesliga Süd Herren",
         results: [
           {
             text: "triathlon.de CUP München/Oberschleißheim",
@@ -127,7 +127,7 @@ export const annualResults: AnnualResult[] = [
       },
       {
         image: men_1_2024,
-        name: "Langesliga Süd Herren",
+        name: "Landesliga Süd Herren",
         overall: "1. Platz",
         results: [
           {
