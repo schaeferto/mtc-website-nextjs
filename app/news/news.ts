@@ -30,8 +30,8 @@ export const newsShort: NewsType[] = [
     header: "Ironman 70.3 World Championships 2024",
     text: [
       "Im Dezember fanden die Ironman 70.3 World Championships in Taupo, Neuseeland statt. Mit (vierfacher) Biberbeteiligung war der späte Saisonabschluss unter der brennenden Sonne ein absolutes Highlightrennen.",
-      "Für Anne ging es Samstag beim Damenrennen an den Start. Holger, Carsten und Valentin folgten beim Herrenrennen am Sonntag. Die letzten beiden trugen auch noch ihr ganz persönliches Battle auf der Strecke aus. Wer wohl als erstes ins Ziel kommen würde? Am Ende war es ein Finish wie es im Buche steht. Nach gegenseitigem überholen liefen sie schlussendlich gemeinsam über die Ziellinie.",
-      "Allgemeines Fazit: Es war ein grandioses Rennen! Die Landschaft, die unfassbar tollen, freundlichen und hilfsbereiten Volunteers, die super Stimmung und natürlich nicht zu letzt der biberstarke Zusammenhalt, hat das Wochenende zu einem unvergesslichen Event gemacht.",
+      "Am Samstag startete Anne beim Damenrennen. Holger, Carsten und Valentin folgten ihr am Sonntag beim Herrenrennen. Zwischen den beiden Letzteren entwickelte sich ein spannender Wettkampf. Wer wohl als Erster die Ziellinie überqueren würde? Am Ende lieferten sie sich ein Kopf-an-Kopf-Rennen und überquerten gemeinsam die Ziellinie",
+      "Fazit: Es war ein grandioses Rennen! Die atemberaubende Landschaft, die unglaublich freundlichen und hilfsbereiten Volunteers, die großartige Stimmung und natürlich der biberstarke Zusammenhalt unseres Teams haben das Wochenende zu einem unvergesslichen Event gemacht.",
     ],
   },
 ];
