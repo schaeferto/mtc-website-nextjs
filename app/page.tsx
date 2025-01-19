@@ -131,7 +131,7 @@ export default function Home() {
       <Cover />
       <Motto />
       <SectionLinks />
-      <NewsContent isShortVersion={true} />
+      <NewsContent isShortVersion={true} newsCount={2} />
       <Apply />
     </div>
   );
