@@ -6,7 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { newsShort } from "@/app/news/news";
 
-export function NewsContent({ isShortVersion = false }) {
+export function NewsContent({
+  isShortVersion = false,
+  newsCount,
+}: {
+  isShortVersion?: boolean;
+  newsCount?: number;
+}) {
   const [isClient, setIsClient] = useState(false);
   const isBigScreen = useMediaQuery({ query: "(min-width: 768px)" });
   // Set isClient to true, when this component is in client
@@ -18,6 +24,11 @@ export function NewsContent({ isShortVersion = false }) {
     return null; // or a loading spinner
   }
 
+  let news = newsShort.slice().reverse();
+  if (newsCount && newsCount < news.length) {
+    news = news.slice(0, newsCount);
+  }
+
   return (
     <div className={"flex flex-col items-center"}>
       <div
@@ -25,7 +36,7 @@ export function NewsContent({ isShortVersion = false }) {
       >
         <div className={"text-3xl font-bold text-center"}>UNSERE NEWS</div>
         <hr className={"border-mtc-black md:w-full w-5/6 my-8"} />
-        {newsShort.map((news, index) => (
+        {news.map((news, index) => (
           <div key={index} className={"flex flex-col items-center"}>
             {isBigScreen ? (
               <div className={"flex"}>
@@ -36,7 +47,15 @@ export function NewsContent({ isShortVersion = false }) {
                 ></Image>
                 <div className={"flex flex-col shrink px-8"}>
                   <h3 className={"text-xl font-bold pb-8"}>{news.header}</h3>
-                  <p className={""}>{news.text}</p>
+                  {Array.isArray(news.text) ? (
+                    news.text.map((text, index) => (
+                      <p key={index} className={"pb-4"}>
+                        {text}
+                      </p>
+                    ))
+                  ) : (
+                    <p>{news.text}</p>
+                  )}
                 </div>
               </div>
             ) : (
@@ -44,8 +63,20 @@ export function NewsContent({ isShortVersion = false }) {
                 <h3 className={"text-xl font-bold text-center my-8"}>
                   {news.header}
                 </h3>
-                <Image src={news.image} alt={"News Image"} className={''}></Image>
-                <p className={"text-center m-8"}>{news.text}</p>
+                <Image
+                  src={news.image}
+                  alt={"News Image"}
+                  className={""}
+                ></Image>
+                {Array.isArray(news.text) ? (
+                  news.text.map((text, index) => (
+                    <p key={index} className={"text-center m-8"}>
+                      {text}
+                    </p>
+                  ))
+                ) : (
+                  <p className={"text-center m-8"}>{news.text}</p>
+                )}
               </div>
             )}
             {index !== newsShort.length - 1 && (
