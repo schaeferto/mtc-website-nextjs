@@ -41,7 +41,9 @@ export function NewsContent({
             {isBigScreen ? (
               <div className={"flex"}>
                 <Image
-                  src={news.image}
+                  src={news.image.src}
+                  width={news.image.width}
+                  height={news.image.height}
                   alt={"News Image"}
                   className={"object-cover w-1/4 grow-2"}
                 ></Image>
@@ -64,7 +66,9 @@ export function NewsContent({
                   {news.header}
                 </h3>
                 <Image
-                  src={news.image}
+                  src={news.image.src}
+                  width={news.image.width}
+                  height={news.image.height}
                   alt={"News Image"}
                   className={""}
                 ></Image>
