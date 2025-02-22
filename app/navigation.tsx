@@ -97,20 +97,20 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
   const rootNav = (
     <nav className={"grid grid-cols-1 gap-6 text-2xl mt-4"}>
       <div className={"col-start-1"}>&nbsp;</div>
-      <Link href="/" onClick={onClose}>
+      <Link href="/" onClick={onClose} className={"ml-10"}>
         Home
       </Link>
-      <Link href="/news" onClick={onClose}>
+      <Link href="/news" onClick={onClose} className={"ml-10"}>
         News
       </Link>
       <div
         onClick={() => setShowClubSubNav(true)}
-        className={"flex items-center justify-between"}
+        className={"flex items-center justify-between ml-10"}
       >
         <span>Verein</span>
         <PiCaretRight size={26} className={"mr-8"}></PiCaretRight>
       </div>
-      <Link href="/sponsors" onClick={onClose}>
+      <Link href="/sponsors" onClick={onClose} className={"ml-10"}>
         Sponsoren
       </Link>
     </nav>
@@ -119,33 +119,33 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
   const clubSubNav = (
     <nav className={"grid grid-cols-1 gap-6 text-2xl mt-4"}>
       <div
-        className={"flex content-center items-center"}
+        className={"flex content-center items-center h-8"}
         onClick={() => setShowClubSubNav(false)}
       >
         <PiCaretLeft size={26} className={"text-gray-400"}></PiCaretLeft>
-        <span className={"text-sm text-gray-400"}>Zurück</span>
+        <span className={"text-sm text-gray-400 ml-4"}>Zurück</span>
       </div>
-      <Link href={"/training"} className={"block"} onClick={onClose}>
+      <Link href={"/training"} className={"block ml-10"} onClick={onClose}>
         Training
       </Link>
-      <Link href={"/league"} className={"block"} onClick={onClose}>
+      <Link href={"/league"} className={"block ml-10"} onClick={onClose}>
         Liga
       </Link>
-      <Link href={"/board"} className={"block"} onClick={onClose}>
+      <Link href={"/board"} className={"block ml-10"} onClick={onClose}>
         Vorstand
       </Link>
-      <Link href={"/join"} className={"block"} onClick={onClose}>
+      <Link href={"/join"} className={"block ml-10"} onClick={onClose}>
         Mitglied werden
       </Link>
     </nav>
   );
 
   return (
-    <div className="fixed top-0 mt-[40px] right-0 bg-transparent z-10 w-full h-full flex overflow-auto">
+    <div className="fixed top-0 right-0 bg-transparent z-10 w-full h-full flex overflow-auto">
       <div onClick={onClose} className={"grow backdrop-blur-sm"}></div>
       <div
         className={
-          "flex flex-col w-9/12 h-full bg-mtc-black overflow-auto pl-10"
+          "flex flex-col w-9/12 h-full bg-mtc-black overflow-auto pl-4"
         }
       >
         <PiXLight
