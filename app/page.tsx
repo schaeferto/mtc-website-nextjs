@@ -51,7 +51,7 @@ const Cover = () => {
   return (
     <div className={`relative first-content mb-16`}>
       <Overlay />
-      <Video fileName={"header-video"} />
+      <Video fileName={"header-2"} />
     </div>
   );
 };
