@@ -2,13 +2,50 @@ import Image from "next/image";
 import footerImage from "../public/orig-free-footer.webp";
 import { PiGithubLogoFill } from "react-icons/pi";
 import Link from "next/link";
+import pac from "../public/pac.png";
+import runningPoint from "../public/running_point.png";
+import dstr from "../public/dstr.png";
 
 export default function Footer() {
   return (
-    <footer className={`bg-mtc-black pt-[80px] text-mtc-background`}>
+    <footer
+      className={`bg-mtc-black pt-[80px] text-mtc-background flex flex-col items-center`}
+    >
       <FooterImage></FooterImage>
+      <FooterSponsors></FooterSponsors>
       <FooterText></FooterText>
     </footer>
+  );
+}
+
+function FooterSponsors() {
+  return (
+    <div className={"flex flex-col items-center text-sm my-12 md:max-w-3xl"}>
+      <div className={"mb-8"}>Wir bedanken uns bei unseren Sponsoren:</div>
+      <div className={"flex justify-center items-center gap-8"}>
+        <Image
+          src={pac}
+          alt={"Logo"}
+          width={760}
+          height={306}
+          className={"w-3/12"}
+        ></Image>
+        <Image
+          src={runningPoint}
+          alt={"Logo"}
+          width={14747}
+          height={1346}
+          className={"w-3/12"}
+        ></Image>
+        <Image
+          src={dstr}
+          alt={"Logo"}
+          width={329}
+          height={329}
+          className={"w-2/12"}
+        ></Image>
+      </div>
+    </div>
   );
 }
 
