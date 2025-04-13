@@ -47,10 +47,6 @@ export default function Training() {
             <h2 className={"text-xl font-medium"}>Lauftraining</h2>
             <div>Donnerstags 18:30 - 20:00</div>
           </div>
-          <div>
-            <h2 className={"text-xl font-medium"}>Radtraining</h2>
-            <div>Montags 19:30 - 20:30 (Zwift)</div>
-          </div>
         </div>
 
         {/*{calender}*/}
