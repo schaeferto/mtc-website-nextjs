@@ -1,4 +1,5 @@
 import newsAllgaeuImage from "@/public/allgaeu_news.jpg";
+import newsPlaceholderImage from "@/public/news_placeholder.png";
 import newsSchongauImage from "@/public/schongau_news.jpg";
 import newsChallengeImage from "@/public/challenge_news.jpg";
 import neuseeland from "@/public/neuseeland.jpg";
@@ -17,6 +18,16 @@ export const newsShort: NewsType[] = [
     image: { src: newsAllgaeuImage, height: 2268, width: 3024 },
     header: "Allgäu Triathlon 2024",
     text: "Es war ein Spektakel. Der Allgäu Triathlon 2024. Unsere Biber waren auf der Mitteldistanz und der Olympischen Distanz unterwegs. Was alle gemeinsam hatten: Sie wurden plörre nass. Inklusive der Biber-Fans am Rand. Da half die beste Regenjacke nicht. Am Ende schafften es drei Biber sogar aufs Podium!",
+  },
+  {
+    image: { src: newsPlaceholderImage, height: 600, width: 900 },
+    header: "Liga Auftakt",
+    text: [
+      "Vergangenes Wochenende fand der Liga-Auftakt in Weiden statt. 🤩 Diesmal ging es sowohl für die Herren als auch die Damen in der Bayernliga an den Start.",
+      "Bei strahlendem Sonnenschein gab es in der Früh ein Einzelrennen, aus der daraus resultierenden Mannschaftswertung dann am Nachmittag das Verfolgungs-Rennen. Supersprint, also 400m schwimmen, 9km Rad fahren und 1,7km am Morgen sowie 3,4 km am Nachmittag laufen. Kurz gesagt: Eine richtige Laktatparty. 🫣",
+      "Unsere frisch aufgestiegenen Männer konnten den 4. Platz behaupten, während die Damen sich Platz 1 erkämpften und den Saisonstart perfekt machten🥇😎 Was für ein Auftakt! 💪🏻"
+    ],
+    date: "2025-05-15",
   },
   {
     image: { src: newsSchongauImage, height: 2268, width: 3024 },
