@@ -2,6 +2,8 @@
 
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useState } from "react";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
 import Link from "next/link";
 import { newsShort } from "@/app/news/news";
@@ -15,6 +17,29 @@ export function NewsContent({
 }) {
   const [isClient, setIsClient] = useState(false);
   const isBigScreen = useMediaQuery({ query: "(min-width: 768px)" });
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  let news = newsShort.slice().reverse();
+
+  // Prepare images for the lightbox
+  const images = news.map((item) => ({
+    src: typeof item.image.src === "string" ? item.image.src : item.image.src.src,
+    width: item.image.width,
+    height: item.image.height,
+    title: item.header,
+  }));
+
+  // Handler for closing the lightbox
+  const handleLightboxClose = () => {
+    setLightboxOpen(false);
+    setLightboxIndex(0);
+  };
+
+  // Handler for changing slides
+  const handleLightboxIndexChange = (newIndex: number) => {
+    setLightboxIndex(newIndex);
+  };
   // Set isClient to true, when this component is in client
   useEffect(() => {
     setIsClient(true);
@@ -24,7 +49,6 @@ export function NewsContent({
     return null; // or a loading spinner
   }
 
-  let news = newsShort.slice().reverse();
   if (newsCount && newsCount < news.length) {
     news = news.slice(0, newsCount);
   }
@@ -45,8 +69,12 @@ export function NewsContent({
                   width={news.image.width}
                   height={news.image.height}
                   alt={"News Image"}
-                  className={"object-cover w-1/4 grow-2"}
-                ></Image>
+                  className={"object-cover w-1/4 grow-2 cursor-pointer"}
+                  onClick={() => {
+                    setLightboxIndex(index);
+                    setLightboxOpen(true);
+                  }}
+                />
                 <div className={"flex flex-col shrink px-8"}>
                   <h3 className={"text-xl font-bold pb-8"}>{news.header}</h3>
                   {Array.isArray(news.text) ? (
@@ -70,8 +98,12 @@ export function NewsContent({
                   width={news.image.width}
                   height={news.image.height}
                   alt={"News Image"}
-                  className={""}
-                ></Image>
+                  className={"cursor-pointer"}
+                  onClick={() => {
+                    setLightboxIndex(index);
+                    setLightboxOpen(true);
+                  }}
+                />
                 {Array.isArray(news.text) ? (
                   news.text.map((text, index) => (
                     <p key={index} className={"text-center m-8"}>
@@ -88,6 +120,17 @@ export function NewsContent({
             )}
           </div>
         ))}
+        {/* Lightbox overlay for images - render only once */}
+        <Lightbox
+          open={lightboxOpen}
+          close={handleLightboxClose}
+          slides={images}
+          index={lightboxIndex}
+          carousel={{ finite: false }}
+          on={{
+            view: ({ index }) => handleLightboxIndexChange(index),
+          }}
+        />
         {isShortVersion ? (
           <Link href={"/news"} className={"self-center py-16"}>
             <button
