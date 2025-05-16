@@ -1,5 +1,5 @@
 import newsAllgaeuImage from "@/public/allgaeu_news.jpg";
-import newsPlaceholderImage from "@/public/news_placeholder.png";
+import ligaAuftaktImage from "@/public/liga_auftakt.jpg";
 import newsSchongauImage from "@/public/schongau_news.jpg";
 import newsChallengeImage from "@/public/challenge_news.jpg";
 import neuseeland from "@/public/neuseeland.jpg";
@@ -56,7 +56,7 @@ export const newsShort: NewsType[] = [
     ],
   },
   {
-    image: { src: newsPlaceholderImage, height: 600, width: 900 },
+    image: { src: ligaAuftaktImage, height: 4032, width: 3024 },
     header: "Liga Auftakt",
     text: [
       "Vergangenes Wochenende fand der Liga-Auftakt in Weiden statt. 🤩 Diesmal ging es sowohl für die Herren als auch die Damen in der Bayernliga an den Start.",
