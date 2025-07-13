@@ -76,7 +76,14 @@ export function NewsContent({
                   }}
                 />
                 <div className={"flex flex-col shrink px-8"}>
-                  <h3 className={"text-xl font-bold pb-8"}>{news.header}</h3>
+                  <div className={"min-h-[1.5em] pb-6 text-sm text-mtc-black/70"}>
+                  <h3 className={"text-xl font-bold text-mtc-black"}>{news.header}</h3>
+                    {news.date && (
+                      <span>
+                        {new Date(news.date).toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" })}
+                      </span>
+                    )}
+                  </div>
                   {Array.isArray(news.text) ? (
                     news.text.map((text, index) => (
                       <p key={index} className={"pb-4"}>
@@ -90,9 +97,16 @@ export function NewsContent({
               </div>
             ) : (
               <div className={"flex flex-col"}>
-                <h3 className={"text-xl font-bold text-center my-8"}>
+                <h3 className={"text-xl font-bold text-center mt-8"}>
                   {news.header}
                 </h3>
+                <div className={"min-h-[1.5em] mb-6 text-sm text-mtc-black/70 text-center"}>
+                  {news.date && (
+                    <span>
+                      {new Date(news.date).toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" })}
+                    </span>
+                  )}
+                </div>
                 <Image
                   src={news.image.src}
                   width={news.image.width}
