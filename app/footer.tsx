@@ -66,7 +66,11 @@ const FooterImage = () => {
 const FooterText = () => {
   return (
     <div className="flex flex-col justify-center items-center text-sm gap-4 py-6">
-      <Link href={"/impressum"}>Impressum</Link>
+      <div className="flex gap-4">
+        <Link href={"/impressum"}>Impressum</Link>
+        <span>|</span>
+        <Link href={"/datenschutz"}>Datenschutz</Link>
+      </div>
       <div>© 2024 Munich Triathlon Club e.V.</div>
       <div className="flex flex-col items-center justify-center">
         <div>Made with ❤️ by</div>
