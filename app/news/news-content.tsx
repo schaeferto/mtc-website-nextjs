@@ -105,13 +105,12 @@ export function NewsContent({
                       "min-h-[1.5em] pb-6 text-sm text-mtc-black/70 w-full relative"
                     }
                   >
-                    {/* Desktop: header left, badge right. Mobile: badge absolute to the right. */}
                     <div className="flex items-center gap-2 w-full">
                       <h3 className={"text-xl font-bold text-mtc-black"}>
                         {news.header}
                       </h3>
                       {recentIds.has(news.id) && (
-                        <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow">
+                        <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow flex-shrink-0 self-center leading-none">
                           NEU
                         </span>
                       )}
@@ -145,7 +144,7 @@ export function NewsContent({
                     {news.header}
                   </h3>
                   {recentIds.has(news.id) && (
-                    <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow">
+                    <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow self-center leading-none">
                       NEU
                     </span>
                   )}
