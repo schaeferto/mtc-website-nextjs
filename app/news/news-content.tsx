@@ -6,7 +6,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
 import Link from "next/link";
-import { newsShort } from "@/app/news/news";
+import { getArticles } from "@/app/news/article-loader";
 
 export function NewsContent({
   isShortVersion = false,
@@ -20,11 +20,13 @@ export function NewsContent({
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  let news = newsShort.slice().reverse();
+  const allArticles = getArticles(); // Already sorted newest first
+  let newsArticles = allArticles.slice();
 
   // Prepare images for the lightbox
-  const images = news.map((item) => ({
-    src: typeof item.image.src === "string" ? item.image.src : item.image.src.src,
+  const images = newsArticles.map((item) => ({
+    src:
+      typeof item.image.src === "string" ? item.image.src : item.image.src.src,
     width: item.image.width,
     height: item.image.height,
     title: item.header,
@@ -49,8 +51,30 @@ export function NewsContent({
     return null; // or a loading spinner
   }
 
-  if (newsCount && newsCount < news.length) {
-    news = news.slice(0, newsCount);
+  if (newsCount && newsCount < newsArticles.length) {
+    newsArticles = newsArticles.slice(0, newsCount);
+  }
+
+  const recentCount = allArticles.filter((article) => {
+    if (!article.releaseDate) return false;
+    const articleDate = new Date(article.releaseDate);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - articleDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays <= 30;
+  }).length;
+
+  // Build set of recent article ids (releaseDate within last 30 days)
+  const recentIds = new Set<string>();
+  if (recentCount > 0) {
+    const now = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setDate(now.getDate() - 30);
+    for (const a of allArticles) {
+      if (!a.releaseDate) continue;
+      const d = new Date(a.releaseDate);
+      if (d >= oneMonthAgo && d <= now) recentIds.add(a.id);
+    }
   }
 
   return (
@@ -60,7 +84,7 @@ export function NewsContent({
       >
         <div className={"text-3xl font-bold text-center"}>UNSERE NEWS</div>
         <hr className={"border-mtc-black md:w-full w-5/6 my-8"} />
-        {news.map((news, index) => (
+        {newsArticles.map((news, index) => (
           <div key={index} className={"flex flex-col items-center"}>
             {isBigScreen ? (
               <div className={"flex"}>
@@ -76,11 +100,30 @@ export function NewsContent({
                   }}
                 />
                 <div className={"flex flex-col shrink px-8"}>
-                  <div className={"min-h-[1.5em] pb-6 text-sm text-mtc-black/70"}>
-                  <h3 className={"text-xl font-bold text-mtc-black"}>{news.header}</h3>
+                  <div
+                    className={
+                      "min-h-[1.5em] pb-6 text-sm text-mtc-black/70 w-full relative"
+                    }
+                  >
+                    {/* Desktop: header left, badge right. Mobile: badge absolute to the right. */}
+                    <div className="flex items-center gap-2 w-full">
+                      <h3 className={"text-xl font-bold text-mtc-black"}>
+                        {news.header}
+                      </h3>
+                      {recentIds.has(news.id) && (
+                        <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow">
+                          NEU
+                        </span>
+                      )}
+                    </div>
+
                     {news.date && (
                       <span>
-                        {new Date(news.date).toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" })}
+                        {new Date(news.date).toLocaleDateString("de-DE", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
                       </span>
                     )}
                   </div>
@@ -97,13 +140,28 @@ export function NewsContent({
               </div>
             ) : (
               <div className={"flex flex-col"}>
-                <h3 className={"text-xl font-bold text-center mt-8"}>
-                  {news.header}
-                </h3>
-                <div className={"min-h-[1.5em] mb-6 text-sm text-mtc-black/70 text-center"}>
+                <div className="flex justify-center gap-2 w-full mt-8">
+                  <h3 className={"text-xl font-bold text-center"}>
+                    {news.header}
+                  </h3>
+                  {recentIds.has(news.id) && (
+                    <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow">
+                      NEU
+                    </span>
+                  )}
+                </div>
+                <div
+                  className={
+                    "min-h-[1.5em] mb-6 text-sm text-mtc-black/70 text-center"
+                  }
+                >
                   {news.date && (
                     <span>
-                      {new Date(news.date).toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" })}
+                      {new Date(news.date).toLocaleDateString("de-DE", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
                     </span>
                   )}
                 </div>
@@ -129,7 +187,7 @@ export function NewsContent({
                 )}
               </div>
             )}
-            {index !== newsShort.length - 1 && (
+            {index !== newsArticles.length - 1 && (
               <hr className={"border-mtc-black my-8 px-8 md:w-full w-5/6 "} />
             )}
           </div>
@@ -147,13 +205,22 @@ export function NewsContent({
         />
         {isShortVersion ? (
           <Link href={"/news"} className={"self-center py-16"}>
-            <button
-              className={
-                "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black w-[300px] font-medium"
-              }
-            >
-              MEHR BERICHTE
-            </button>
+            <div className="relative inline-block">
+              <button
+                className={
+                  "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black w-[300px] font-medium"
+                }
+              >
+                MEHR BERICHTE
+              </button>
+
+              {/* Show a pulsing badge with the number of articles added in the last 30 days */}
+              {recentCount > 0 && (
+                <span className="absolute -top-2 -right-2 inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow-lg animate-pulse">
+                  {recentCount >= 100 ? "99+" : `${recentCount}`}
+                </span>
+              )}
+            </div>
           </Link>
         ) : null}
       </div>
