@@ -16,6 +16,7 @@ import { ligaMixedSchongauNew } from "./articles/2025/2025-07-27-liga-herren-sch
 import { ligaMixedHof } from "./articles/2025/2025-07-13-liga-mixed-hof";
 import { suedkaernten } from "./articles/2025/2025-09-14-suedkaernten";
 import { toskana } from "./articles/2025/2025-04-06-toskana";
+import { pizza } from "./articles/2025/2025-10-27-pizza";
 
 // You'll need to add new articles here as you create them
 export const allArticles: NewsArticle[] = [
@@ -24,6 +25,7 @@ export const allArticles: NewsArticle[] = [
   ligaHerrenAmmersee,
   ligaHerrenOberschleissheim,
   ligaMixedSchongauNew,
+  pizza,
   ligaMixedHof,
   suedkaernten,
   toskana,
