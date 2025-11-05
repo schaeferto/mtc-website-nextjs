@@ -19,6 +19,7 @@ export function NewsContent({
   const isBigScreen = useMediaQuery({ query: "(min-width: 768px)" });
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState<number>(6);
 
   const allArticles = getArticles(); // Already sorted newest first
   let newsArticles = allArticles.slice();
@@ -55,6 +56,9 @@ export function NewsContent({
     newsArticles = newsArticles.slice(0, newsCount);
   }
 
+  // For the full news page, show a limited number first and allow loading more
+  const displayedArticles = isShortVersion ? newsArticles : newsArticles.slice(0, visibleCount);
+
   const recentCount = allArticles.filter((article) => {
     if (!article.releaseDate) return false;
     const articleDate = new Date(article.releaseDate);
@@ -84,7 +88,7 @@ export function NewsContent({
       >
         <div className={"text-3xl font-bold text-center"}>UNSERE NEWS</div>
         <hr className={"border-mtc-black md:w-full w-5/6 my-8"} />
-        {newsArticles.map((news, index) => (
+        {displayedArticles.map((news, index) => (
           <div key={index} className={"flex flex-col items-center"}>
             {isBigScreen ? (
               <div className={"flex"}>
@@ -186,7 +190,7 @@ export function NewsContent({
                 )}
               </div>
             )}
-            {index !== newsArticles.length - 1 && (
+            {index !== displayedArticles.length - 1 && (
               <hr className={"border-mtc-black my-8 px-8 md:w-full w-5/6 "} />
             )}
           </div>
@@ -202,6 +206,19 @@ export function NewsContent({
             view: ({ index }) => handleLightboxIndexChange(index),
           }}
         />
+        {/* Load more button for full news page */}
+        {!isShortVersion && visibleCount < newsArticles.length && (
+          <div className={"flex justify-center py-16"}>
+            <button
+              onClick={() => setVisibleCount((v) => Math.min(newsArticles.length, v + 6))}
+              className={
+                "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black w-[300px] font-medium"
+              }
+            >
+              MEHR LADEN
+            </button>
+          </div>
+        )}
         {isShortVersion ? (
           <Link href={"/news"} className={"self-center py-16"}>
             <div className="relative inline-block">
