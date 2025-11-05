@@ -41,3 +41,6 @@ next-env.d.ts
 
 #IntelliJ
 .idea
+
+# AI generated md files
+.ai_md_files/
