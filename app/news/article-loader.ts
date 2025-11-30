@@ -19,10 +19,12 @@ import { toskana } from "./articles/2025/2025-04-06-toskana";
 import { pizza } from "./articles/2025/2025-10-27-pizza";
 import { munichMarathon } from "./articles/2025/2025-10-12-munich-marathon";
 import { marbella } from "./articles/2025/2025-11-21-marbella";
+import { huettenwanderung } from "./articles/2025/2025-11-23-huettenwanderung";
 
 // You'll need to add new articles here as you create them
 export const allArticles: NewsArticle[] = [
   // New articles (2025)
+  huettenwanderung,
   marbella,
   newAllgaeu,
   ligaHerrenAmmersee,
