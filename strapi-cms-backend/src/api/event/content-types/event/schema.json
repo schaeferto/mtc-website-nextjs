@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "event"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "date": {
+      "type": "datetime",
+      "required": true,
+      "unique": true
+    },
+    "training": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::training.training",
+      "inversedBy": "events"
+    }
+  }
+}
