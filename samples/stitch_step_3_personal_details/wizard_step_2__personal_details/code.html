@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="light" lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Probetraining - Deine Daten</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#fde047", // Matching the yellow from the screenshot buttons
+                        "background-light": "#e5e7eb", // Light grey background seen in screenshot
+                        "background-dark": "#1a1a1a",
+                        "card-light": "#ffffff",
+                        "card-dark": "#2d2d2d",
+                    },
+                    fontFamily: {
+                        display: ["Montserrat", "sans-serif"],
+                        sans: ["Montserrat", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .step-indicator {
+            width: 100%;
+            height: 4px;
+            background-color: #d1d5db;
+        }
+        .step-indicator-active {
+            width: 100%;
+            height: 4px;
+            background-color: #fde047;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4">
+<div class="max-w-xl w-full bg-transparent">
+<div class="flex gap-2 mb-8">
+<div class="h-1.5 flex-1 bg-primary rounded-full"></div>
+<div class="h-1.5 flex-1 bg-primary rounded-full"></div>
+</div>
+<div class="text-center mb-10">
+<h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 dark:text-gray-100 uppercase tracking-tight">
+                Deine Daten
+            </h1>
+<p class="text-gray-600 dark:text-gray-400 mt-2 font-medium">Fast geschafft! Gib uns noch kurz deine Kontaktdaten an.</p>
+</div>
+<form action="#" class="space-y-6" method="POST">
+<div class="space-y-5">
+<div>
+<label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wide" for="name">
+                        Name
+                    </label>
+<input class="w-full px-4 py-3 bg-white dark:bg-card-dark border-transparent focus:border-primary focus:ring-2 focus:ring-primary text-gray-900 dark:text-white rounded shadow-sm transition-all outline-none" id="name" name="name" placeholder="Vor- und Nachname" required="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wide" for="email">
+                        E-Mail
+                    </label>
+<input class="w-full px-4 py-3 bg-white dark:bg-card-dark border-transparent focus:border-primary focus:ring-2 focus:ring-primary text-gray-900 dark:text-white rounded shadow-sm transition-all outline-none" id="email" name="email" placeholder="beispiel@mail.de" required="" type="email"/>
+</div>
+<div>
+<label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wide" for="age">
+                        Alter
+                    </label>
+<input class="w-full px-4 py-3 bg-white dark:bg-card-dark border-transparent focus:border-primary focus:ring-2 focus:ring-primary text-gray-900 dark:text-white rounded shadow-sm transition-all outline-none" id="age" name="age" placeholder="Z.B. 25" required="" type="number"/>
+</div>
+</div>
+<div class="flex items-start mt-4">
+<div class="flex items-center h-5">
+<input class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded" id="privacy" name="privacy" required="" type="checkbox"/>
+</div>
+<div class="ml-3 text-xs">
+<label class="text-gray-600 dark:text-gray-400" for="privacy">Ich akzeptiere die Datenschutzbestimmungen und bin damit einverstanden, dass meine Daten zum Zweck der Organisation des Probetrainings verarbeitet werden.</label>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row-reverse gap-4 pt-6">
+<button class="flex-1 bg-primary hover:bg-yellow-400 text-gray-900 font-extrabold py-4 px-8 rounded-full uppercase tracking-widest transition-colors shadow-md active:scale-95" type="submit">
+                    Anmeldung abschicken
+                </button>
+<button class="flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-4 px-8 rounded-full uppercase tracking-widest transition-colors active:scale-95" type="button">
+                    Zurück
+                </button>
+</div>
+</form>
+<div class="mt-12 text-center">
+<a class="text-sm font-semibold text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center justify-center gap-2" href="#">
+<span class="material-symbols-outlined text-base">close</span>
+                Vorgang abbrechen
+            </a>
+</div>
+</div>
+<div class="fixed bottom-4 right-4">
+<button class="p-3 rounded-full bg-white dark:bg-card-dark shadow-lg text-gray-800 dark:text-gray-200" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-outlined">contrast</span>
+</button>
+</div>
+
+</body></html>
