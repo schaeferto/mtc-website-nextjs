@@ -11,7 +11,7 @@ export async function GET() {
       `${strapiUrl}/api/events?populate=training&sort=date:asc`,
       {
         headers: { Authorization: `Bearer ${token}` },
-        next: { revalidate: 3600 },
+        next: { revalidate: 10 },
       },
     );
 
@@ -20,6 +20,7 @@ export async function GET() {
     }
 
     const data = await response.json();
+
     const events = data.data.map((e: any) => ({
       id: e.id,
       documentId: e.documentId,

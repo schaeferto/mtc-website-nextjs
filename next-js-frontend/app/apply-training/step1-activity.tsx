@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PiPersonSimpleSwimLight, PiPersonSimpleRunLight } from "react-icons/pi";
 
 interface TrainingOption {
   id: number;
@@ -108,11 +109,36 @@ export default function Step1Activity({
                   }}
                   style={{ display: "none" }}
                 />
-                <div style={{ fontSize: "24px", marginBottom: "10px" }}>
+                <div
+                  style={{
+                    fontSize: "48px",
+                    marginBottom: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
                   {training.title === "Swimming" ||
-                  training.title === "Schwimmen"
-                    ? "🏊"
-                    : "🏃"}
+                    training.title === "Schwimmen" ? (
+                    <PiPersonSimpleSwimLight
+                      style={{
+                        transform:
+                          selectedActivity === training.documentId
+                            ? "scale(1.1)"
+                            : "scale(1)",
+                        transition: "transform 0.2s",
+                      }}
+                    />
+                  ) : (
+                    <PiPersonSimpleRunLight
+                      style={{
+                        transform:
+                          selectedActivity === training.documentId
+                            ? "scale(1.1)"
+                            : "scale(1)",
+                        transition: "transform 0.2s",
+                      }}
+                    />
+                  )}
                 </div>
                 <div style={{ fontSize: "18px", fontWeight: "bold" }}>
                   {training.title}

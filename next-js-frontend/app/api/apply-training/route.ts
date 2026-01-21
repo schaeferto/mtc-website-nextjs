@@ -35,62 +35,68 @@ export async function POST(req: Request) {
       );
     }
 
-    // TODO Store Application in Strapi
-    // // Save to Strapi
-    // const applicationRes = await fetch(
-    //   `${strapiUrl}/api/training-applications`,
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${strapiToken}`,
-    //     },
-    //     body: JSON.stringify({
-    //       data: {
-    //         name: data.name,
-    //         email: data.email,
-    //         age: parseInt(data.age),
-    //         training: data.activity,
-    //         event: data.eventId,
-    //         applicationDate: new Date().toISOString(),
-    //         status: "pending",
-    //       },
-    //     }),
-    //   },
-    // );
+    // Fetch email templates from Strapi
+    const templatesResponse = await fetch(
+      `${strapiUrl}/api/email-templates`,
+      {
+        headers: { Authorization: `Bearer ${strapiToken}` },
+      },
+    );
 
-    // if (!applicationRes.ok) {
-    //   const error = await applicationRes.json();
-    //   console.error("Strapi error:", error);
-    //   throw new Error("Failed to save application");
-    // }
+    if (!templatesResponse.ok) {
+      throw new Error("Failed to fetch email templates from Strapi");
+    }
+
+    const templatesData = await templatesResponse.json();
+    const templates = templatesData.data.reduce((acc: any, t: any) => {
+      acc[t.name] = t;
+      return acc;
+    }, {});
+
+    const applicantTemplate = templates.applicant_confirmation;
+    const adminTemplate = templates.admin_notification;
+
+    if (!applicantTemplate || !adminTemplate) {
+      throw new Error("Email templates not found in Strapi");
+    }
+
+    // Helper function to render template with variables
+    const renderTemplate = (
+      html: string,
+      variables: Record<string, string>,
+    ) => {
+      return Object.entries(variables).reduce((acc, [key, value]) => {
+        return acc.replace(new RegExp(`{{${key}}}`, "g"), value);
+      }, html);
+    };
+
+    const applicantHtml = renderTemplate(applicantTemplate.html, {
+      name: data.name,
+      event: data.event,
+    });
+
+    const adminHtml = renderTemplate(adminTemplate.html, {
+      name: data.name,
+      email: data.email,
+      age: data.age,
+      event: data.event,
+      date: new Date().toLocaleString("de-DE"),
+    });
 
     // Send confirmation email to applicant
     await resend.emails.send({
       from: fromEmail,
       to: data.email,
-      subject: "Probetraining Anmeldung bestätigt",
-      html: `
-        <h1>Hallo ${data.name},</h1>
-        <p>vielen Dank für deine Anmeldung zum Probetraining im Bereich <strong>${data.event}</strong>!</p>
-        <p>Wir freuen uns auf dich und werden dich in Kürze mit weiteren Informationen kontaktieren.</p>
-        <p>Viele Grüße,<br/>Dein MTC Triathlon Team</p>
-      `,
+      subject: applicantTemplate.subject,
+      html: applicantHtml,
     });
 
     // Send notification email to admin
     await resend.emails.send({
       from: fromEmail,
       to: adminEmail,
-      subject: "Neue Probetraining Anmeldung",
-      html: `
-        <h1>Neue Anmeldung</h1>
-        <p><strong>Name:</strong> ${data.name}</p>
-        <p><strong>E-Mail:</strong> ${data.email}</p>
-        <p><strong>Alter:</strong> ${data.age}</p>
-        <p><strong>Sportart:</strong> ${data.event}</p>
-        <p><strong>Datum:</strong> ${new Date().toLocaleString("de-DE")}</p>
-      `,
+      subject: adminTemplate.subject,
+      html: adminHtml,
     });
 
     return Response.json({ success: true });

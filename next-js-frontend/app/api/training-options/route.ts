@@ -9,7 +9,7 @@ export async function GET() {
 
     const response = await fetch(`${strapiUrl}/api/trainings`, {
       headers: { Authorization: `Bearer ${token}` },
-      next: { revalidate: 3600 },
+      next: { revalidate: 10 },
     });
 
     if (!response.ok) {

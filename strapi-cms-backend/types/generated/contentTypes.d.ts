@@ -467,10 +467,43 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEmailTemplateEmailTemplate
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'email_templates';
+  info: {
+    displayName: 'Email Template';
+    pluralName: 'email-templates';
+    singularName: 'email-template';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    html: Schema.Attribute.RichText & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::email-template.email-template'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    subject: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   collectionName: 'events';
   info: {
-    displayName: 'event';
+    displayName: 'Events';
     pluralName: 'events';
     singularName: 'event';
   };
@@ -498,7 +531,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
 export interface ApiTrainingTraining extends Struct.CollectionTypeSchema {
   collectionName: 'trainings';
   info: {
-    displayName: 'training';
+    displayName: 'Training';
     pluralName: 'trainings';
     singularName: 'training';
   };
@@ -1035,6 +1068,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::email-template.email-template': ApiEmailTemplateEmailTemplate;
       'api::event.event': ApiEventEvent;
       'api::training.training': ApiTrainingTraining;
       'plugin::content-releases.release': PluginContentReleasesRelease;
