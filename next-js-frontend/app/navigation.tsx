@@ -220,6 +220,7 @@ export default function Navigation() {
             width={84}
             height={84}
             className={`ml-3`}
+            priority
           />
         </Link>
       </div>

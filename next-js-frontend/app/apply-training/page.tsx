@@ -53,18 +53,24 @@ export default function ApplyTrainingPage() {
   const fetchTrainingsAndEvents = async () => {
     try {
       setLoading(true);
-      const [trainingsRes, eventsRes] = await Promise.all([
-        fetch("/api/training-options"),
-        fetch("/api/event-options"),
-      ]);
-
-      const trainingsData = await trainingsRes.json();
+      const eventsRes = await fetch("/api/event-options");
       const eventsData = await eventsRes.json();
 
-      setTrainings(Array.isArray(trainingsData) ? trainingsData : []);
-      setEvents(Array.isArray(eventsData) ? eventsData : []);
+      const eventsList: EventOption[] = Array.isArray(eventsData) ? eventsData : [];
+      setEvents(eventsList);
+
+      // Derive unique trainings from events
+      const uniqueTrainingsMap = new Map<string, TrainingOption>();
+      eventsList.forEach(event => {
+        if (event.training && !uniqueTrainingsMap.has(event.training.documentId)) {
+          uniqueTrainingsMap.set(event.training.documentId, event.training);
+        }
+      });
+
+      setTrainings(Array.from(uniqueTrainingsMap.values()));
+
     } catch (error) {
-      console.error("Error fetching trainings/events:", error);
+      console.error("Error fetching events:", error);
     } finally {
       setLoading(false);
     }
@@ -115,7 +121,7 @@ export default function ApplyTrainingPage() {
 
   if (loading) {
     return (
-      <div style={{ padding: "20px", marginTop: "80px", textAlign: "center" }}>
+      <div className="first-content" style={{ padding: "20px", textAlign: "center" }}>
         <p>Loading training options...</p>
       </div>
     );
@@ -126,7 +132,7 @@ export default function ApplyTrainingPage() {
   }
 
   return (
-    <div style={{ marginTop: "80px" }}>
+    <div className="first-content">
       {step === 1 && (
         <Step1Activity
           trainings={trainings}

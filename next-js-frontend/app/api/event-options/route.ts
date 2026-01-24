@@ -8,7 +8,7 @@ export async function GET() {
     }
 
     const response = await fetch(
-      `${strapiUrl}/api/events?populate[training]=true&populate[location]=true&sort=date:asc`,
+      `${strapiUrl}/api/trainings?sort=date:asc`,
       {
         headers: { Authorization: `Bearer ${token}` },
         next: { revalidate: 10 },
@@ -21,21 +21,19 @@ export async function GET() {
 
     const data = await response.json();
 
-    const events = data.data.map((e: any) => ({
-      id: e.id,
-      documentId: e.documentId,
-      date: e.date,
+    const events = data.data.map((t: any) => ({
+      id: t.id,
+      documentId: t.documentId,
+      date: t.date,
       training: {
-        id: e.training.id,
-        documentId: e.training.documentId,
-        title: e.training.title,
+        id: t.trainingType === 'swimming' ? 1 : 2, // Mock ID based on static list
+        documentId: t.trainingType,
+        title: t.trainingType.charAt(0).toUpperCase() + t.trainingType.slice(1),
       },
-      location: e.location
-        ? {
-          name: e.location.name,
-          imageName: e.location.imageName,
-        }
-        : null,
+      location: {
+        name: t.locationName,
+        imageName: t.imageName,
+      },
     }));
 
     return Response.json(events);
