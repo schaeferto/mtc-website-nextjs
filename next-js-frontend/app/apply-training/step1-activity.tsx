@@ -175,7 +175,7 @@ export default function Step1Activity({
               style={{
                 width: "100%",
                 padding: "12px",
-                borderBottom: "2px solid #fde047",
+                borderBottom: "2px solid var(--mtc-yellow)",
                 borderTop: "none",
                 borderLeft: "none",
                 borderRight: "none",
@@ -277,7 +277,7 @@ export default function Step1Activity({
             disabled={!selectedActivity || !selectedEvent}
             style={{
               backgroundColor:
-                selectedActivity && selectedEvent ? "#fde047" : "#ccc",
+                selectedActivity && selectedEvent ? "var(--mtc-yellow)" : "#ccc",
               color: "#000",
               padding: "12px 40px",
               fontSize: "16px",
@@ -307,7 +307,7 @@ export default function Step1Activity({
               width: "12px",
               height: "12px",
               borderRadius: "50%",
-              backgroundColor: "#fde047",
+              backgroundColor: "var(--mtc-yellow)",
             }}
           />
           <div

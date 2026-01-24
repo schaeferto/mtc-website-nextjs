@@ -45,7 +45,7 @@ export default function Step2Details({
             style={{
               flex: 1,
               height: "6px",
-              backgroundColor: "#fde047",
+              backgroundColor: "var(--mtc-yellow)",
               borderRadius: "3px",
             }}
           />
@@ -53,7 +53,7 @@ export default function Step2Details({
             style={{
               flex: 1,
               height: "6px",
-              backgroundColor: "#fde047",
+              backgroundColor: "var(--mtc-yellow)",
               borderRadius: "3px",
             }}
           />
@@ -196,7 +196,7 @@ export default function Step2Details({
             disabled={loading}
             style={{
               flex: 1,
-              backgroundColor: "#fde047",
+              backgroundColor: "var(--mtc-yellow)",
               color: "#000",
               padding: "15px",
               fontSize: "16px",

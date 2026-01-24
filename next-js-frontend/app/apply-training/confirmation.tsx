@@ -51,7 +51,7 @@ export default function ConfirmationPage({ email }: { email: string }) {
             href="/"
             style={{
               display: "inline-block",
-              backgroundColor: "#fde047",
+              backgroundColor: "var(--mtc-yellow)",
               color: "#000",
               padding: "12px 40px",
               fontSize: "16px",
