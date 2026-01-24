@@ -89,7 +89,7 @@ export default function Step1Activity({
                   position: "relative",
                   cursor: "pointer",
                   padding: "20px",
-                  border: "2px solid #ddd",
+                  border: "2px solid var(--mtc-yellow)",
                   borderRadius: "8px",
                   textAlign: "center",
                   transition: "all 0.2s",
@@ -99,8 +99,8 @@ export default function Step1Activity({
                       : "#fff",
                   borderColor:
                     selectedActivity === training.documentId
-                      ? "#fde047"
-                      : "#ddd",
+                      ? "var(--mtc-yellow)"
+                      : "var(--mtc-background)",
                 }}
               >
                 <input

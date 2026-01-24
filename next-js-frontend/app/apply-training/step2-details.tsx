@@ -69,8 +69,11 @@ export default function Step2Details({
         >
           Deine Daten
         </h1>
-        <p style={{ color: "#666", fontSize: "16px", textAlign: "center" }}>
+        <p style={{ color: "#666", fontSize: "16px", textAlign: "center", marginBottom: "10px" }}>
           Fast geschafft! Gib uns noch kurz deine Kontaktdaten an.
+        </p>
+        <p style={{ color: "#666", fontSize: "14px", textAlign: "center", fontStyle: "italic" }}>
+          Die genaue Adresse für das Training wird dir per E-Mail zugeschickt.
         </p>
       </div>
 
@@ -180,9 +183,8 @@ export default function Step2Details({
             htmlFor="privacy"
             style={{ fontSize: "13px", color: "#666", lineHeight: "1.4" }}
           >
-            Ich akzeptiere die Datenschutzbestimmungen und bin damit
-            einverstanden, dass meine Daten zum Zweck der Organisation des
-            Probetrainings verarbeitet werden.
+            Ich akzeptiere die <a href="/datenschutz" target="_blank" style={{ textDecoration: "underline" }}>Datenschutzbestimmungen</a> und bin damit
+            einverstanden, dass meine E-Mail-Adresse genutzt wird, um mir Informationen zum Probetraining zuzusenden.
           </label>
         </div>
 
