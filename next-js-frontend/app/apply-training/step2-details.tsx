@@ -69,11 +69,8 @@ export default function Step2Details({
         >
           Deine Daten
         </h1>
-        <p style={{ color: "#666", fontSize: "16px", textAlign: "center", marginBottom: "10px" }}>
+        <p style={{ color: "#666", fontSize: "16px", textAlign: "center" }}>
           Fast geschafft! Gib uns noch kurz deine Kontaktdaten an.
-        </p>
-        <p style={{ color: "#666", fontSize: "14px", textAlign: "center", fontStyle: "italic" }}>
-          Die genaue Adresse für das Training wird dir per E-Mail zugeschickt.
         </p>
       </div>
 

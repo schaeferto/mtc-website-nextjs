@@ -71,6 +71,9 @@ export default function Step1Activity({
         <p style={{ color: "#666", fontSize: "16px" }}>
           Schritt 1: Sportart und Termin wählen
         </p>
+        <p style={{ color: "#666", fontSize: "14px", marginTop: "10px", fontStyle: "italic" }}>
+          Die genaue Adresse für das Training wird dir per E-Mail zugeschickt.
+        </p>
       </div>
 
       <form onSubmit={handleSubmit} style={{ marginBottom: "30px" }}>
