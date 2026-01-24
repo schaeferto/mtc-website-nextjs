@@ -11,6 +11,9 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "title": {
+      "type": "string"
+    },
     "date": {
       "type": "datetime",
       "required": true,
@@ -20,6 +23,12 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::training.training",
+      "inversedBy": "events"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location",
       "inversedBy": "events"
     }
   }

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { PiPersonSimpleSwimLight, PiPersonSimpleRunLight } from "react-icons/pi";
+import { PiPersonSimpleSwimLight, PiPersonSimpleRunLight, PiMapPinLight } from "react-icons/pi";
+import Image from "next/image";
 
 interface TrainingOption {
   id: number;
@@ -14,6 +15,10 @@ interface EventOption {
   documentId: string;
   date: string;
   training: TrainingOption;
+  location: {
+    name: string;
+    imageName: string;
+  } | null;
 }
 
 interface Step1Props {
@@ -192,6 +197,77 @@ export default function Step1Activity({
                 </option>
               ))}
             </select>
+          </div>
+        )}
+
+        {selectedActivity && selectedEvent && (
+          <div
+            style={{
+              animation: "fadeIn 0.5s ease-in",
+              marginBottom: "30px",
+              padding: "20px",
+              backgroundColor: "#f9f9f9",
+              borderRadius: "12px",
+              border: "1px solid #eee",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "15px",
+                fontWeight: "bold",
+                color: "#333",
+              }}
+            >
+              <PiMapPinLight size={24} />
+              <span>
+                Trainingsort:{" "}
+                {events.find((e) => e.documentId === selectedEvent)?.location
+                  ?.name || "Unbekannt"}
+              </span>
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "250px",
+                backgroundColor: "#f9f9f9",
+                borderRadius: "8px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#666",
+                textAlign: "center",
+                padding: "20px",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {events.find((e) => e.documentId === selectedEvent)?.location
+                ?.imageName ? (
+                <Image
+                  src={`/${events.find((e) => e.documentId === selectedEvent)?.location
+                    ?.imageName
+                    }`}
+                  alt="Training Location"
+                  fill
+                  style={{ objectFit: "contain" }}
+                  unoptimized // Since it's a dynamic image name from public/ folder
+                />
+              ) : (
+                <>
+                  <p style={{ fontSize: "14px", marginBottom: "10px" }}>
+                    Hier wird die Karte angezeigt, sobald die Location in Strapi
+                    konfiguriert wurde.
+                  </p>
+                  <p style={{ fontSize: "12px", color: "#999" }}>
+                    Keine Location für diesen Termin hinterlegt.
+                  </p>
+                </>
+              )}
+            </div>
           </div>
         )}
 

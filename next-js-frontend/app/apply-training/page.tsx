@@ -16,6 +16,10 @@ interface EventOption {
   documentId: string;
   date: string;
   training: TrainingOption;
+  location: {
+    name: string;
+    imageName: string;
+  } | null;
 }
 
 interface FormData {
@@ -57,8 +61,8 @@ export default function ApplyTrainingPage() {
       const trainingsData = await trainingsRes.json();
       const eventsData = await eventsRes.json();
 
-      setTrainings(trainingsData);
-      setEvents(eventsData);
+      setTrainings(Array.isArray(trainingsData) ? trainingsData : []);
+      setEvents(Array.isArray(eventsData) ? eventsData : []);
     } catch (error) {
       console.error("Error fetching trainings/events:", error);
     } finally {

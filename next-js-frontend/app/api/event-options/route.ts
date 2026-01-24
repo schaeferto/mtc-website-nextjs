@@ -8,7 +8,7 @@ export async function GET() {
     }
 
     const response = await fetch(
-      `${strapiUrl}/api/events?populate=training&sort=date:asc`,
+      `${strapiUrl}/api/events?populate[training]=true&populate[location]=true&sort=date:asc`,
       {
         headers: { Authorization: `Bearer ${token}` },
         next: { revalidate: 10 },
@@ -30,6 +30,12 @@ export async function GET() {
         documentId: e.training.documentId,
         title: e.training.title,
       },
+      location: e.location
+        ? {
+          name: e.location.name,
+          imageName: e.location.imageName,
+        }
+        : null,
     }));
 
     return Response.json(events);
