@@ -13,7 +13,8 @@
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
-    "seed:templates": "ts-node -r dotenv/config scripts/seed-email-templates.ts"
+    "seed:templates": "ts-node -r dotenv/config scripts/seed-email-templates.ts",
+    "seed:trainings": "ts-node -r dotenv/config scripts/import-trainings.ts"
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.33.3",

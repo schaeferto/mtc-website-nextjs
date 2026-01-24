@@ -11,14 +11,27 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
+    "date": {
+      "type": "datetime",
+      "required": true
+    },
+    "locationName": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
       "type": "string"
     },
-    "events": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::event.event",
-      "mappedBy": "training"
+    "imageName": {
+      "type": "string"
+    },
+    "trainingType": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "swimming",
+        "running"
+      ]
     }
   }
 }
