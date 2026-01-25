@@ -1,4 +1,9 @@
+export const dynamic = "force-dynamic";
+
 export async function GET() {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), 20000); // 20 second timeout
+
   try {
     const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
     const token = process.env.STRAPI_API_TOKEN;
@@ -7,13 +12,16 @@ export async function GET() {
       return Response.json({ error: "Strapi not configured" }, { status: 500 });
     }
 
+    console.log(`Fetching trainings from Strapi: ${strapiUrl}`);
     const response = await fetch(
       `${strapiUrl}/api/trainings?sort=date:asc`,
       {
         headers: { Authorization: `Bearer ${token}` },
-        next: { revalidate: 10 },
+        cache: "no-store",
+        signal: controller.signal,
       },
     );
+    clearTimeout(id);
 
     if (!response.ok) {
       throw new Error(`Strapi error: ${response.status}`);
@@ -37,7 +45,12 @@ export async function GET() {
     }));
 
     return Response.json(events);
-  } catch (error) {
+  } catch (error: any) {
+    clearTimeout(id);
+    if (error.name === "AbortError") {
+      console.error("Fetch to Strapi timed out after 10 seconds");
+      return Response.json({ error: "Strapi connection timeout" }, { status: 504 });
+    }
     console.error("Error fetching events:", error);
     return Response.json({ error: "Failed to fetch events" }, { status: 500 });
   }
