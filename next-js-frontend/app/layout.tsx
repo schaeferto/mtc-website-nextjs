@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navigation from "@/app/navigation";
 import Footer from "@/app/footer";
-import { Montserrat } from "next/font/google";
+import { Montserrat, Caveat } from "next/font/google";
 
 const findel = localFont({
   src: "./fonts/Findel-Display-Regular.otf",
@@ -15,6 +15,13 @@ const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
   display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
+  display: "swap",
+  weight: ["700"],
 });
 
 export const metadata: Metadata = {
@@ -29,7 +36,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${findel.variable} ${montserrat.variable} antialiased`}
+      className={`${findel.variable} ${montserrat.variable} ${caveat.variable} antialiased`}
     >
       <body className={"font-montserrat"}>
         <Navigation />

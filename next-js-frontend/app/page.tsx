@@ -10,6 +10,29 @@ import { NewsContent } from "@/app/news/news-content";
 import { Video } from "@/app/video";
 import { SectionLinks } from "@/app/section-links";
 
+const ScrollIndicator = () => {
+  return (
+    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce">
+      <span className="text-white text-sm font-medium mb-2 tracking-wider">
+        Scroll
+      </span>
+      <svg
+        className="w-6 h-6 text-white"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M19 14l-7 7m0 0l-7-7m7 7V3"
+        />
+      </svg>
+    </div>
+  );
+};
+
 const Overlay = () => {
   return (
     <div
@@ -49,35 +72,57 @@ const Overlay = () => {
 
 const Cover = () => {
   return (
-    <div className={`relative first-content mb-16`}>
+    <div className={`relative first-content`}>
       <Overlay />
       <Video fileName={"header-2"} />
+      <ScrollIndicator />
     </div>
   );
 };
 
 const Motto = () => {
   return (
-    <div className={"flex flex-col items-center"}>
-      <h2 className={"text-2xl md:text-4xl font-bold mb-8"}>Unser Motto</h2>
-      <hr className={"border-mtc-black w-5/6 md:max-w-3xl"}></hr>
-      <Image
-        src={mottoImage}
-        alt={"The Team cheering."}
-        className="w-full md:w-[600px] my-16"
-      ></Image>
-      <div className={"font-bold mb-2 mx-4"}>#biberfieber</div>
-      <div className={"text-center mx-4 mb-8 max-w-3xl"}>
-        Willkommen beim MTC München, dem Munich Triathlon Club. Wir sind ein
-        junger, dynamischer Verein, der es sich zur Aufgabe gemacht hat, durch
-        Zusammenhalt, Freundschaft, Transparenz und Sportsgeist das Vereinsleben
-        gemeinsam zu gestalten. Wir möchten gemeinsam wachsen, sportliche
-        Erfahrungen sammeln und alle, die es möchten, mit unserem #biberfieber
-        anstecken.
-      </div>
-      <div className={"text-center mx-4 max-w-3xl"}>
-        Warum Biber? Warum denn nicht, oder habt ihr noch nie etwas von den
-        Bibern an der Isar gehört? 😉
+    <div className="relative z-20 px-4 md:px-8 py-24">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+          {/* Left side - Image */}
+          <div className="lg:w-1/2">
+            <Image
+              src={mottoImage}
+              alt="The Team cheering."
+              className="w-full h-[400px] lg:h-[500px] object-cover rounded-2xl shadow-lg"
+            />
+          </div>
+
+          {/* Right side - Content */}
+          <div className="lg:w-1/2 flex flex-col justify-center">
+            <div className="mb-2">
+              <span className="text-mtc-yellow font-handwritten text-4xl block rotate-[-2deg]">
+                #biberfieber
+              </span>
+            </div>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-mtc-black leading-tight">
+              Unser Motto
+            </h2>
+            <div className="w-16 h-1.5 bg-mtc-yellow rounded-full mb-6"></div>
+            <div className="space-y-4 text-base text-gray-600 leading-relaxed">
+              <p>
+                Willkommen beim MTC München, dem Munich Triathlon Club. Wir sind
+                ein junger, dynamischer Verein, der es sich zur Aufgabe gemacht
+                hat, durch Zusammenhalt, Freundschaft, Transparenz und
+                Sportsgeist das Vereinsleben gemeinsam zu gestalten.
+              </p>
+              <p>
+                Wir möchten gemeinsam wachsen, sportliche Erfahrungen sammeln
+                und alle, die es möchten, mit unserem #biberfieber anstecken.
+              </p>
+              <p className="text-gray-500 italic">
+                Warum Biber? Warum denn nicht, oder habt ihr noch nie etwas von
+                den Bibern an der Isar gehört? 😉
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
