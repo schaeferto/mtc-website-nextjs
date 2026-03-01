@@ -139,7 +139,7 @@ const Apply = () => {
           "flex md:flex-row flex-col items-center justify-center gap-6 py-16"
         }
       >
-        <Link href={"/training"}>
+        <Link href={"/apply-training"}>
           <div
             className={
               "flex border-b-2 border-mtc-yellow w-[320px] bg-white p-2 px-4 gap-4"

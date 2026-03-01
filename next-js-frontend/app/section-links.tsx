@@ -34,7 +34,7 @@ export function SectionLinks() {
             </div>
             <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0">
               <ImageWithTextAndLink
-                href={"/training"}
+                href={"/join"}
                 src={homeTrainingImage}
                 alt={"Training"}
                 text={"Training"}
