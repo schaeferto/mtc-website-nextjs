@@ -1,7 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { PiPersonSimpleSwimLight, PiPersonSimpleRunLight, PiMapPinLight } from "react-icons/pi";
+import { useState, useEffect } from "react";
+import {
+  PiPersonSimpleSwimLight,
+  PiPersonSimpleRunLight,
+  PiMapPinLight,
+} from "react-icons/pi";
 import Image from "next/image";
 
 interface TrainingOption {
@@ -41,6 +45,12 @@ export default function Step1Activity({
   const [selectedActivity, setSelectedActivity] = useState(formData.activity);
   const [selectedEvent, setSelectedEvent] = useState(formData.eventId);
 
+  // keep local state in sync when parent formData changes (e.g. navigating back)
+  useEffect(() => {
+    setSelectedActivity(formData.activity);
+    setSelectedEvent(formData.eventId);
+  }, [formData.activity, formData.eventId]);
+
   const filteredEvents = selectedActivity
     ? events.filter((e) => e.training.documentId === selectedActivity)
     : [];
@@ -71,7 +81,14 @@ export default function Step1Activity({
         <p style={{ color: "#666", fontSize: "16px" }}>
           Schritt 1: Sportart und Termin wählen
         </p>
-        <p style={{ color: "#666", fontSize: "14px", marginTop: "10px", fontStyle: "italic" }}>
+        <p
+          style={{
+            color: "#666",
+            fontSize: "14px",
+            marginTop: "10px",
+            fontStyle: "italic",
+          }}
+        >
           Die genaue Adresse für das Training wird dir per E-Mail zugeschickt.
         </p>
       </div>
@@ -126,7 +143,7 @@ export default function Step1Activity({
                   }}
                 >
                   {training.title === "Swimming" ||
-                    training.title === "Schwimmen" ? (
+                  training.title === "Schwimmen" ? (
                     <PiPersonSimpleSwimLight
                       style={{
                         transform:
@@ -251,9 +268,10 @@ export default function Step1Activity({
               {events.find((e) => e.documentId === selectedEvent)?.location
                 ?.imageName ? (
                 <Image
-                  src={`/${events.find((e) => e.documentId === selectedEvent)?.location
-                    ?.imageName
-                    }`}
+                  src={`/${
+                    events.find((e) => e.documentId === selectedEvent)?.location
+                      ?.imageName
+                  }`}
                   alt="Training Location"
                   fill
                   style={{ objectFit: "contain" }}
@@ -280,7 +298,9 @@ export default function Step1Activity({
             disabled={!selectedActivity || !selectedEvent}
             style={{
               backgroundColor:
-                selectedActivity && selectedEvent ? "var(--mtc-yellow)" : "#ccc",
+                selectedActivity && selectedEvent
+                  ? "var(--mtc-yellow)"
+                  : "#ccc",
               color: "#000",
               padding: "12px 40px",
               fontSize: "16px",

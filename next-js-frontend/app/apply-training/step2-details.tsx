@@ -1,33 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Step2Props {
-  formData: { activity: string; event: string; eventId: string };
-  onSubmit: (data: { name: string; email: string; age: string }) => void;
+  formData: {
+    activity: string;
+    event: string;
+    eventId: string;
+    name?: string;
+    email?: string;
+    over18?: boolean;
+  };
+  onSubmit: (data: { name: string; email: string; over18: boolean }) => void;
   onBack: () => void;
+  onChange: (data: { name?: string; email?: string; over18?: boolean }) => void;
 }
 
 export default function Step2Details({
   formData,
   onSubmit,
   onBack,
+  onChange,
 }: Step2Props) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [age, setAge] = useState("");
+  // sync local fields when parent formData changes (e.g. returning)
+  useEffect(() => {
+    if (formData.name !== undefined) setName(formData.name);
+    if (formData.email !== undefined) setEmail(formData.email);
+    if (formData.over18 !== undefined) setOver18(formData.over18);
+  }, [formData.name, formData.email, formData.over18]);
+  const [name, setName] = useState(formData.name || "");
+  const [email, setEmail] = useState(formData.email || "");
+  const [over18, setOver18] = useState(Boolean(formData.over18));
   const [privacy, setPrivacy] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !age || !privacy) {
-      alert("Please fill in all fields and accept privacy policy");
+    if (!name || !email || !privacy || !over18) {
+      alert(
+        "Bitte alle Felder ausfüllen, die Datenschutzerklärung akzeptieren und bestätigen, dass du über 18 bist.",
+      );
       return;
     }
 
     setLoading(true);
-    await onSubmit({ name, email, age });
+    await onSubmit({ name, email, over18 });
     setLoading(false);
   };
 
@@ -91,7 +108,10 @@ export default function Step2Details({
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              onChange({ name: e.target.value });
+            }}
             placeholder="Vor- und Nachname"
             required
             style={{
@@ -122,7 +142,10 @@ export default function Step2Details({
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              onChange({ email: e.target.value });
+            }}
             placeholder="beispiel@mail.de"
             required
             style={{
@@ -137,35 +160,23 @@ export default function Step2Details({
           />
         </div>
 
-        <div style={{ marginBottom: "20px" }}>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontWeight: "bold",
-              fontSize: "14px",
-              color: "#555",
-              textTransform: "uppercase",
-            }}
-          >
-            Alter
-          </label>
+        <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
           <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            placeholder="Z.B. 25"
-            required
-            style={{
-              width: "100%",
-              padding: "12px",
-              border: "none",
-              borderRadius: "4px",
-              backgroundColor: "#f5f5f5",
-              fontSize: "16px",
-              boxSizing: "border-box",
+            type="checkbox"
+            id="over18"
+            checked={over18}
+            onChange={(e) => {
+              setOver18(e.target.checked);
+              onChange({ over18: e.target.checked });
             }}
+            style={{ marginTop: "2px" }}
           />
+          <label
+            htmlFor="over18"
+            style={{ fontSize: "13px", color: "#666", lineHeight: "1.4" }}
+          >
+            Ich bin über 18 Jahre alt
+          </label>
         </div>
 
         <div style={{ marginBottom: "30px", display: "flex", gap: "10px" }}>
@@ -180,8 +191,16 @@ export default function Step2Details({
             htmlFor="privacy"
             style={{ fontSize: "13px", color: "#666", lineHeight: "1.4" }}
           >
-            Ich akzeptiere die <a href="/datenschutz" target="_blank" style={{ textDecoration: "underline" }}>Datenschutzbestimmungen</a> und bin damit
-            einverstanden, dass meine E-Mail-Adresse genutzt wird, um mir Informationen zum Probetraining zuzusenden.
+            Ich akzeptiere die{" "}
+            <a
+              href="/datenschutz"
+              target="_blank"
+              style={{ textDecoration: "underline" }}
+            >
+              Datenschutzbestimmungen
+            </a>{" "}
+            und bin damit einverstanden, dass meine E-Mail-Adresse genutzt wird,
+            um mir Informationen zum Probetraining zuzusenden.
           </label>
         </div>
 

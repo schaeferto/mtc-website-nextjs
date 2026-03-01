@@ -28,7 +28,7 @@ interface FormData {
   eventId: string;
   name: string;
   email: string;
-  age: string;
+  over18: boolean;
 }
 
 export default function ApplyTrainingPage() {
@@ -36,13 +36,14 @@ export default function ApplyTrainingPage() {
   const [trainings, setTrainings] = useState<TrainingOption[]>([]);
   const [events, setEvents] = useState<EventOption[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     activity: "",
     event: "",
     eventId: "",
     name: "",
     email: "",
-    age: "",
+    over18: false,
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -52,25 +53,36 @@ export default function ApplyTrainingPage() {
 
   const fetchTrainingsAndEvents = async () => {
     try {
+      setFetchError(null);
       setLoading(true);
       const eventsRes = await fetch("/api/event-options");
+      if (!eventsRes.ok) {
+        throw new Error(`HTTP ${eventsRes.status}`);
+      }
       const eventsData = await eventsRes.json();
 
-      const eventsList: EventOption[] = Array.isArray(eventsData) ? eventsData : [];
+      const eventsList: EventOption[] = Array.isArray(eventsData)
+        ? eventsData
+        : [];
       setEvents(eventsList);
 
       // Derive unique trainings from events
       const uniqueTrainingsMap = new Map<string, TrainingOption>();
-      eventsList.forEach(event => {
-        if (event.training && !uniqueTrainingsMap.has(event.training.documentId)) {
+      eventsList.forEach((event) => {
+        if (
+          event.training &&
+          !uniqueTrainingsMap.has(event.training.documentId)
+        ) {
           uniqueTrainingsMap.set(event.training.documentId, event.training);
         }
       });
 
       setTrainings(Array.from(uniqueTrainingsMap.values()));
-
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching events:", error);
+      setFetchError(
+        "Beim Laden der Trainingsoptionen ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+      );
     } finally {
       setLoading(false);
     }
@@ -91,7 +103,7 @@ export default function ApplyTrainingPage() {
   const handleStep2Submit = async (data: {
     name: string;
     email: string;
-    age: string;
+    over18: boolean;
   }) => {
     const finalData = { ...formData, ...data };
     setFormData(finalData);
@@ -121,8 +133,41 @@ export default function ApplyTrainingPage() {
 
   if (loading) {
     return (
-      <div className="first-content" style={{ padding: "20px", textAlign: "center" }}>
+      <div
+        className="first-content"
+        style={{ padding: "20px", textAlign: "center" }}
+      >
         <p>Loading training options...</p>
+      </div>
+    );
+  }
+
+  if (fetchError) {
+    return (
+      <div
+        className="first-content flex justify-center"
+        style={{ padding: "20px" }}
+      >
+        <div className="w-full p-6 text-center flex flex-col items-center mt-48">
+          <p className="text-red-600 mb-20">{fetchError}</p>
+          <button
+            onClick={fetchTrainingsAndEvents}
+            className="bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black w-[300px] font-medium mx-auto"
+          >
+            ERNEUT LADEN
+          </button>
+          <p className="text-sm text-gray-400 mt-20 text-center max-w-lg">
+            Sollte das Tool weiterhin nicht funktionieren, schreibe uns bitte
+            eine E‑Mail an{" "}
+            <a
+              href="mailto:munichtriathlonclub@gmail.com"
+              className="underline"
+            >
+              munichtriathlonclub@gmail.com
+            </a>{" "}
+            und wir melden uns direkt bei dir.
+          </p>
+        </div>
       </div>
     );
   }
@@ -130,6 +175,12 @@ export default function ApplyTrainingPage() {
   if (submitted) {
     return <ConfirmationPage email={formData.email} />;
   }
+
+  const handleStep2Change = (
+    data: Partial<Pick<FormData, "name" | "email" | "over18">>,
+  ) => {
+    setFormData((prev) => ({ ...prev, ...data }));
+  };
 
   return (
     <div className="first-content">
@@ -146,6 +197,7 @@ export default function ApplyTrainingPage() {
           formData={formData}
           onSubmit={handleStep2Submit}
           onBack={handleBack}
+          onChange={handleStep2Change}
         />
       )}
     </div>

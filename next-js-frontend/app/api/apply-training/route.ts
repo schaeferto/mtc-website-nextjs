@@ -8,7 +8,7 @@ interface ApplicationData {
   eventId: string;
   name: string;
   email: string;
-  age: string;
+  over18: boolean;
 }
 
 export async function POST(req: Request) {
@@ -16,9 +16,9 @@ export async function POST(req: Request) {
     const data: ApplicationData = await req.json();
 
     // Validate required fields
-    if (!data.name || !data.email || !data.age || !data.eventId) {
+    if (!data.name || !data.email || !data.eventId || data.over18 !== true) {
       return Response.json(
-        { error: "Missing required fields" },
+        { error: "Missing required fields or age confirmation" },
         { status: 400 },
       );
     }
@@ -36,12 +36,9 @@ export async function POST(req: Request) {
     }
 
     // Fetch email templates from Strapi
-    const templatesResponse = await fetch(
-      `${strapiUrl}/api/email-templates`,
-      {
-        headers: { Authorization: `Bearer ${strapiToken}` },
-      },
-    );
+    const templatesResponse = await fetch(`${strapiUrl}/api/email-templates`, {
+      headers: { Authorization: `Bearer ${strapiToken}` },
+    });
 
     if (!templatesResponse.ok) {
       throw new Error("Failed to fetch email templates from Strapi");
@@ -78,7 +75,7 @@ export async function POST(req: Request) {
     const adminHtml = renderTemplate(adminTemplate.html, {
       name: data.name,
       email: data.email,
-      age: data.age,
+      over18: data.over18 ? "Ja" : "Nein",
       event: data.event,
       date: new Date().toLocaleString("de-DE"),
     });
