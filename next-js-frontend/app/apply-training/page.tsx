@@ -51,41 +51,63 @@ export default function ApplyTrainingPage() {
     fetchTrainingsAndEvents();
   }, []);
 
+  // client-side fetch with simple retry logic; this keeps retries close to the
+  // UX and lets the API route remain thin. You could also add similar retry
+  // behavior inside `/api/event-options` if you expect Strapi to flake often.
   const fetchTrainingsAndEvents = async () => {
-    try {
-      setFetchError(null);
-      setLoading(true);
-      const eventsRes = await fetch("/api/event-options");
-      if (!eventsRes.ok) {
-        throw new Error(`HTTP ${eventsRes.status}`);
-      }
-      const eventsData = await eventsRes.json();
+    setFetchError(null);
+    setLoading(true);
 
-      const eventsList: EventOption[] = Array.isArray(eventsData)
-        ? eventsData
-        : [];
-      setEvents(eventsList);
+    const maxAttempts = 3;
+    let attempt = 0;
+    let lastError: any = null;
 
-      // Derive unique trainings from events
-      const uniqueTrainingsMap = new Map<string, TrainingOption>();
-      eventsList.forEach((event) => {
-        if (
-          event.training &&
-          !uniqueTrainingsMap.has(event.training.documentId)
-        ) {
-          uniqueTrainingsMap.set(event.training.documentId, event.training);
+    while (attempt < maxAttempts) {
+      attempt += 1;
+      try {
+        const eventsRes = await fetch("/api/event-options");
+        if (!eventsRes.ok) {
+          throw new Error(`HTTP ${eventsRes.status}`);
         }
-      });
+        const eventsData = await eventsRes.json();
 
-      setTrainings(Array.from(uniqueTrainingsMap.values()));
-    } catch (error: any) {
-      console.error("Error fetching events:", error);
+        const eventsList: EventOption[] = Array.isArray(eventsData)
+          ? eventsData
+          : [];
+        setEvents(eventsList);
+
+        // Derive unique trainings from events
+        const uniqueTrainingsMap = new Map<string, TrainingOption>();
+        eventsList.forEach((event) => {
+          if (
+            event.training &&
+            !uniqueTrainingsMap.has(event.training.documentId)
+          ) {
+            uniqueTrainingsMap.set(event.training.documentId, event.training);
+          }
+        });
+
+        setTrainings(Array.from(uniqueTrainingsMap.values()));
+        lastError = null;
+        break; // success
+      } catch (err: any) {
+        lastError = err;
+        console.warn(`fetch attempt ${attempt} failed`, err);
+        if (attempt < maxAttempts) {
+          // wait before retrying
+          await new Promise((r) => setTimeout(r, 500 * attempt));
+        }
+      }
+    }
+
+    if (lastError) {
+      console.error("All fetch attempts failed", lastError);
       setFetchError(
         "Beim Laden der Trainingsoptionen ist ein Fehler aufgetreten. Bitte versuche es erneut.",
       );
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   const handleStep1Submit = (data: {

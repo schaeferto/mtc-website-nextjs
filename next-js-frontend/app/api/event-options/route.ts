@@ -12,15 +12,11 @@ export async function GET() {
       return Response.json({ error: "Strapi not configured" }, { status: 500 });
     }
 
-    console.log(`Fetching trainings from Strapi: ${strapiUrl}`);
-    const response = await fetch(
-      `${strapiUrl}/api/trainings?sort=date:asc`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        cache: "no-store",
-        signal: controller.signal,
-      },
-    );
+    const response = await fetch(`${strapiUrl}/api/trainings?sort=date:asc`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+      signal: controller.signal,
+    });
     clearTimeout(id);
 
     if (!response.ok) {
@@ -34,7 +30,7 @@ export async function GET() {
       documentId: t.documentId,
       date: t.date,
       training: {
-        id: t.trainingType === 'swimming' ? 1 : 2, // Mock ID based on static list
+        id: t.trainingType === "swimming" ? 1 : 2, // Mock ID based on static list
         documentId: t.trainingType,
         title: t.trainingType.charAt(0).toUpperCase() + t.trainingType.slice(1),
       },
@@ -49,7 +45,10 @@ export async function GET() {
     clearTimeout(id);
     if (error.name === "AbortError") {
       console.error("Fetch to Strapi timed out after 10 seconds");
-      return Response.json({ error: "Strapi connection timeout" }, { status: 504 });
+      return Response.json(
+        { error: "Strapi connection timeout" },
+        { status: 504 },
+      );
     }
     console.error("Error fetching events:", error);
     return Response.json({ error: "Failed to fetch events" }, { status: 500 });
