@@ -17,9 +17,9 @@
     "seed:trainings": "ts-node -r dotenv/config scripts/import-trainings.ts"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.33.3",
-    "@strapi/plugin-users-permissions": "5.33.3",
-    "@strapi/strapi": "5.33.3",
+    "@strapi/plugin-cloud": "5.37.1",
+    "@strapi/plugin-users-permissions": "5.37.1",
+    "@strapi/strapi": "5.37.1",
     "better-sqlite3": "12.4.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
