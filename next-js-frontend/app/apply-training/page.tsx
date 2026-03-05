@@ -46,6 +46,7 @@ export default function ApplyTrainingPage() {
     over18: false,
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchTrainingsAndEvents();
@@ -102,9 +103,10 @@ export default function ApplyTrainingPage() {
 
     if (lastError) {
       console.error("All fetch attempts failed", lastError);
-      setFetchError(
-        "Beim Laden der Trainingsoptionen ist ein Fehler aufgetreten. Bitte versuche es erneut.",
-      );
+      const errorMessage = lastError.message?.includes("504")
+        ? "Der Server antwortet zu langsam. Bitte versuche es in einer Minute erneut."
+        : "Beim Laden der Trainingsoptionen ist ein Fehler aufgetreten. Bitte versuche es erneut.";
+      setFetchError(errorMessage);
     }
 
     setLoading(false);
@@ -129,6 +131,7 @@ export default function ApplyTrainingPage() {
   }) => {
     const finalData = { ...formData, ...data };
     setFormData(finalData);
+    setSubmissionError(null);
 
     // Submit to backend
     try {
@@ -141,11 +144,18 @@ export default function ApplyTrainingPage() {
       if (response.ok) {
         setSubmitted(true);
       } else {
-        alert("Submission failed. Please try again.");
+        const errorData = await response.json();
+        const errorMessage = `${
+          errorData.error ||
+          "Anmeldung fehlgeschlagen. Bitte versuche es erneut."
+        } ${`Wenn das Problem weiterhin besteht, kontaktiere uns bitte per E‑Mail. munichtriathlonclub@gmail.com`}`;
+        setSubmissionError(errorMessage);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Error submitting form. Please try again.");
+      setSubmissionError(
+        "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+      );
     }
   };
 
@@ -156,10 +166,40 @@ export default function ApplyTrainingPage() {
   if (loading) {
     return (
       <div
-        className="first-content"
-        style={{ padding: "20px", textAlign: "center" }}
+        className="first-content flex justify-center"
+        style={{ padding: "20px" }}
       >
-        <p>Loading training options...</p>
+        <div className="w-full p-6 text-center flex flex-col items-center mt-48">
+          {/* Finite progress bar animation */}
+          <div className="w-32 h-1 bg-gray-200 rounded-full overflow-hidden mb-6">
+            <div
+              className="h-full bg-mtc-yellow"
+              style={{
+                animation: "progress 10s ease-in-out forwards",
+              }}
+            />
+          </div>
+          <p className="text-lg font-medium mb-2">Lade Trainingsoptionen...</p>
+          <p className="text-sm text-gray-500">
+            Dies kann auf langsamen Verbindungen bis zu 10 Sekunden dauern.
+          </p>
+
+          {/* Add CSS animation keyframes */}
+          <style>
+            {`
+              @keyframes progress {
+                0% {
+                  width: 0%;
+                  opacity: 1;
+                }
+                100% {
+                  width: 100%;
+                  opacity: 1;
+                }
+              }
+            `}
+          </style>
+        </div>
       </div>
     );
   }
@@ -170,7 +210,7 @@ export default function ApplyTrainingPage() {
         className="first-content flex justify-center"
         style={{ padding: "20px" }}
       >
-        <div className="w-full p-6 text-center flex flex-col items-center mt-48">
+        <div className="w-full p-6 text-center flex flex-col items-center md:mt-48 mt-12">
           <p className="text-red-600 mb-20">{fetchError}</p>
           <button
             onClick={fetchTrainingsAndEvents}
@@ -206,6 +246,19 @@ export default function ApplyTrainingPage() {
 
   return (
     <div className="first-content">
+      {submissionError && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="flex justify-between items-start">
+            <p className="text-red-700">{submissionError}</p>
+            <button
+              onClick={() => setSubmissionError(null)}
+              className="text-red-500 hover:text-red-700 font-bold text-lg"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
       {step === 1 && (
         <Step1Activity
           trainings={trainings}

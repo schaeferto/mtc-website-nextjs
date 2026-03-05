@@ -24,7 +24,7 @@
     "./**/*.js",
     // Force the JSON files in the src folder to be included
     "src/**/*.json"
-  ],
+, "../scripts/import-trainings.ts", "../scripts/import-email-templates.ts"  ],
 
   "exclude": [
     "node_modules/",
