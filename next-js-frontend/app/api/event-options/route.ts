@@ -41,11 +41,13 @@ export async function GET() {
     // Get current date and date 3 weeks from now
     const now = new Date();
     now.setHours(0, 0, 0, 0);
+    const startDateObj = new Date(now);
+    startDateObj.setDate(startDateObj.getDate() + 2); // Exclude trainings within next 2 days
     const threeWeeksFromNow = new Date(now);
     threeWeeksFromNow.setDate(threeWeeksFromNow.getDate() + 21);
 
     // Format dates for Strapi filter (ISO format)
-    const startDate = now.toISOString().split("T")[0];
+    const startDate = startDateObj.toISOString().split("T")[0];
     const endDate = threeWeeksFromNow.toISOString().split("T")[0];
 
     // Fetch swimming and running trainings in parallel with limits
