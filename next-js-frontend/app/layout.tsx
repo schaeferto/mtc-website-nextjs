@@ -26,6 +26,10 @@ const caveat = Caveat({
 
 export const metadata: Metadata = {
   title: "MTC Munich",
+  icons: {
+    icon: "/favicon/favicon.ico",
+    apple: "/favicon/favicon-64.png",
+  },
 };
 
 export default function RootLayout({

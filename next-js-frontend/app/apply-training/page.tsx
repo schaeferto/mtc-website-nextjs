@@ -36,6 +36,7 @@ export default function ApplyTrainingPage() {
   const [trainings, setTrainings] = useState<TrainingOption[]>([]);
   const [events, setEvents] = useState<EventOption[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentAttempt, setCurrentAttempt] = useState(0);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     activity: "",
@@ -59,12 +60,13 @@ export default function ApplyTrainingPage() {
     setFetchError(null);
     setLoading(true);
 
-    const maxAttempts = 3;
+    const maxAttempts = 5;
     let attempt = 0;
     let lastError: any = null;
 
     while (attempt < maxAttempts) {
       attempt += 1;
+      setCurrentAttempt(attempt);
       try {
         const eventsRes = await fetch("/api/event-options");
         if (!eventsRes.ok) {
@@ -171,7 +173,7 @@ export default function ApplyTrainingPage() {
       >
         <div className="w-full p-6 text-center flex flex-col items-center mt-48">
           {/* Finite progress bar animation */}
-          <div className="w-32 h-1 bg-gray-200 rounded-full overflow-hidden mb-6">
+          <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden mb-6">
             <div
               className="h-full bg-mtc-yellow"
               style={{
@@ -179,6 +181,9 @@ export default function ApplyTrainingPage() {
               }}
             />
           </div>
+          <p className="text-sm text-gray-500 mb-4">
+            Versuch {currentAttempt} von 5
+          </p>
           <p className="text-lg font-medium mb-2">Lade Trainingsoptionen...</p>
           <p className="text-sm text-gray-500">
             Dies kann auf langsamen Verbindungen bis zu 10 Sekunden dauern.

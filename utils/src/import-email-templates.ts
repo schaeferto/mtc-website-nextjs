@@ -28,7 +28,7 @@ const emailTemplates = [
     subject: "Probetraining zum Schwimmen in Bogenhausen",
     html: `<h1>Hi {{local.userName}},</h1>
 <p>schön, dass du auf uns aufmerksam geworden bist. 
-Hiermit bestätige ich deine Anmeldung zum Probetraining fürs <strong>{{local.event}}</strong>! am <strong>{{strapi.date}}</strong>!</p>
+Hiermit bestätige ich deine Anmeldung zum Probetraining fürs <strong>{{local.event}}</strong> am <strong>{{strapi.date}}</strong>!</p>
 <p>Wir schwimmen im Schulschwimmbad in der {{strapi.address}} (das ist der Seiteneingang der Grundschule dort. Achtung: Google Maps will einen immer zum Haupteingang Nr. 27 leiten). Wir treffen uns um 20:15 Uhr alle vor dem Tor dort und gehen um ca. 20:20 gemeinsam rein. </p>
 <p>Bitte bring Pull Boye und Paddles mit, falls du hast.</p>
 <p>Voraussetzung ist, dass du 400m am Stück kraulen kannst.</p>
@@ -41,7 +41,7 @@ Falls das nicht der Fall ist oder du doch nicht am Probetraining teilnehmen kann
     subject: "Probetraining zum Schwimmen in Moosach",
     html: `<h1>Hi {{local.userName}},</h1>
 <p>schön, dass du auf uns aufmerksam geworden bist. 
-Hiermit bestätige ich deine Anmeldung zum Probetraining fürs <strong>{{local.event}}</strong>! am <strong>{{strapi.date}}</strong>!</p>
+Hiermit bestätige ich deine Anmeldung zum Probetraining fürs <strong>{{local.event}}</strong> am <strong>{{strapi.date}}</strong>!</p>
 <p>Wir schwimmen im Schulschwimmbad (Welzenbachbad) in der {{strapi.address}} (ums Eck vom Haupteingang der Grundschule. Wir treffen uns um 19:15 Uhr alle vor dem Bad und gehen um ca. 19:20 gemeinsam rein.</p>
 <p>Bitte bring Pull Boye und Paddles mit, falls du hast.</p>
 <p>Voraussetzung ist, dass du 400m am Stück kraulen kannst.</p>
@@ -54,7 +54,7 @@ Falls das nicht der Fall ist oder du doch nicht am Probetraining teilnehmen kann
     subject: "Probetraining zum Laufen im Olympiapark",
     html: `<h1>Hi {{local.userName}},</h1>
 <p>schön, dass du auf uns aufmerksam geworden bist. 
-Hiermit bestätige ich deine Anmeldung zum Probetraining fürs <strong>{{local.event}}</strong>! am <strong>{{strapi.date}}</strong>!</p>
+Hiermit bestätige ich deine Anmeldung zum Probetraining fürs <strong>{{local.event}}</strong> am <strong>{{strapi.date}}</strong>!</p>
 <p>Wir treffen uns um 18:15 Uhr bei gutem Wetter vor und bei schlechtem/kalten Wetter in der BMW Welt Richtung Brundegaplatz/U-Bahn. Unten bei den Schließfächern in der BMW Welt kannst du auch etwas einsperren. Um 18:30 laufen wir gemeinsam los und laufen uns ein, danach folgt ein Lauf-ABC und im Anschluss die Intervalle.</p>
 <p>Falls du doch nicht am Probetraining teilnehmen kannst, gib uns zur Stornierung deiner Anmeldung bitte per Mail an munichtriathlonclub@gmail.com Bescheid. Bei weiteren Fragen kannst du dich auch gerne melden.</p>
 <p>Wir freuen uns auf dich!</p>
