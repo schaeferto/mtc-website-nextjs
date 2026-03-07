@@ -171,9 +171,26 @@ export default function ApplyTrainingPage() {
         className="first-content flex justify-center"
         style={{ padding: "20px" }}
       >
-        <div className="w-full p-6 text-center flex flex-col items-center mt-48">
+        <div className="w-full p-6 text-center flex flex-col items-center md:mt-36 mt-24">
+          <p className="text-lg font-medium mb-1">Lade Trainingsoptionen...</p>
+          <p className="text-sm text-gray-500 mb-6">
+            Dies kann leider Zeitweise bis zu 60 Sekunden dauern.
+          </p>
+
+          {/* Animated Beaver */}
+          <div className="mb-8 h-24 flex items-center justify-center">
+            <img
+              src="/favicon/biber_transparent.png"
+              alt="Beaver loading"
+              className="h-20 object-contain animate-beaver-bounce"
+            />
+          </div>
+
           {/* Finite progress bar animation */}
-          <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden mb-6">
+          <div
+            key={`progress-${currentAttempt}`}
+            className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden mb-2"
+          >
             <div
               className="h-full bg-mtc-yellow"
               style={{
@@ -183,10 +200,6 @@ export default function ApplyTrainingPage() {
           </div>
           <p className="text-sm text-gray-500 mb-4">
             Versuch {currentAttempt} von 5
-          </p>
-          <p className="text-lg font-medium mb-2">Lade Trainingsoptionen...</p>
-          <p className="text-sm text-gray-500">
-            Dies kann auf langsamen Verbindungen bis zu 10 Sekunden dauern.
           </p>
 
           {/* Add CSS animation keyframes */}
@@ -201,6 +214,23 @@ export default function ApplyTrainingPage() {
                   width: 100%;
                   opacity: 1;
                 }
+              }
+              @keyframes beaverBounce {
+                0%, 100% {
+                  transform: translateX(-50px) translateY(0) scaleX(1);
+                }
+                25% {
+                  transform: translateX(-25px) translateY(-10px) scaleX(1.05);
+                }
+                50% {
+                  transform: translateX(0px) translateY(0) scaleX(0.95);
+                }
+                75% {
+                  transform: translateX(25px) translateY(-5px) scaleX(1.02);
+                }
+              }
+              .animate-beaver-bounce {
+                animation: beaverBounce 2s ease-in-out infinite;
               }
             `}
           </style>
