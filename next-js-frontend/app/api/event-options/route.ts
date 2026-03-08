@@ -98,7 +98,7 @@ export async function GET() {
       (t: any): EventOption => ({
         id: t.id,
         documentId: t.documentId,
-        date: convertUTCToLocalTime(t.date),
+        date: t.date,
         training: {
           id: t.trainingType === "swimming" ? 1 : 2, // Mock ID based on static list
           documentId: t.trainingType,

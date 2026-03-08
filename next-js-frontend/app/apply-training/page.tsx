@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Step1Activity from "./step1-activity";
 import Step2Details from "./step2-details";
 import ConfirmationPage from "./confirmation";
+import { convertUTCToLocalTime } from "../utils/date-utils";
 
 interface TrainingOption {
   id: number;
@@ -77,11 +78,13 @@ export default function ApplyTrainingPage() {
         const eventsList: EventOption[] = Array.isArray(eventsData)
           ? eventsData
           : [];
-        setEvents(eventsList);
+
+        const eventsWithLocalDates = convertEventDatesToLocal(eventsList);
+        setEvents(eventsWithLocalDates);
 
         // Derive unique trainings from events
         const uniqueTrainingsMap = new Map<string, TrainingOption>();
-        eventsList.forEach((event) => {
+        eventsWithLocalDates.forEach((event) => {
           if (
             event.training &&
             !uniqueTrainingsMap.has(event.training.documentId)
@@ -312,4 +315,11 @@ export default function ApplyTrainingPage() {
       )}
     </div>
   );
+}
+
+function convertEventDatesToLocal(eventsList: EventOption[]): EventOption[] {
+  return eventsList.map((event) => ({
+    ...event,
+    date: convertUTCToLocalTime(event.date),
+  }));
 }
