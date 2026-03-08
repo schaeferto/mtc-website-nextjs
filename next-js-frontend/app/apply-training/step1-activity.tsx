@@ -14,7 +14,7 @@ interface TrainingOption {
   title: string;
 }
 
-interface EventOption {
+export interface EventOption {
   id: number;
   documentId: string;
   date: string;
@@ -206,14 +206,7 @@ export default function Step1Activity({
               <option value="">Verfügbaren Termin auswählen...</option>
               {filteredEvents.map((event) => (
                 <option key={event.documentId} value={event.documentId}>
-                  {new Date(event.date).toLocaleDateString("de-DE", {
-                    weekday: "long",
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {event.date}
                 </option>
               ))}
             </select>

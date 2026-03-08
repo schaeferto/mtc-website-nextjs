@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "import:templates": "tsx -r dotenv/config src/import-email-templates.ts",
-    "import:trainings": "tsx -r dotenv/config src/import-trainings.ts"
+    "import:trainings": "tsx -r dotenv/config src/import-trainings.ts",
+    "convert:csv": "tsx src/convert-csv-dates.ts"
   },
   "author": "",
   "license": "ISC",

@@ -1,3 +1,6 @@
+import { convertUTCToLocalTime } from "@/app/utils/date-utils";
+import { EventOption } from "../../apply-training/step1-activity";
+
 export const dynamic = "force-dynamic";
 
 /**
@@ -91,20 +94,22 @@ export async function GET() {
         new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
 
-    const events = allTrainings.map((t: any) => ({
-      id: t.id,
-      documentId: t.documentId,
-      date: t.date,
-      training: {
-        id: t.trainingType === "swimming" ? 1 : 2, // Mock ID based on static list
-        documentId: t.trainingType,
-        title: t.trainingType === "swimming" ? "Schwimmen" : "Laufen",
-      },
-      location: {
-        name: t.locationName,
-        imageName: t.imageName,
-      },
-    }));
+    const events = allTrainings.map(
+      (t: any): EventOption => ({
+        id: t.id,
+        documentId: t.documentId,
+        date: convertUTCToLocalTime(t.date),
+        training: {
+          id: t.trainingType === "swimming" ? 1 : 2, // Mock ID based on static list
+          documentId: t.trainingType,
+          title: t.trainingType === "swimming" ? "Schwimmen" : "Laufen",
+        },
+        location: {
+          name: t.locationName,
+          imageName: t.imageName,
+        },
+      }),
+    );
 
     return Response.json(events);
   } catch (error: any) {
