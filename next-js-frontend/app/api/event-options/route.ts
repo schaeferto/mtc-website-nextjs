@@ -55,13 +55,13 @@ export async function GET() {
     // Fetch swimming and running trainings in parallel with limits
     const [swimmingResponse, runningResponse] = await Promise.all([
       fetchTrainingsWithTimeout(
-        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=swimming&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
+        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Schwimmen&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
         token,
         controller.signal,
         10000,
       ),
       fetchTrainingsWithTimeout(
-        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=running&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
+        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Laufen&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
         token,
         controller.signal,
         10000,
@@ -101,9 +101,9 @@ export async function GET() {
         address: t.address,
         trainingType: t.trainingType,
         training: {
-          id: t.trainingType === "swimming" ? 1 : 2, // Mock ID based on static list
+          id: t.trainingType === "Schwimmen" ? 1 : 2, // Mock ID based on static list
           documentId: t.trainingType,
-          title: t.trainingType === "swimming" ? "Schwimmen" : "Laufen",
+          title: t.trainingType === "Schwimmen" ? "Schwimmen" : "Laufen",
         },
         location: {
           name: t.locationName,

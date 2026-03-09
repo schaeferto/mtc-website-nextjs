@@ -10,21 +10,10 @@ interface ApplicationData {
   eventDate: string;
   eventAddress: string;
   locationName: string;
-  trainingType: "swimming" | "running";
+  trainingType: "Schwimmen" | "Laufen";
   name: string;
   email: string;
   over18: boolean;
-}
-
-/**
- * Convert training type to German
- */
-function getGermanTrainingType(trainingType: string): string {
-  const trainingMap: Record<string, string> = {
-    swimming: "Schwimmen",
-    running: "Laufen",
-  };
-  return trainingMap[trainingType.toLowerCase()] || trainingType;
 }
 
 /**
@@ -101,18 +90,18 @@ export async function POST(req: Request) {
     // Select applicant template based on trainingType and locationName
     let applicantTemplateName = "";
     if (
-      data.trainingType === "swimming" &&
+      data.trainingType === "Schwimmen" &&
       data.locationName.toLowerCase().includes("bogenhausen")
     ) {
       applicantTemplateName =
         "swimming_bogenhausen_trial_registration_confirmation";
     } else if (
-      data.trainingType === "swimming" &&
+      data.trainingType === "Schwimmen" &&
       data.locationName.toLowerCase().includes("moosach")
     ) {
       applicantTemplateName =
         "swimming_moosach_trial_registration_confirmation";
-    } else if (data.trainingType === "running") {
+    } else if (data.trainingType === "Laufen") {
       applicantTemplateName =
         "running_olympiapark_trial_registration_confirmation";
     } else {
@@ -142,23 +131,21 @@ export async function POST(req: Request) {
       }, html);
     };
 
-    const germanEventName = getGermanTrainingType(data.event);
-
     // Prepare variables for applicant email
     const applicantVariables = {
-      "local.userName": data.name,
-      "local.event": germanEventName,
-      "strapi.date": formattedDate,
-      "strapi.address": data.eventAddress,
+      name: data.name,
+      event: data.event,
+      date: formattedDate,
+      addresse: data.eventAddress,
     };
 
     // Prepare variables for admin notification
     const adminVariables = {
-      "local.userName": data.name,
-      "local.email": data.email,
-      "local.event": germanEventName,
-      "strapi.date": formattedDate,
-      "strapi.address": data.eventAddress,
+      name: data.name,
+      email: data.email,
+      event: data.event,
+      date: formattedDate,
+      addresse: data.eventAddress,
     };
 
     const applicantHtml = renderTemplate(

@@ -525,7 +525,7 @@ export interface ApiTrainingTraining extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     locationName: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    trainingType: Schema.Attribute.Enumeration<['swimming', 'running']> &
+    trainingType: Schema.Attribute.Enumeration<['Schwimmen', 'Laufen']> &
       Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

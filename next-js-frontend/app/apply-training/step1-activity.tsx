@@ -19,7 +19,7 @@ export interface EventOption {
   documentId: string;
   date: string;
   address: string;
-  trainingType: "swimming" | "running";
+  trainingType: "Schwimmen" | "Laufen";
   training: TrainingOption;
   location: {
     name: string;
@@ -144,8 +144,7 @@ export default function Step1Activity({
                     justifyContent: "center",
                   }}
                 >
-                  {training.title === "Swimming" ||
-                  training.title === "Schwimmen" ? (
+                  {training.title === "Schwimmen" ? (
                     <PiPersonSimpleSwimLight
                       style={{
                         transform:

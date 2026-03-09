@@ -40,7 +40,7 @@ interface Training {
   address: string;
   locationName: string;
   imageName: string;
-  trainingType: "swimming" | "running";
+  trainingType: "Schwimmen" | "Laufen";
   [key: string]: any;
 }
 
@@ -106,7 +106,7 @@ async function importTrainings() {
         continue;
       }
 
-      if (!["swimming", "running"].includes(training.trainingType)) {
+      if (!["Schwimmen", "Laufen"].includes(training.trainingType)) {
         console.warn(
           `Skipping invalid entry (invalid trainingType "${training.trainingType}"): ${JSON.stringify(training)}`,
         );

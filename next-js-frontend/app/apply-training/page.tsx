@@ -18,7 +18,7 @@ interface EventOption {
   date: string;
   dateISO?: string; // Keep original ISO date for API submission
   address: string;
-  trainingType: "swimming" | "running";
+  trainingType: "Schwimmen" | "Laufen";
   training: TrainingOption;
   location: {
     name: string;
@@ -33,7 +33,7 @@ interface FormData {
   eventDate: string;
   eventAddress: string;
   locationName: string;
-  trainingType: "swimming" | "running";
+  trainingType: "Schwimmen" | "Laufen";
   name: string;
   email: string;
   over18: boolean;
@@ -53,7 +53,7 @@ export default function ApplyTrainingPage() {
     eventDate: "",
     eventAddress: "",
     locationName: "",
-    trainingType: "swimming",
+    trainingType: "Schwimmen",
     name: "",
     email: "",
     over18: false,
@@ -136,7 +136,9 @@ export default function ApplyTrainingPage() {
     // Find the selected event to get full training data
     const selectedEvent = events.find((e) => e.documentId === data.eventId);
     if (!selectedEvent) {
-      setSubmissionError("Event nicht gefunden. Bitte versuchen Sie es erneut.");
+      setSubmissionError(
+        "Event nicht gefunden. Bitte versuchen Sie es erneut.",
+      );
       return;
     }
 
