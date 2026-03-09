@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { formatDateForEmail } from "../../utils/date-utils";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -6,17 +7,13 @@ interface ApplicationData {
   activity: string;
   event: string;
   eventId: string;
+  eventDate: string;
+  eventAddress: string;
+  locationName: string;
+  trainingType: "swimming" | "running";
   name: string;
   email: string;
   over18: boolean;
-}
-
-interface TrainingData {
-  date: string;
-  address: string;
-  locationName: string;
-  imageName?: string;
-  trainingType: "swimming" | "running";
 }
 
 /**
@@ -33,16 +30,16 @@ function getGermanTrainingType(trainingType: string): string {
 /**
  * Validate that all required training data is available
  */
-function validateTrainingData(training: TrainingData): void {
-  const requiredFields: (keyof TrainingData)[] = [
-    "date",
-    "address",
+function validateTrainingData(data: ApplicationData): void {
+  const requiredFields: (keyof ApplicationData)[] = [
+    "eventDate",
+    "eventAddress",
     "locationName",
     "trainingType",
   ];
 
   for (const field of requiredFields) {
-    if (!training[field]) {
+    if (!data[field]) {
       throw new Error(
         `Missing required training data: ${field}. Cannot process application.`,
       );
@@ -80,27 +77,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // Fetch training data from Strapi using eventId
-    const trainingResponse = await fetch(
-      `${strapiUrl}/api/trainings/${data.eventId}`,
-      {
-        headers: { Authorization: `Bearer ${strapiToken}` },
-      },
-    );
-
-    if (!trainingResponse.ok) {
-      throw new Error("Failed to fetch training data from Strapi");
-    }
-
-    const trainingData = await trainingResponse.json();
-    const training = trainingData.data as TrainingData;
-
-    if (!training) {
-      throw new Error("Training not found in Strapi");
-    }
-
     // Validate all required training data is available
-    validateTrainingData(training);
+    validateTrainingData(data);
+
+    // Format the date for email display
+    const formattedDate = formatDateForEmail(data.eventDate);
 
     // Fetch email templates from Strapi
     const templatesResponse = await fetch(`${strapiUrl}/api/email-templates`, {
@@ -120,23 +101,23 @@ export async function POST(req: Request) {
     // Select applicant template based on trainingType and locationName
     let applicantTemplateName = "";
     if (
-      training.trainingType === "swimming" &&
-      training.locationName.toLowerCase().includes("bogenhausen")
+      data.trainingType === "swimming" &&
+      data.locationName.toLowerCase().includes("bogenhausen")
     ) {
       applicantTemplateName =
         "swimming_bogenhausen_trial_registration_confirmation";
     } else if (
-      training.trainingType === "swimming" &&
-      training.locationName.toLowerCase().includes("moosach")
+      data.trainingType === "swimming" &&
+      data.locationName.toLowerCase().includes("moosach")
     ) {
       applicantTemplateName =
         "swimming_moosach_trial_registration_confirmation";
-    } else if (training.trainingType === "running") {
+    } else if (data.trainingType === "running") {
       applicantTemplateName =
         "running_olympiapark_trial_registration_confirmation";
     } else {
       throw new Error(
-        `No email template configured for training type: ${training.trainingType} at ${training.locationName}`,
+        `No email template configured for training type: ${data.trainingType} at ${data.locationName}`,
       );
     }
 
@@ -167,8 +148,8 @@ export async function POST(req: Request) {
     const applicantVariables = {
       "local.userName": data.name,
       "local.event": germanEventName,
-      "strapi.date": training.date,
-      "strapi.address": training.address,
+      "strapi.date": formattedDate,
+      "strapi.address": data.eventAddress,
     };
 
     // Prepare variables for admin notification
@@ -176,8 +157,8 @@ export async function POST(req: Request) {
       "local.userName": data.name,
       "local.email": data.email,
       "local.event": germanEventName,
-      "strapi.date": training.date,
-      "strapi.address": training.address,
+      "strapi.date": formattedDate,
+      "strapi.address": data.eventAddress,
     };
 
     const applicantHtml = renderTemplate(

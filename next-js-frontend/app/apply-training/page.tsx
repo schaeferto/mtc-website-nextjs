@@ -16,6 +16,9 @@ interface EventOption {
   id: number;
   documentId: string;
   date: string;
+  dateISO?: string; // Keep original ISO date for API submission
+  address: string;
+  trainingType: "swimming" | "running";
   training: TrainingOption;
   location: {
     name: string;
@@ -27,6 +30,10 @@ interface FormData {
   activity: string;
   event: string;
   eventId: string;
+  eventDate: string;
+  eventAddress: string;
+  locationName: string;
+  trainingType: "swimming" | "running";
   name: string;
   email: string;
   over18: boolean;
@@ -43,6 +50,10 @@ export default function ApplyTrainingPage() {
     activity: "",
     event: "",
     eventId: "",
+    eventDate: "",
+    eventAddress: "",
+    locationName: "",
+    trainingType: "swimming",
     name: "",
     email: "",
     over18: false,
@@ -122,9 +133,20 @@ export default function ApplyTrainingPage() {
     event: string;
     eventId: string;
   }) => {
+    // Find the selected event to get full training data
+    const selectedEvent = events.find((e) => e.documentId === data.eventId);
+    if (!selectedEvent) {
+      setSubmissionError("Event nicht gefunden. Bitte versuchen Sie es erneut.");
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
       ...data,
+      eventDate: selectedEvent.dateISO || selectedEvent.date, // Use ISO date for API
+      eventAddress: selectedEvent.address,
+      locationName: selectedEvent.location?.name || "",
+      trainingType: selectedEvent.trainingType,
     }));
     setStep(2);
   };
@@ -320,6 +342,7 @@ export default function ApplyTrainingPage() {
 function convertEventDatesToLocal(eventsList: EventOption[]): EventOption[] {
   return eventsList.map((event) => ({
     ...event,
-    date: convertUTCToLocalTime(event.date),
+    dateISO: event.date, // Keep original ISO date
+    date: convertUTCToLocalTime(event.date), // Convert for display
   }));
 }

@@ -1,4 +1,3 @@
-import { convertUTCToLocalTime } from "@/app/utils/date-utils";
 import { EventOption } from "../../apply-training/step1-activity";
 
 export const dynamic = "force-dynamic";
@@ -99,6 +98,8 @@ export async function GET() {
         id: t.id,
         documentId: t.documentId,
         date: t.date,
+        address: t.address,
+        trainingType: t.trainingType,
         training: {
           id: t.trainingType === "swimming" ? 1 : 2, // Mock ID based on static list
           documentId: t.trainingType,

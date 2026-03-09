@@ -18,6 +18,8 @@ export interface EventOption {
   id: number;
   documentId: string;
   date: string;
+  address: string;
+  trainingType: "swimming" | "running";
   training: TrainingOption;
   location: {
     name: string;

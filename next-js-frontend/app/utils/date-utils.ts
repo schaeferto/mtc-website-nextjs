@@ -25,3 +25,23 @@ export function convertUTCToLocalTime(utcDateString: string): string {
 export function getLocalDate(utcDateString: string): Date {
   return new Date(utcDateString);
 }
+
+/**
+ * Format date in German email format: dd.mm.yyyy um hh:mm
+ * @param dateString - Date string (already in local timezone format from convertUTCToLocalTime)
+ * @returns Formatted string (e.g., "01.03.2026 um 19:30")
+ */
+export function formatDateForEmail(dateString: string): string {
+  // dateString is in format like "Montag, 1. März 2026 um 19:30 Uhr"
+  // We need to parse it back to a Date object
+  // Actually, better to accept ISO string and format it directly
+  const date = new Date(dateString);
+  
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+  return `${day}.${month}.${year} um ${hours}:${minutes}`;
+}
