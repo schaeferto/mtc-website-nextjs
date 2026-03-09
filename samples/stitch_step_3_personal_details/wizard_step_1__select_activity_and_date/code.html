@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="light" lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wizard Step 1: Select Activity and Date</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FDE047", // The yellow from the "Mehr Berichte" button
+              "background-light": "#F2F2F2",
+              "background-dark": "#1A1A1A",
+              "surface-light": "#FFFFFF",
+              "surface-dark": "#2D2D2D",
+              "text-dark": "#333333",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "4px",
+              "large": "24px",
+            },
+          },
+        },
+      };
+    </script>
+<style>body {
+    font-family: "Inter", sans-serif
+    }
+.activity-card.selected {
+    border-color: #FDE047;
+    box-shadow: 0 0 0 2px #FDE047
+    }select {
+    appearance: none;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB0qYHA60DFqqhOBPkT0-kVu5671iu5NREUC48YPY9SFAPrvPLwFCUwu0pKbeXESmzRYaL6brXCNUXQCED3xLvUDLPmla7KUB6XVzPnjNAjlM5toiuNabD5MD4s_TewVISpeIEurCXYu0isrp-y36EjF0MgIzADzo3CKTYpUjCKxASxCfcruuG682Fh9rhwPOEHCmeFY-OAVa1R9eNtx5TG56Hy3iwG9JBzGrwqFAt29n4zyVEIY1Ku3RWgxt2ZFTjNL7AylY_o_hI);
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-6 text-text-dark dark:text-gray-100 transition-colors duration-200">
+<main class="w-full max-w-2xl">
+<div class="text-center mb-12">
+<h1 class="text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-gray-900 dark:text-white">
+                Probetraining buchen
+            </h1>
+<p class="mt-4 text-gray-600 dark:text-gray-400 font-medium">Schritt 1: Sportart und Termin wählen</p>
+</div>
+<div class="space-y-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="relative block cursor-pointer group">
+<input class="peer sr-only" name="activity" onchange="toggleDateSelector(true)" type="radio" value="swimming"/>
+<div class="activity-card flex flex-col items-center justify-center p-10 bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-lg transition-all duration-200 peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary hover:shadow-md">
+<span class="material-symbols-outlined text-5xl mb-4 text-gray-800 dark:text-gray-100 group-hover:scale-110 transition-transform">
+                            pool
+                        </span>
+<span class="text-xl font-bold uppercase tracking-wide">Schwimmen</span>
+</div>
+</label>
+<label class="relative block cursor-pointer group">
+<input class="peer sr-only" name="activity" onchange="toggleDateSelector(true)" type="radio" value="running"/>
+<div class="activity-card flex flex-col items-center justify-center p-10 bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-lg transition-all duration-200 peer-checked:border-primary peer-checked:ring-2 peer-checked:ring-primary hover:shadow-md">
+<span class="material-symbols-outlined text-5xl mb-4 text-gray-800 dark:text-gray-100 group-hover:scale-110 transition-transform">
+                            directions_run
+                        </span>
+<span class="text-xl font-bold uppercase tracking-wide">Laufen</span>
+</div>
+</label>
+</div>
+<div class="hidden animate-in fade-in slide-in-from-top-4 duration-500" id="date-selector">
+<div class="space-y-2">
+<label class="block text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400" for="termin">Termin wählen</label>
+<div class="relative">
+<select class="w-full bg-surface-light dark:bg-surface-dark border-b-2 border-t-0 border-x-0 border-primary focus:ring-0 focus:border-primary text-lg py-4 px-0 cursor-pointer font-medium" id="termin">
+<option disabled="" selected="" value="">Verfügbaren Termin auswählen...</option>
+<option value="1">Dienstag, 25. November - 18:30 Uhr</option>
+<option value="2">Donnerstag, 27. November - 19:00 Uhr</option>
+<option value="3">Samstag, 29. November - 09:00 Uhr</option>
+</select>
+</div>
+</div>
+</div>
+<div class="pt-8 flex justify-center">
+<button class="bg-primary hover:bg-yellow-400 text-gray-900 font-extrabold py-4 px-16 rounded-full uppercase tracking-widest transition-all duration-200 shadow-lg hover:shadow-xl active:scale-95">
+                    Weiter
+                </button>
+</div>
+</div>
+<div class="mt-12 flex justify-center space-x-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<div class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+</div>
+</main>
+<div class="fixed bottom-6 right-6">
+<button class="p-3 rounded-full bg-surface-light dark:bg-surface-dark shadow-lg border border-gray-200 dark:border-gray-700 transition-colors" onclick="toggleDarkMode()">
+<span class="material-symbols-outlined dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined hidden dark:block">light_mode</span>
+</button>
+</div>
+<script>
+        function toggleDateSelector(show) {
+            const selector = document.getElementById('date-selector');
+            if (show) {
+                selector.classList.remove('hidden');
+                selector.classList.add('block');
+            }
+        }
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+            } else {
+                html.classList.add('dark');
+            }
+        }
+    </script>
+
+</body></html>

@@ -40,9 +40,6 @@ const DesktopMenu = () => {
             onMouseOut={() => setDisplay("hidden")}
             onClick={() => setDisplay("hidden")}
           >
-            <Link href={"/training"} className={"block"}>
-              Training
-            </Link>
             <Link href={"/league"} className={"block"}>
               Liga
             </Link>
@@ -125,9 +122,6 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
         <PiCaretLeft size={26} className={"text-gray-400"}></PiCaretLeft>
         <span className={"text-sm text-gray-400 ml-4"}>Zurück</span>
       </div>
-      <Link href={"/training"} className={"block ml-10"} onClick={onClose}>
-        Training
-      </Link>
       <Link href={"/league"} className={"block ml-10"} onClick={onClose}>
         Liga
       </Link>
@@ -220,6 +214,7 @@ export default function Navigation() {
             width={84}
             height={84}
             className={`ml-3`}
+            priority
           />
         </Link>
       </div>
