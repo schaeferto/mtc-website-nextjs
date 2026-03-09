@@ -11,6 +11,7 @@ const config: Config = {
       fontFamily: {
         findel: ["var(--font-findel)"],
         montserrat: ["var(--font-montserrat)"],
+        handwritten: ["var(--font-caveat)"],
       },
       colors: {
         background: "var(--background)",

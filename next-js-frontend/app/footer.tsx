@@ -57,6 +57,7 @@ const FooterImage = () => {
         width={2478}
         height={1394}
         alt={"footer"}
+        loading="eager"
         className={"md:max-w-3xl object-cover object-top saturate-[0.7]"}
       ></Image>
     </div>
