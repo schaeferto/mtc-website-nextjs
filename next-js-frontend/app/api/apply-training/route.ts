@@ -1,5 +1,4 @@
 import { Resend } from "resend";
-import { formatDateForEmail } from "../../utils/date-utils";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -69,8 +68,8 @@ export async function POST(req: Request) {
     // Validate all required training data is available
     validateTrainingData(data);
 
-    // Format the date for email display
-    const formattedDate = formatDateForEmail(data.eventDate);
+    // Pass raw date to templates - frontend handles conversion
+    const formattedDate = data.eventDate;
 
     // Fetch email templates from Strapi
     const templatesResponse = await fetch(`${strapiUrl}/api/email-templates`, {

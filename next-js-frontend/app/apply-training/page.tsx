@@ -16,7 +16,6 @@ interface EventOption {
   id: number;
   documentId: string;
   date: string;
-  dateISO?: string; // Keep original ISO date for API submission
   address: string;
   trainingType: "Schwimmen" | "Laufen";
   training: TrainingOption;
@@ -145,7 +144,7 @@ export default function ApplyTrainingPage() {
     setFormData((prev) => ({
       ...prev,
       ...data,
-      eventDate: selectedEvent.dateISO || selectedEvent.date, // Use ISO date for API
+      eventDate: selectedEvent.date,
       eventAddress: selectedEvent.address,
       locationName: selectedEvent.location?.name || "",
       trainingType: selectedEvent.trainingType,
@@ -344,7 +343,6 @@ export default function ApplyTrainingPage() {
 function convertEventDatesToLocal(eventsList: EventOption[]): EventOption[] {
   return eventsList.map((event) => ({
     ...event,
-    dateISO: event.date, // Keep original ISO date
     date: convertUTCToLocalTime(event.date), // Convert for display
   }));
 }
