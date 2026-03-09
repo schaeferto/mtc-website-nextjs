@@ -31,24 +31,6 @@ function getGermanTrainingType(trainingType: string): string {
 }
 
 /**
- * Format date string to German format (dd.mm.yyyy HH:mm)
- */
-function formatDateToGerman(dateString: string): string {
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) {
-    throw new Error("Invalid date format");
-  }
-
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-
-  return `${day}.${month}.${year} ${hours}:${minutes}`;
-}
-
-/**
  * Validate that all required training data is available
  */
 function validateTrainingData(training: TrainingData): void {
@@ -179,15 +161,13 @@ export async function POST(req: Request) {
       }, html);
     };
 
-    // Format date to German format (yyyy-mm-dd HH:mm)
-    const trainingDate = formatDateToGerman(training.date);
     const germanEventName = getGermanTrainingType(data.event);
 
     // Prepare variables for applicant email
     const applicantVariables = {
       "local.userName": data.name,
       "local.event": germanEventName,
-      "strapi.date": trainingDate,
+      "strapi.date": training.date,
       "strapi.address": training.address,
     };
 
@@ -196,7 +176,7 @@ export async function POST(req: Request) {
       "local.userName": data.name,
       "local.email": data.email,
       "local.event": germanEventName,
-      "strapi.date": trainingDate,
+      "strapi.date": training.date,
       "strapi.address": training.address,
     };
 
