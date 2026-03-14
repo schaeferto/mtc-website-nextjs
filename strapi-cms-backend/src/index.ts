@@ -1,4 +1,4 @@
-// import type { Core } from '@strapi/strapi';
+import type { Core } from "@strapi/strapi";
 
 export default {
   /**
@@ -16,5 +16,35 @@ export default {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    // Initialize isDisabled field for all existing trainings
+    try {
+      const trainings = await strapi.db
+        .query("api::training.training")
+        .findMany();
+
+      for (const training of trainings) {
+        if (training.isDisabled === null || training.isDisabled === undefined) {
+          await strapi.db.query("api::training.training").update({
+            where: { id: training.id },
+            data: { isDisabled: false },
+          });
+        }
+      }
+
+      const updatedCount = trainings.filter(
+        (t: any) => t.isDisabled === null || t.isDisabled === undefined,
+      ).length;
+      if (updatedCount > 0) {
+        console.log(
+          `✓ Initialized ${updatedCount} trainings with isDisabled = false`,
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Error initializing isDisabled field for trainings:",
+        error,
+      );
+    }
+  },
 };
