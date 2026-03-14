@@ -28,10 +28,11 @@
     "trainingType": {
       "type": "enumeration",
       "required": true,
-      "enum": [
-        "Schwimmen",
-        "Laufen"
-      ]
+      "enum": ["Schwimmen", "Laufen"]
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

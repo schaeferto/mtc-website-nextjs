@@ -517,6 +517,7 @@ export interface ApiTrainingTraining extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     date: Schema.Attribute.DateTime & Schema.Attribute.Required;
     imageName: Schema.Attribute.String;
+    isDisabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

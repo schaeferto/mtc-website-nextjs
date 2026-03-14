@@ -55,13 +55,13 @@ export async function GET() {
     // Fetch swimming and running trainings in parallel with limits
     const [swimmingResponse, runningResponse] = await Promise.all([
       fetchTrainingsWithTimeout(
-        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Schwimmen&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
+        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Schwimmen&filters[isDisabled][$eq]=false&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
         token,
         controller.signal,
         10000,
       ),
       fetchTrainingsWithTimeout(
-        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Laufen&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
+        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Laufen&filters[isDisabled][$eq]=false&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
         token,
         controller.signal,
         10000,
