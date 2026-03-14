@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Probetraining Buchen - Triathlon Verein</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+<!-- Header -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+<div class="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
+<button class="p-2 -ml-2 text-gray-600 hover:text-gray-900">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-lg font-semibold">Probetraining vereinbaren</h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</div>
+</header>
+<main class="flex-grow max-w-3xl mx-auto w-full px-4 py-8">
+<!-- Progress Bar -->
+<div class="mb-8">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm font-medium text-blue-600">Schritt 1 von 3</span>
+<span class="text-sm text-gray-500">Sportart wählen</span>
+</div>
+<div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+<div class="h-full bg-blue-600 rounded-full" style="width: 33.33%"></div>
+</div>
+</div>
+<div class="space-y-6">
+<header>
+<h2 class="text-2xl font-bold tracking-tight">Wofür interessierst du dich?</h2>
+<p class="text-gray-600 mt-1">Wähle die Sportart aus, die du ausprobieren möchtest.</p>
+</header>
+<!-- Selection Options -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Swimming Option (Selected) -->
+<label class="relative flex flex-col p-5 cursor-pointer rounded-2xl border-2 border-blue-600 bg-blue-50/50 transition-all">
+<input checked="" class="sr-only" name="sport" onchange="toggleInfoBox(this)" type="radio" value="swimming"/>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-2xl">pool</span>
+</div>
+<div>
+<h3 class="font-bold text-gray-900">Schwimmen</h3>
+<p class="text-sm text-gray-600">Bahntraining im Olympiastützpunkt</p>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-blue-600 flex items-center justify-center">
+<div class="w-3 h-3 bg-blue-600 rounded-full"></div>
+</div>
+</div>
+</label>
+<!-- Cycling Option -->
+<label class="relative flex flex-col p-5 cursor-pointer rounded-2xl border border-gray-200 bg-white hover:border-blue-300 transition-all">
+<input class="sr-only" name="sport" onchange="toggleInfoBox(this)" type="radio" value="cycling"/>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600">
+<span class="material-symbols-outlined text-2xl">directions_bike</span>
+</div>
+<div>
+<h3 class="font-bold text-gray-900">Radfahren</h3>
+<p class="text-sm text-gray-600">Gruppenausfahrt oder Technik</p>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border border-gray-300"></div>
+</div>
+</label>
+<!-- Running Option -->
+<label class="relative flex flex-col p-5 cursor-pointer rounded-2xl border border-gray-200 bg-white hover:border-blue-300 transition-all">
+<input class="sr-only" name="sport" onchange="toggleInfoBox(this)" type="radio" value="running"/>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600">
+<span class="material-symbols-outlined text-2xl">directions_run</span>
+</div>
+<div>
+<h3 class="font-bold text-gray-900">Laufen</h3>
+<p class="text-sm text-gray-600">Intervalltraining auf der Bahn</p>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border border-gray-300"></div>
+</div>
+</label>
+</div>
+<!-- Swimming Info Box -->
+<div class="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-xl flex gap-3" id="swimming-info">
+<span class="material-symbols-outlined text-amber-600 flex-shrink-0">info</span>
+<p class="text-sm text-amber-800 leading-relaxed">
+<span class="font-semibold block mb-0.5">Hinweis:</span>
+                    Du musst bereits schwimmen können und in der Lage sein, 100m in unter 2:30 Minuten zu schwimmen.
+                </p>
+</div>
+<!-- Action Button -->
+<div class="pt-6">
+<button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-blue-200 flex items-center justify-center gap-2">
+                    Weiter
+                    <span class="material-symbols-outlined">chevron_right</span>
+</button>
+<p class="text-center text-sm text-gray-500 mt-4">Kostenlos und unverbindlich</p>
+</div>
+</div>
+</main>
+<script>
+        function toggleInfoBox(input) {
+            const infoBox = document.getElementById('swimming-info');
+            if (input.value === 'swimming') {
+                infoBox.classList.remove('hidden');
+            } else {
+                infoBox.classList.add('hidden');
+            }
+
+            // Update border styling for visual selection
+            document.querySelectorAll('label').forEach(label => {
+                const radio = label.querySelector('input');
+                if (radio.checked) {
+                    label.classList.add('border-blue-600', 'bg-blue-50/50');
+                    label.classList.remove('border-gray-200', 'bg-white');
+                    label.querySelector('.w-6.h-6').innerHTML = '<div class="w-3 h-3 bg-blue-600 rounded-full"></div>';
+                    label.querySelector('.w-6.h-6').classList.add('border-blue-600');
+                    label.querySelector('.w-6.h-6').classList.remove('border-gray-300');
+                    label.querySelector('.w-12').classList.add('bg-blue-100', 'text-blue-600');
+                    label.querySelector('.w-12').classList.remove('bg-gray-100', 'text-gray-600');
+                } else {
+                    label.classList.remove('border-blue-600', 'bg-blue-50/50');
+                    label.classList.add('border-gray-200', 'bg-white');
+                    label.querySelector('.w-6.h-6').innerHTML = '';
+                    label.querySelector('.w-6.h-6').classList.remove('border-blue-600');
+                    label.querySelector('.w-6.h-6').classList.add('border-gray-300');
+                    label.querySelector('.w-12').classList.remove('bg-blue-100', 'text-blue-600');
+                    label.querySelector('.w-12').classList.add('bg-gray-100', 'text-gray-600');
+                }
+            });
+        }
+    </script>
+</body></html>
