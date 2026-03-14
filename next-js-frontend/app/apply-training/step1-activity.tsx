@@ -5,6 +5,7 @@ import {
   PiPersonSimpleSwimLight,
   PiPersonSimpleRunLight,
   PiMapPinLight,
+  PiWarningLight,
 } from "react-icons/pi";
 import Image from "next/image";
 
@@ -99,9 +100,9 @@ export default function Step1Activity({
         <div style={{ marginBottom: "40px" }}>
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "20px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "12px",
             }}
           >
             {trainings.map((training) => (
@@ -110,11 +111,13 @@ export default function Step1Activity({
                 style={{
                   position: "relative",
                   cursor: "pointer",
-                  padding: "20px",
-                  border: "2px solid var(--mtc-yellow)",
-                  borderRadius: "8px",
-                  textAlign: "center",
+                  padding: "16px",
+                  border: "2px solid",
+                  borderRadius: "16px",
                   transition: "all 0.2s",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "16px",
                   backgroundColor:
                     selectedActivity === training.documentId
                       ? "#fef3c7"
@@ -122,7 +125,7 @@ export default function Step1Activity({
                   borderColor:
                     selectedActivity === training.documentId
                       ? "var(--mtc-yellow)"
-                      : "var(--mtc-background)",
+                      : "#e5e7eb",
                 }}
               >
                 <input
@@ -138,41 +141,115 @@ export default function Step1Activity({
                 />
                 <div
                   style={{
-                    fontSize: "48px",
-                    marginBottom: "10px",
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "12px",
+                    backgroundColor:
+                      selectedActivity === training.documentId
+                        ? "var(--mtc-yellow)"
+                        : "#f3f4f6",
                     display: "flex",
+                    alignItems: "center",
                     justifyContent: "center",
+                    flexShrink: 0,
+                    color:
+                      selectedActivity === training.documentId
+                        ? "#000"
+                        : "#6b7280",
+                    fontSize: "28px",
                   }}
                 >
                   {training.title === "Schwimmen" ? (
-                    <PiPersonSimpleSwimLight
-                      style={{
-                        transform:
-                          selectedActivity === training.documentId
-                            ? "scale(1.1)"
-                            : "scale(1)",
-                        transition: "transform 0.2s",
-                      }}
-                    />
+                    <PiPersonSimpleSwimLight size={28} />
                   ) : (
-                    <PiPersonSimpleRunLight
+                    <PiPersonSimpleRunLight size={28} />
+                  )}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: "16px", fontWeight: "bold" }}>
+                    {training.title}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "13px",
+                      color: "#6b7280",
+                      marginTop: "2px",
+                    }}
+                  >
+                    {training.title === "Schwimmen"
+                      ? "Schwimmtraining im 25m Becken"
+                      : "Intervalltraining im Park oder auf der Bahn"}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    width: "24px",
+                    height: "24px",
+                    borderRadius: "50%",
+                    border: "2px solid",
+                    borderColor:
+                      selectedActivity === training.documentId
+                        ? "var(--mtc-yellow)"
+                        : "#d1d5db",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  {selectedActivity === training.documentId && (
+                    <div
                       style={{
-                        transform:
-                          selectedActivity === training.documentId
-                            ? "scale(1.1)"
-                            : "scale(1)",
-                        transition: "transform 0.2s",
+                        width: "12px",
+                        height: "12px",
+                        borderRadius: "50%",
+                        backgroundColor: "var(--mtc-yellow)",
                       }}
                     />
                   )}
-                </div>
-                <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                  {training.title}
                 </div>
               </label>
             ))}
           </div>
         </div>
+
+        {selectedActivity === "Schwimmen" && (
+          <div
+            style={{
+              marginBottom: "30px",
+              padding: "16px",
+              backgroundColor: "#fee2e2",
+              border: "1px solid #fecaca",
+              borderRadius: "8px",
+              display: "flex",
+              gap: "12px",
+            }}
+          >
+            <PiWarningLight size={24} style={{ color: "#991b1b", flexShrink: 0 }} />
+            <div>
+              <div
+                style={{
+                  fontWeight: "bold",
+                  marginBottom: "4px",
+                  color: "#991b1b",
+                }}
+              >
+                Hinweis:
+              </div>
+              <p
+                style={{
+                  fontSize: "14px",
+                  lineHeight: "1.5",
+                  margin: 0,
+                  color: "#991b1b",
+                }}
+              >
+                Du solltest in der Lage sein, 400m in unter 10 Minuten
+                durchgängig zu kraulen.
+              </p>
+            </div>
+          </div>
+        )}
 
         {selectedActivity && (
           <div
