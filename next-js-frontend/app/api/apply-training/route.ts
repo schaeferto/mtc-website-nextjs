@@ -100,9 +100,18 @@ export async function POST(req: Request) {
     ) {
       applicantTemplateName =
         "swimming_moosach_trial_registration_confirmation";
-    } else if (data.trainingType === "Laufen") {
+    } else if (
+      data.trainingType === "Laufen" &&
+      data.locationName.toLowerCase().includes("olympiapark")
+    ) {
       applicantTemplateName =
         "running_olympiapark_trial_registration_confirmation";
+    } else if (
+      data.trainingType === "Laufen" &&
+      data.locationName.toLowerCase().includes("englischer garten")
+    ) {
+      applicantTemplateName =
+        "running_englischergarten_trial_registration_confirmation";
     } else {
       throw new Error(
         `No email template configured for training type: ${data.trainingType} at ${data.locationName}`,

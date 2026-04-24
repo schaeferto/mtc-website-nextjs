@@ -225,7 +225,10 @@ export default function Step1Activity({
               gap: "12px",
             }}
           >
-            <PiWarningLight size={24} style={{ color: "#991b1b", flexShrink: 0 }} />
+            <PiWarningLight
+              size={24}
+              style={{ color: "#991b1b", flexShrink: 0 }}
+            />
             <div>
               <div
                 style={{
