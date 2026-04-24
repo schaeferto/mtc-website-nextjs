@@ -61,6 +61,17 @@ Hiermit bestätige ich deine Anmeldung zum Probetraining fürs <strong>{{event}}
 <p>Viele Grüße,<br/>dein MTC Team</p>`,
   },
   {
+    name: "running_englischergarten_trial_registration_confirmation",
+    subject: "Probetraining zum Laufen im Englischen Garten",
+    html: `<h1>Hi {{name}},</h1>
+<p>schön, dass du auf uns aufmerksam geworden bist. 
+Heremit bestätige ich deine Anmeldung zum Probetraining fürs <strong>{{event}}</strong> am <strong>{{date}}</strong>!</p>
+<p>Wir treffen uns um 18:30 Uhr im Englischen Garten nähe der Eisbachwelle auf einem Sportgelände (Am Hirschanger, Himmelreichstr. 5, 80538  München). Wir laufen uns kurz gemeinsam ein, danach folgt ein Lauf-ABC und im Anschluss die Intervalle.</p>
+<p>Falls du doch nicht am Probetraining teilnehmen kannst, gib uns zur Stornierung deiner Anmeldung bitte per Mail an munichtriathlonclub@gmail.com Bescheid. Bei weiteren Fragen kannst du dich auch gerne melden.</p>
+<p>Wir freuen uns auf dich!</p>
+<p>Viele Grüße,<br/>dein MTC Team</p>`,
+  },
+  {
     name: "trial_registration_notification",
     subject: "Neue Anmeldung zum Probetraining: {{event}} am {{date}}",
     html: `<h1>Neue Anmeldung zum Probetraining</h1>
