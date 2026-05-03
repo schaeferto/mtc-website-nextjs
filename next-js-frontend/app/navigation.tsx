@@ -51,7 +51,6 @@ const DesktopMenu = () => {
             </Link>
           </div>
         </div>
-        <Link href={"/sponsors"}>Sponsoren</Link>
       </div>
       <NavIconList />
     </nav>
@@ -107,9 +106,6 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
         <span>Verein</span>
         <PiCaretRight size={26} className={"mr-8"}></PiCaretRight>
       </div>
-      <Link href="/sponsors" onClick={onClose} className={"ml-10"}>
-        Sponsoren
-      </Link>
     </nav>
   );
 
