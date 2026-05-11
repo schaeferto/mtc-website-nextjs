@@ -1,9 +1,9 @@
-import valentin from "../../public/valentin.jpg";
-import max from "../../public/max.jpg";
-import carsten from "../../public/carsten.jpg";
-import eva from "../../public/eva.jpg";
-import lisa from "../../public/lisa.jpg";
-import eckart from "../../public/eckart.jpg";
+import valentin from "../../public/board-members/valentin.jpg";
+import max from "../../public/board-members/max.jpg";
+import carsten from "../../public/board-members/carsten.jpg";
+import eva from "../../public/board-members/eva.jpg";
+import marieHarder from "../../public/board-members/marie-harder.jpeg";
+import eckart from "../../public/board-members/eckart.jpg";
 import Image, { StaticImageData } from "next/image";
 import { PiEnvelopeLight } from "react-icons/pi";
 import Link from "next/link";
@@ -14,6 +14,7 @@ export default function Board() {
     surname: string;
     lastname: string;
     position: string;
+    imageStyle?: React.CSSProperties;
   }[] = [
     {
       image: valentin,
@@ -40,10 +41,14 @@ export default function Board() {
       position: "Schriftführerin",
     },
     {
-      image: lisa,
-      surname: "Lisa",
-      lastname: "Montag",
+      image: marieHarder,
+      surname: "Marie",
+      lastname: "Harder",
       position: "Beisitzende",
+      imageStyle: {
+        transform: "scale(1.4) translateX(-30px) translateY(-20px)",
+        transformOrigin: "top left",
+      },
     },
     {
       image: eckart,
@@ -68,12 +73,14 @@ export default function Board() {
       >
         {boardMembers.map((member, index) => (
           <div key={index}>
-            <Image
-              src={member.image}
-              alt={member.surname}
-              height={200}
-              className={"rounded-ee-full mb-4"}
-            ></Image>
+            <div className={"overflow-hidden rounded-ee-full mb-4 w-fit"}>
+              <Image
+                src={member.image}
+                alt={member.surname}
+                height={200}
+                style={member.imageStyle}
+              ></Image>
+            </div>
             <div className={"text-xl font-bold"}>{member.surname}</div>
             <div className={"text-xl font-bold"}>{member.lastname}</div>
             <div className={"font-medium"}>{member.position}</div>
@@ -81,7 +88,7 @@ export default function Board() {
         ))}
       </div>
 
-      <div className={'flex flex-col justify-center'}>
+      <div className={"flex flex-col justify-center"}>
         <div className={"self-start font-bold text-xl mt-8"}>
           Fragen? Schreib uns eine Mail:
         </div>
