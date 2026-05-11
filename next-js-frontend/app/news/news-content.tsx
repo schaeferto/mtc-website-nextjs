@@ -57,7 +57,9 @@ export function NewsContent({
   }
 
   // For the full news page, show a limited number first and allow loading more
-  const displayedArticles = isShortVersion ? newsArticles : newsArticles.slice(0, visibleCount);
+  const displayedArticles = isShortVersion
+    ? newsArticles
+    : newsArticles.slice(0, visibleCount);
 
   const recentCount = allArticles.filter((article) => {
     if (!article.releaseDate) return false;
@@ -143,12 +145,12 @@ export function NewsContent({
               </div>
             ) : (
               <div className={"flex flex-col"}>
-                <div className="flex justify-center gap-2 w-full mt-8">
+                <div className="flex justify-center gap-2 w-full mt-8 relative">
                   <h3 className={"text-xl font-bold text-center"}>
                     {news.header}
                   </h3>
                   {recentIds.has(news.id) && (
-                    <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow self-center leading-none">
+                    <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow self-center leading-none absolute -top-6 right-2">
                       NEU
                     </span>
                   )}
@@ -210,7 +212,9 @@ export function NewsContent({
         {!isShortVersion && visibleCount < newsArticles.length && (
           <div className={"flex justify-center py-16"}>
             <button
-              onClick={() => setVisibleCount((v) => Math.min(newsArticles.length, v + 6))}
+              onClick={() =>
+                setVisibleCount((v) => Math.min(newsArticles.length, v + 6))
+              }
               className={
                 "bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black w-[300px] font-medium"
               }
