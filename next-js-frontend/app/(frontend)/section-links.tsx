@@ -6,7 +6,7 @@ import homeLeagueImage from "@/public/home_liga.jpg";
 import homeTrainingImage from "@/public/home_training.jpg";
 import homeContactImage from "@/public/home_contact.jpg";
 import { PiCaretLeft, PiCaretRight } from "react-icons/pi";
-import { ImageWithTextAndLink } from "@/app/image-with-textoverlay";
+import { ImageWithTextAndLink } from "@/app/(frontend)/image-with-textoverlay";
 
 export function SectionLinks() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });

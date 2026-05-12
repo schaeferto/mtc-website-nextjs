@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "../../public/logo-rounded.svg";
+import logo from "@/public/logo-rounded.svg";
 
 export default function Impressum() {
   return (

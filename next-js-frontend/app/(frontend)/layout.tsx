@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navigation from "@/app/navigation";
-import Footer from "@/app/footer";
+import Navigation from "@/app/(frontend)/navigation";
+import Footer from "@/app/(frontend)/footer";
 import { Montserrat, Caveat } from "next/font/google";
 
 const findel = localFont({

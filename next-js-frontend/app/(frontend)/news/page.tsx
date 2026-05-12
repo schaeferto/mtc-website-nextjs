@@ -1,6 +1,6 @@
 "use client";
 
-import { NewsContent } from "@/app/news/news-content";
+import { NewsContent } from "@/app/(frontend)/news/news-content";
 
 export default function News() {
   return (

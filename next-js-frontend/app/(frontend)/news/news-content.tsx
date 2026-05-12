@@ -6,7 +6,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
 import Link from "next/link";
-import { getArticles } from "@/app/news/article-loader";
+import { getArticles } from "@/app/(frontend)/news/article-loader";
 
 export function NewsContent({
   isShortVersion = false,

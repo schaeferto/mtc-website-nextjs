@@ -1,5 +1,8 @@
 import Image from "next/image";
-import { annualResults, TeamRecord } from "@/app/league/league.content";
+import {
+  annualResults,
+  TeamRecord,
+} from "@/app/(frontend)/league/league.content";
 
 export default function League() {
   return (

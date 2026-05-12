@@ -1,9 +1,9 @@
-import valentin from "../../public/board-members/valentin.jpg";
-import max from "../../public/board-members/max.jpg";
-import carsten from "../../public/board-members/carsten.jpg";
-import eva from "../../public/board-members/eva.jpg";
-import marieHarder from "../../public/board-members/marie-harder.jpeg";
-import eckart from "../../public/board-members/eckart.jpg";
+import valentin from "@/public/board-members/valentin.jpg";
+import max from "@/public/board-members/max.jpg";
+import carsten from "@/public/board-members/carsten.jpg";
+import eva from "@/public/board-members/eva.jpg";
+import marieHarder from "@/public/board-members/marie-harder.jpeg";
+import eckart from "@/public/board-members/eckart.jpg";
 import Image, { StaticImageData } from "next/image";
 import { PiEnvelopeLight } from "react-icons/pi";
 import Link from "next/link";

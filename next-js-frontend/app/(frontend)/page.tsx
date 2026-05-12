@@ -1,18 +1,17 @@
-import mottoImage from "../public/motto.jpg";
+import mottoImage from "@/public/motto.jpg";
 import Image from "next/image";
-import "./globals.css";
 import Link from "next/link";
 import {
   PiIdentificationCardLight,
   PiPersonSimpleRunLight,
 } from "react-icons/pi";
-import { NewsContent } from "@/app/news/news-content";
-import { Video } from "@/app/video";
-import { SectionLinks } from "@/app/section-links";
+import { NewsContent } from "@/app/(frontend)/news/news-content";
+import { Video } from "@/app/(frontend)/video";
+import { SectionLinks } from "@/app/(frontend)/section-links";
 
 const ScrollIndicator = () => {
   return (
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce">
+    <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center animate-bounce">
       <span className="text-white text-sm font-medium mb-2 tracking-wider">
         Scroll
       </span>

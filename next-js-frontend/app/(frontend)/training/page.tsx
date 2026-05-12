@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import training1 from "../../public/training_1.jpg";
-import training2 from "../../public/training_2.jpg";
-import training3 from "../../public/training_3.jpg";
-import travel from "../../public/travel.jpg";
-import swim from "../../public/swim.jpg";
+import training1 from "@/public/training_1.jpg";
+import training2 from "@/public/training_2.jpg";
+import training3 from "@/public/training_3.jpg";
+import travel from "@/public/travel.jpg";
+import swim from "@/public/swim.jpg";
 
 export default function Training() {
   return (

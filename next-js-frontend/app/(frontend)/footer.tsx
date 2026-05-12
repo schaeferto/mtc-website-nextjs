@@ -1,5 +1,5 @@
 import Image from "next/image";
-import footerImage from "../public/orig-free-footer.webp";
+import footerImage from "@/public/orig-free-footer.webp";
 import { PiGithubLogoFill } from "react-icons/pi";
 import Link from "next/link";
 
