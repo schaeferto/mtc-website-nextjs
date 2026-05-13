@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload';
 
 export const EmailTemplates: CollectionConfig = {
   slug: 'email-templates',
@@ -42,4 +42,4 @@ export const EmailTemplates: CollectionConfig = {
       },
     },
   ],
-}
+};
