@@ -40,28 +40,19 @@ export async function GET() {
       return Response.json({ error: "Strapi not configured" }, { status: 500 });
     }
 
-    // Get current date and date 3 weeks from now
-    const now = new Date();
-    now.setHours(0, 0, 0, 0);
-    const startDateObj = new Date(now);
-    startDateObj.setDate(startDateObj.getDate() + 2); // Exclude trainings within next 2 days
-    const threeWeeksFromNow = new Date(now);
-    threeWeeksFromNow.setDate(threeWeeksFromNow.getDate() + 21);
+    // Fetch trainings starting after 24h from now
+    const startDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 
-    // Format dates for Strapi filter (ISO format)
-    const startDate = startDateObj.toISOString().split("T")[0];
-    const endDate = threeWeeksFromNow.toISOString().split("T")[0];
-
-    // Fetch swimming and running trainings in parallel with limits
+    // Fetch swimming (next 6) and running (next 3) in parallel
     const [swimmingResponse, runningResponse] = await Promise.all([
       fetchTrainingsWithTimeout(
-        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Schwimmen&filters[isDisabled][$eq]=false&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
+        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Schwimmen&filters[isDisabled][$ne]=true&filters[date][$gte]=${startDate}&sort=date:asc&pagination[limit]=6`,
         token,
         controller.signal,
         10000,
       ),
       fetchTrainingsWithTimeout(
-        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Laufen&filters[isDisabled][$eq]=false&filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&sort=date:asc&pagination[limit]=50`,
+        `${strapiUrl}/api/trainings?filters[trainingType][$eq]=Laufen&filters[isDisabled][$ne]=true&filters[date][$gte]=${startDate}&sort=date:asc&pagination[limit]=3`,
         token,
         controller.signal,
         10000,
