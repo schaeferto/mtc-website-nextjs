@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "payload migrate && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "payload": "PAYLOAD_CONFIG_PATH=payload.config.ts payload"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.84.1",
