@@ -1,29 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Step1Activity from "./step1-activity";
+import Step1Activity, {
+  ActivityOption,
+  EventOption,
+} from "./step1-activity";
 import Step2Details from "./step2-details";
 import ConfirmationPage from "./confirmation";
 import { convertUTCToLocalTime } from "../utils/date-utils";
-
-interface TrainingOption {
-  id: number;
-  documentId: string;
-  title: string;
-}
-
-interface EventOption {
-  id: number;
-  documentId: string;
-  date: string;
-  address: string;
-  trainingType: "Schwimmen" | "Laufen";
-  training: TrainingOption;
-  location: {
-    name: string;
-    imageName: string;
-  } | null;
-}
 
 interface FormData {
   activity: string;
@@ -32,18 +16,58 @@ interface FormData {
   eventDate: string;
   eventAddress: string;
   locationName: string;
-  trainingType: "Schwimmen" | "Laufen";
+  discipline: "Schwimmen" | "Laufen";
   name: string;
   email: string;
   over18: boolean;
 }
 
+function LoadingSkeleton() {
+  return (
+    <main className="max-w-[800px] mx-auto px-5 py-10 animate-pulse">
+      {/* Header */}
+      <div className="text-center mb-10">
+        <div className="h-8 bg-gray-200 rounded-full w-56 mx-auto mb-3" />
+        <div className="h-4 bg-gray-200 rounded-full w-44 mx-auto mb-2" />
+        <div className="h-3 bg-gray-200 rounded-full w-72 mx-auto" />
+      </div>
+
+      {/* Activity cards */}
+      <div className="flex flex-col gap-3 mb-10">
+        {[0, 1].map((i) => (
+          <div
+            key={i}
+            className="p-4 border-2 border-gray-100 rounded-2xl flex items-center gap-4"
+          >
+            <div className="w-12 h-12 rounded-xl bg-gray-200 shrink-0" />
+            <div className="flex-1 space-y-2">
+              <div className="h-4 bg-gray-200 rounded-full w-24" />
+              <div className="h-3 bg-gray-200 rounded-full w-52" />
+            </div>
+            <div className="w-6 h-6 rounded-full border-2 border-gray-200 shrink-0" />
+          </div>
+        ))}
+      </div>
+
+      {/* Button */}
+      <div className="flex justify-center mt-8">
+        <div className="h-12 bg-gray-200 rounded-full w-32" />
+      </div>
+
+      {/* Step dots */}
+      <div className="flex justify-center gap-2 mt-8">
+        <div className="w-3 h-3 rounded-full bg-gray-300" />
+        <div className="w-3 h-3 rounded-full bg-gray-200" />
+      </div>
+    </main>
+  );
+}
+
 export default function ApplyTrainingPage() {
   const [step, setStep] = useState(1);
-  const [trainings, setTrainings] = useState<TrainingOption[]>([]);
+  const [activities, setActivities] = useState<ActivityOption[]>([]);
   const [events, setEvents] = useState<EventOption[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentAttempt, setCurrentAttempt] = useState(0);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     activity: "",
@@ -52,7 +76,7 @@ export default function ApplyTrainingPage() {
     eventDate: "",
     eventAddress: "",
     locationName: "",
-    trainingType: "Schwimmen",
+    discipline: "Schwimmen",
     name: "",
     email: "",
     over18: false,
@@ -61,220 +85,50 @@ export default function ApplyTrainingPage() {
   const [submissionError, setSubmissionError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchTrainingsAndEvents();
+    fetchEvents();
   }, []);
 
-  // client-side fetch with simple retry logic; this keeps retries close to the
-  // UX and lets the API route remain thin. You could also add similar retry
-  // behavior inside `/api/event-options` if you expect Strapi to flake often.
-  const fetchTrainingsAndEvents = async () => {
+  const fetchEvents = async () => {
     setFetchError(null);
     setLoading(true);
 
-    const maxAttempts = 5;
-    let attempt = 0;
-    let lastError: any = null;
+    try {
+      const res = await fetch("/api/event-options");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
 
-    while (attempt < maxAttempts) {
-      attempt += 1;
-      setCurrentAttempt(attempt);
-      try {
-        const eventsRes = await fetch("/api/event-options");
-        if (!eventsRes.ok) {
-          throw new Error(`HTTP ${eventsRes.status}`);
-        }
-        const eventsData = await eventsRes.json();
+      const eventsList: EventOption[] = Array.isArray(data) ? data : [];
+      const eventsWithLocalDates = convertEventDatesToLocal(eventsList);
+      setEvents(eventsWithLocalDates);
 
-        const eventsList: EventOption[] = Array.isArray(eventsData)
-          ? eventsData
-          : [];
-
-        const eventsWithLocalDates = convertEventDatesToLocal(eventsList);
-        setEvents(eventsWithLocalDates);
-
-        // Derive unique trainings from events
-        const uniqueTrainingsMap = new Map<string, TrainingOption>();
-        eventsWithLocalDates.forEach((event) => {
-          if (
-            event.training &&
-            !uniqueTrainingsMap.has(event.training.documentId)
-          ) {
-            uniqueTrainingsMap.set(event.training.documentId, event.training);
-          }
-        });
-
-        setTrainings(Array.from(uniqueTrainingsMap.values()));
-        lastError = null;
-        break; // success
-      } catch (err: any) {
-        lastError = err;
-        console.warn(`fetch attempt ${attempt} failed`, err);
-        if (attempt < maxAttempts) {
-          // wait before retrying
-          await new Promise((r) => setTimeout(r, 500 * attempt));
-        }
-      }
-    }
-
-    if (lastError) {
-      console.error("All fetch attempts failed", lastError);
-      const errorMessage = lastError.message?.includes("504")
-        ? "Der Server antwortet zu langsam. Bitte versuche es in einer Minute erneut."
-        : "Beim Laden der Trainingsoptionen ist ein Fehler aufgetreten. Bitte versuche es erneut.";
-      setFetchError(errorMessage);
+      const disciplineSet = new Set<"Schwimmen" | "Laufen">();
+      eventsWithLocalDates.forEach((e) => disciplineSet.add(e.discipline));
+      setActivities([
+        ...(disciplineSet.has("Schwimmen")
+          ? [{ value: "Schwimmen" as const, title: "Schwimmen" }]
+          : []),
+        ...(disciplineSet.has("Laufen")
+          ? [{ value: "Laufen" as const, title: "Laufen" }]
+          : []),
+      ]);
+    } catch {
+      setFetchError(
+        "Beim Laden der Trainingsoptionen ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+      );
     }
 
     setLoading(false);
   };
 
-  const handleStep1Submit = (data: {
-    activity: string;
-    event: string;
-    eventId: string;
-  }) => {
-    // Find the selected event to get full training data
-    const selectedEvent = events.find((e) => e.documentId === data.eventId);
-    if (!selectedEvent) {
-      setSubmissionError(
-        "Event nicht gefunden. Bitte versuchen Sie es erneut.",
-      );
-      return;
-    }
-
-    setFormData((prev) => ({
-      ...prev,
-      ...data,
-      eventDate: selectedEvent.date,
-      eventAddress: selectedEvent.address,
-      locationName: selectedEvent.location?.name || "",
-      trainingType: selectedEvent.trainingType,
-    }));
-    setStep(2);
-  };
-
-  const handleStep2Submit = async (data: {
-    name: string;
-    email: string;
-    over18: boolean;
-  }) => {
-    const finalData = { ...formData, ...data };
-    setFormData(finalData);
-    setSubmissionError(null);
-
-    // Submit to backend
-    try {
-      const response = await fetch("/api/apply-training", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(finalData),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-      } else {
-        const errorData = await response.json();
-        const errorMessage = `${
-          errorData.error ||
-          "Anmeldung fehlgeschlagen. Bitte versuche es erneut."
-        } ${`Wenn das Problem weiterhin besteht, kontaktiere uns bitte per E‑Mail. munichtriathlonclub@gmail.com`}`;
-        setSubmissionError(errorMessage);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setSubmissionError(
-        "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
-      );
-    }
-  };
-
-  const handleBack = () => {
-    setStep(step - 1);
-  };
-
-  if (loading) {
-    return (
-      <div
-        className="first-content flex justify-center"
-        style={{ padding: "20px" }}
-      >
-        <div className="w-full p-6 text-center flex flex-col items-center md:mt-36 mt-24">
-          <p className="text-lg font-medium mb-1">Lade Trainingsoptionen...</p>
-          <p className="text-sm text-gray-500 mb-6">
-            Dies kann leider Zeitweise bis zu 60 Sekunden dauern.
-          </p>
-
-          {/* Animated Beaver */}
-          <div className="mb-8 h-24 flex items-center justify-center">
-            <img
-              src="/favicon/biber_transparent.png"
-              alt="Beaver loading"
-              className="h-20 object-contain animate-beaver-bounce"
-            />
-          </div>
-
-          {/* Finite progress bar animation */}
-          <div
-            key={`progress-${currentAttempt}`}
-            className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden mb-2"
-          >
-            <div
-              className="h-full bg-mtc-yellow"
-              style={{
-                animation: "progress 10s ease-in-out forwards",
-              }}
-            />
-          </div>
-          <p className="text-sm text-gray-500 mb-4">
-            Versuch {currentAttempt} von 5
-          </p>
-
-          {/* Add CSS animation keyframes */}
-          <style>
-            {`
-              @keyframes progress {
-                0% {
-                  width: 0%;
-                  opacity: 1;
-                }
-                100% {
-                  width: 100%;
-                  opacity: 1;
-                }
-              }
-              @keyframes beaverBounce {
-                0%, 100% {
-                  transform: translateX(-50px) translateY(0) scaleX(1);
-                }
-                25% {
-                  transform: translateX(-25px) translateY(-10px) scaleX(1.05);
-                }
-                50% {
-                  transform: translateX(0px) translateY(0) scaleX(0.95);
-                }
-                75% {
-                  transform: translateX(25px) translateY(-5px) scaleX(1.02);
-                }
-              }
-              .animate-beaver-bounce {
-                animation: beaverBounce 2s ease-in-out infinite;
-              }
-            `}
-          </style>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <LoadingSkeleton />;
 
   if (fetchError) {
     return (
-      <div
-        className="first-content flex justify-center"
-        style={{ padding: "20px" }}
-      >
+      <div className="first-content flex justify-center px-5">
         <div className="w-full p-6 text-center flex flex-col items-center md:mt-48 mt-12">
           <p className="text-red-600 mb-20">{fetchError}</p>
           <button
-            onClick={fetchTrainingsAndEvents}
+            onClick={fetchEvents}
             className="bg-mtc-yellow py-3 px-8 text-xl rounded-full text-black w-[300px] font-medium mx-auto"
           >
             ERNEUT LADEN
@@ -295,9 +149,58 @@ export default function ApplyTrainingPage() {
     );
   }
 
-  if (submitted) {
-    return <ConfirmationPage email={formData.email} />;
-  }
+  if (submitted) return <ConfirmationPage email={formData.email} />;
+
+  const handleStep1Submit = (data: {
+    activity: string;
+    event: string;
+    eventId: string;
+  }) => {
+    const selectedEvent = events.find((e) => e.id.toString() === data.eventId);
+    if (!selectedEvent) {
+      setSubmissionError("Event nicht gefunden. Bitte versuchen Sie es erneut.");
+      return;
+    }
+    setFormData((prev) => ({
+      ...prev,
+      ...data,
+      eventDate: selectedEvent.date,
+      eventAddress: selectedEvent.location?.address ?? "",
+      locationName: selectedEvent.location?.name ?? "",
+      discipline: selectedEvent.discipline,
+    }));
+    setStep(2);
+  };
+
+  const handleStep2Submit = async (data: {
+    name: string;
+    email: string;
+    over18: boolean;
+  }) => {
+    const finalData = { ...formData, ...data };
+    setFormData(finalData);
+    setSubmissionError(null);
+
+    try {
+      const response = await fetch("/api/register-trial-training", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(finalData),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        const errorData = await response.json();
+        setSubmissionError(
+          `${errorData.error ?? "Anmeldung fehlgeschlagen. Bitte versuche es erneut."} Wenn das Problem weiterhin besteht, kontaktiere uns bitte per E‑Mail. munichtriathlonclub@gmail.com`,
+        );
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmissionError("Ein Fehler ist aufgetreten. Bitte versuche es erneut.");
+    }
+  };
 
   const handleStep2Change = (
     data: Partial<Pick<FormData, "name" | "email" | "over18">>,
@@ -322,7 +225,7 @@ export default function ApplyTrainingPage() {
       )}
       {step === 1 && (
         <Step1Activity
-          trainings={trainings}
+          activities={activities}
           events={events}
           formData={formData}
           onSubmit={handleStep1Submit}
@@ -338,11 +241,15 @@ export default function ApplyTrainingPage() {
       )}
     </div>
   );
+
+  function handleBack() {
+    setStep(step - 1);
+  }
 }
 
 function convertEventDatesToLocal(eventsList: EventOption[]): EventOption[] {
   return eventsList.map((event) => ({
     ...event,
-    date: convertUTCToLocalTime(event.date), // Convert for display
+    date: convertUTCToLocalTime(event.date),
   }));
 }

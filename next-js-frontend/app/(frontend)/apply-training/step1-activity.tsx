@@ -9,27 +9,25 @@ import {
 } from "react-icons/pi";
 import Image from "next/image";
 
-interface TrainingOption {
-  id: number;
-  documentId: string;
-  title: string;
-}
-
 export interface EventOption {
   id: number;
-  documentId: string;
   date: string;
-  address: string;
-  trainingType: "Schwimmen" | "Laufen";
-  training: TrainingOption;
+  discipline: "Schwimmen" | "Laufen";
   location: {
+    id: number;
     name: string;
-    imageName: string;
+    address?: string | null;
+    image?: { url?: string | null } | null;
   } | null;
 }
 
+export interface ActivityOption {
+  value: "Schwimmen" | "Laufen";
+  title: string;
+}
+
 interface Step1Props {
-  trainings: TrainingOption[];
+  activities: ActivityOption[];
   events: EventOption[];
   formData: { activity: string; event: string; eventId: string };
   onSubmit: (data: {
@@ -40,7 +38,7 @@ interface Step1Props {
 }
 
 export default function Step1Activity({
-  trainings,
+  activities,
   events,
   formData,
   onSubmit,
@@ -48,14 +46,13 @@ export default function Step1Activity({
   const [selectedActivity, setSelectedActivity] = useState(formData.activity);
   const [selectedEvent, setSelectedEvent] = useState(formData.eventId);
 
-  // keep local state in sync when parent formData changes (e.g. navigating back)
   useEffect(() => {
     setSelectedActivity(formData.activity);
     setSelectedEvent(formData.eventId);
   }, [formData.activity, formData.eventId]);
 
   const filteredEvents = selectedActivity
-    ? events.filter((e) => e.training.documentId === selectedActivity)
+    ? events.filter((e) => e.discipline === selectedActivity)
     : [];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -66,12 +63,14 @@ export default function Step1Activity({
     }
     onSubmit({
       activity: selectedActivity,
-      event:
-        filteredEvents.find((e) => e.documentId === selectedEvent)?.training
-          .title || "",
+      event: selectedActivity,
       eventId: selectedEvent,
     });
   };
+
+  const selectedEventData = events.find(
+    (e) => e.id.toString() === selectedEvent,
+  );
 
   return (
     <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px" }}>
@@ -105,9 +104,9 @@ export default function Step1Activity({
               gap: "12px",
             }}
           >
-            {trainings.map((training) => (
+            {activities.map((activity) => (
               <label
-                key={training.documentId}
+                key={activity.value}
                 style={{
                   position: "relative",
                   cursor: "pointer",
@@ -119,11 +118,9 @@ export default function Step1Activity({
                   alignItems: "center",
                   gap: "16px",
                   backgroundColor:
-                    selectedActivity === training.documentId
-                      ? "#fef3c7"
-                      : "#fff",
+                    selectedActivity === activity.value ? "#fef3c7" : "#fff",
                   borderColor:
-                    selectedActivity === training.documentId
+                    selectedActivity === activity.value
                       ? "var(--mtc-yellow)"
                       : "#e5e7eb",
                 }}
@@ -131,8 +128,8 @@ export default function Step1Activity({
                 <input
                   type="radio"
                   name="activity"
-                  value={training.documentId}
-                  checked={selectedActivity === training.documentId}
+                  value={activity.value}
+                  checked={selectedActivity === activity.value}
                   onChange={(e) => {
                     setSelectedActivity(e.target.value);
                     setSelectedEvent("");
@@ -145,7 +142,7 @@ export default function Step1Activity({
                     height: "48px",
                     borderRadius: "12px",
                     backgroundColor:
-                      selectedActivity === training.documentId
+                      selectedActivity === activity.value
                         ? "var(--mtc-yellow)"
                         : "#f3f4f6",
                     display: "flex",
@@ -153,13 +150,11 @@ export default function Step1Activity({
                     justifyContent: "center",
                     flexShrink: 0,
                     color:
-                      selectedActivity === training.documentId
-                        ? "#000"
-                        : "#6b7280",
+                      selectedActivity === activity.value ? "#000" : "#6b7280",
                     fontSize: "28px",
                   }}
                 >
-                  {training.title === "Schwimmen" ? (
+                  {activity.title === "Schwimmen" ? (
                     <PiPersonSimpleSwimLight size={28} />
                   ) : (
                     <PiPersonSimpleRunLight size={28} />
@@ -167,7 +162,7 @@ export default function Step1Activity({
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: "16px", fontWeight: "bold" }}>
-                    {training.title}
+                    {activity.title}
                   </div>
                   <div
                     style={{
@@ -176,7 +171,7 @@ export default function Step1Activity({
                       marginTop: "2px",
                     }}
                   >
-                    {training.title === "Schwimmen"
+                    {activity.title === "Schwimmen"
                       ? "Schwimmtraining im 25m Becken"
                       : "Intervalltraining im Park oder auf der Bahn"}
                   </div>
@@ -188,7 +183,7 @@ export default function Step1Activity({
                     borderRadius: "50%",
                     border: "2px solid",
                     borderColor:
-                      selectedActivity === training.documentId
+                      selectedActivity === activity.value
                         ? "var(--mtc-yellow)"
                         : "#d1d5db",
                     display: "flex",
@@ -197,7 +192,7 @@ export default function Step1Activity({
                     flexShrink: 0,
                   }}
                 >
-                  {selectedActivity === training.documentId && (
+                  {selectedActivity === activity.value && (
                     <div
                       style={{
                         width: "12px",
@@ -286,7 +281,7 @@ export default function Step1Activity({
             >
               <option value="">Verfügbaren Termin auswählen...</option>
               {filteredEvents.map((event) => (
-                <option key={event.documentId} value={event.documentId}>
+                <option key={event.id} value={event.id.toString()}>
                   {event.date}
                 </option>
               ))}
@@ -318,8 +313,7 @@ export default function Step1Activity({
               <PiMapPinLight size={24} />
               <span>
                 Trainingsort:{" "}
-                {events.find((e) => e.documentId === selectedEvent)?.location
-                  ?.name || "Unbekannt"}
+                {selectedEventData?.location?.name || "Unbekannt"}
               </span>
             </div>
             <div
@@ -339,23 +333,18 @@ export default function Step1Activity({
                 overflow: "hidden",
               }}
             >
-              {events.find((e) => e.documentId === selectedEvent)?.location
-                ?.imageName ? (
+              {selectedEventData?.location?.image?.url ? (
                 <Image
-                  src={`/${
-                    events.find((e) => e.documentId === selectedEvent)?.location
-                      ?.imageName
-                  }`}
+                  src={selectedEventData.location.image.url}
                   alt="Training Location"
                   fill
+                  sizes="(max-width: 800px) 100vw, 800px"
                   style={{ objectFit: "contain" }}
-                  unoptimized // Since it's a dynamic image name from public/ folder
                 />
               ) : (
                 <>
                   <p style={{ fontSize: "14px", marginBottom: "10px" }}>
-                    Hier wird die Karte angezeigt, sobald die Location in Strapi
-                    konfiguriert wurde.
+                    Kein Bild für diesen Trainingsort hinterlegt.
                   </p>
                   <p style={{ fontSize: "12px", color: "#999" }}>
                     Keine Location für diesen Termin hinterlegt.

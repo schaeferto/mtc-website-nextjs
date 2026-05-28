@@ -8,12 +8,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "payload": "PAYLOAD_CONFIG_PATH=payload.config.ts payload"
+    "payload": "PAYLOAD_CONFIG_PATH=payload.config.ts payload",
+    "migrate:from-strapi": "PAYLOAD_CONFIG_PATH=payload.config.ts payload run scripts/migrate-from-strapi.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.84.1",
     "@payloadcms/next": "^3.84.1",
     "@payloadcms/richtext-lexical": "^3.84.1",
+    "@payloadcms/storage-s3": "^3.84.1",
     "@vercel/blob": "^0.27.0",
     "captions": "link:yet-another-react-lightbox/plugins/captions",
     "embla-carousel-react": "^8.5.1",
