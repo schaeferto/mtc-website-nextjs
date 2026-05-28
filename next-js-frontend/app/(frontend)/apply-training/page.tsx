@@ -24,42 +24,62 @@ interface FormData {
 
 function LoadingSkeleton() {
   return (
-    <main className="max-w-[800px] mx-auto px-5 py-10 animate-pulse">
-      {/* Header */}
-      <div className="text-center mb-10">
-        <div className="h-8 bg-gray-200 rounded-full w-56 mx-auto mb-3" />
-        <div className="h-4 bg-gray-200 rounded-full w-44 mx-auto mb-2" />
-        <div className="h-3 bg-gray-200 rounded-full w-72 mx-auto" />
-      </div>
+    <>
+      <style>{`
+        @keyframes shimmer {
+          0%   { background-position: -200% 0; }
+          100% { background-position:  200% 0; }
+        }
+        .skeleton {
+          background: linear-gradient(
+            90deg,
+            #d1d5db 0%,
+            #d1d5db 30%,
+            #f3f4f6 50%,
+            #d1d5db 70%,
+            #d1d5db 100%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 1.4s infinite linear;
+        }
+      `}</style>
+      <main className="max-w-[800px] mx-auto px-5 py-10 first-content">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <div className="skeleton h-8 rounded-full w-56 mx-auto mb-3" />
+          <div className="skeleton h-4 rounded-full w-44 mx-auto mb-2" />
+          <div className="skeleton h-3 rounded-full w-72 mx-auto" />
+        </div>
 
-      {/* Activity cards */}
-      <div className="flex flex-col gap-3 mb-10">
-        {[0, 1].map((i) => (
-          <div
-            key={i}
-            className="p-4 border-2 border-gray-100 rounded-2xl flex items-center gap-4"
-          >
-            <div className="w-12 h-12 rounded-xl bg-gray-200 shrink-0" />
-            <div className="flex-1 space-y-2">
-              <div className="h-4 bg-gray-200 rounded-full w-24" />
-              <div className="h-3 bg-gray-200 rounded-full w-52" />
+        {/* Activity cards */}
+        <div className="flex flex-col gap-3 mb-10">
+          {[0, 1].map((i) => (
+            <div
+              key={i}
+              className="p-4 border-2 border-gray-200 rounded-2xl flex items-center gap-4"
+            >
+              <div className="skeleton w-12 h-12 rounded-xl shrink-0" />
+              <div className="flex-1 space-y-2">
+                <div className="skeleton h-4 rounded-full w-24" />
+                <div className="skeleton h-3 rounded-full w-52" />
+              </div>
+              <div className="skeleton w-6 h-6 rounded-full shrink-0" />
             </div>
-            <div className="w-6 h-6 rounded-full border-2 border-gray-200 shrink-0" />
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Button */}
-      <div className="flex justify-center mt-8">
-        <div className="h-12 bg-gray-200 rounded-full w-32" />
-      </div>
+        {/* Button */}
+        <div className="flex justify-center mt-8">
+          <div className="skeleton h-12 rounded-full w-32" />
+        </div>
 
-      {/* Step dots */}
-      <div className="flex justify-center gap-2 mt-8">
-        <div className="w-3 h-3 rounded-full bg-gray-300" />
-        <div className="w-3 h-3 rounded-full bg-gray-200" />
-      </div>
-    </main>
+        {/* Step dots */}
+        <div className="flex justify-center gap-2 mt-8">
+          <div className="skeleton w-3 h-3 rounded-full" />
+          <div className="skeleton w-3 h-3 rounded-full" />
+        </div>
+      </main>
+    </>
   );
 }
 
