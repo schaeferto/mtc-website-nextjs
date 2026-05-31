@@ -3,13 +3,9 @@ import config from "@payload-config";
 import SeasonBlock from "./SeasonBlock";
 import type { LeagueSeason, LeagueTeam, LeagueMedia, LeagueEvent } from "@/payload-types";
 
-type PopulatedTeam = Omit<LeagueTeam, "image" | "events"> & {
+export type PopulatedTeam = Omit<LeagueTeam, "image" | "events"> & {
   image?: LeagueMedia | null;
-  events?: { docs?: (LeagueEvent | number)[] };
-};
-
-type PopulatedSeason = Omit<LeagueSeason, "teams"> & {
-  teams?: { docs?: (PopulatedTeam | number)[] };
+  events?: { docs?: LeagueEvent[] };
 };
 
 export default async function LeaguePage() {
@@ -19,9 +15,26 @@ export default async function LeaguePage() {
     collection: "league-seasons",
     where: { published: { equals: true } },
     sort: "-year",
-    depth: 2,
+    depth: 0,
     limit: 50,
   });
+
+  const seasonIds = seasons.map((s) => s.id);
+
+  const { docs: allTeams } = await payload.find({
+    collection: "league-teams",
+    where: { season: { in: seasonIds } },
+    sort: "displayOrder",
+    depth: 2,
+    limit: 200,
+  }) as { docs: PopulatedTeam[] };
+
+  const teamsBySeason = new Map<number, PopulatedTeam[]>();
+  for (const team of allTeams) {
+    const sid = typeof team.season === "number" ? team.season : (team.season as LeagueSeason).id;
+    if (!teamsBySeason.has(sid)) teamsBySeason.set(sid, []);
+    teamsBySeason.get(sid)!.push(team);
+  }
 
   const latestYear = seasons[0]?.year ?? null;
 
@@ -33,10 +46,8 @@ export default async function LeaguePage() {
       <hr className="mb-8 border-mtc-black w-full" />
 
       <div className="w-full flex flex-col gap-4">
-        {(seasons as PopulatedSeason[]).map((season) => {
-          const teams = (season.teams?.docs ?? []).filter(
-            (t): t is PopulatedTeam => typeof t !== "number",
-          );
+        {seasons.map((season) => {
+          const teams = teamsBySeason.get(season.id) ?? [];
           return (
             <SeasonBlock
               key={season.id}

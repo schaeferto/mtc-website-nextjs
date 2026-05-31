@@ -1,10 +1,6 @@
 import Image from "next/image";
-import type { LeagueSeason, LeagueTeam, LeagueMedia, LeagueEvent } from "@/payload-types";
-
-type PopulatedTeam = Omit<LeagueTeam, "image" | "events"> & {
-  image?: LeagueMedia | null;
-  events?: { docs?: (LeagueEvent | number)[] };
-};
+import type { LeagueSeason, LeagueEvent } from "@/payload-types";
+import type { PopulatedTeam } from "./page";
 
 interface SeasonBlockProps {
   season: LeagueSeason;
@@ -53,9 +49,7 @@ function TeamCard({
   season: LeagueSeason;
   defaultOpen: boolean;
 }) {
-  const events = (team.events?.docs ?? []).filter(
-    (e): e is LeagueEvent => typeof e !== "number",
-  );
+  const events: LeagueEvent[] = team.events?.docs ?? [];
 
   return (
     <div className="bg-white rounded-lg p-4 flex flex-col">
