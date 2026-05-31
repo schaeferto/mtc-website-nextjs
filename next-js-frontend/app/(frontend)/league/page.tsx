@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getPayload } from "payload";
 import config from "@payload-config";
 import SeasonBlock from "./SeasonBlock";
