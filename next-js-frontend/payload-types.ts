@@ -72,18 +72,33 @@ export interface Config {
     locations: Location;
     'email-templates': EmailTemplate;
     trainings: Training;
+    'league-media': LeagueMedia;
+    'league-seasons': LeagueSeason;
+    'league-teams': LeagueTeam;
+    'league-events': LeagueEvent;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    'league-seasons': {
+      teams: 'league-teams';
+    };
+    'league-teams': {
+      events: 'league-events';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     locations: LocationsSelect<false> | LocationsSelect<true>;
     'email-templates': EmailTemplatesSelect<false> | EmailTemplatesSelect<true>;
     trainings: TrainingsSelect<false> | TrainingsSelect<true>;
+    'league-media': LeagueMediaSelect<false> | LeagueMediaSelect<true>;
+    'league-seasons': LeagueSeasonsSelect<false> | LeagueSeasonsSelect<true>;
+    'league-teams': LeagueTeamsSelect<false> | LeagueTeamsSelect<true>;
+    'league-events': LeagueEventsSelect<false> | LeagueEventsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -228,6 +243,114 @@ export interface Training {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "league-media".
+ */
+export interface LeagueMedia {
+  id: number;
+  alt: string;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "league-seasons".
+ */
+export interface LeagueSeason {
+  id: number;
+  /**
+   * Season year, e.g. 2025.
+   */
+  year: number;
+  /**
+   * Heading shown on the /league page for this season, e.g. "Saison 2025 – drei Teams am Start".
+   */
+  heading: string;
+  /**
+   * Optional text shown below the season heading on the /league page.
+   */
+  caption?: string | null;
+  teams?: {
+    docs?: (number | LeagueTeam)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  /**
+   * Only published seasons appear on the /league page.
+   */
+  published?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "league-teams".
+ */
+export interface LeagueTeam {
+  id: number;
+  name: string;
+  season: number | LeagueSeason;
+  image?: (number | null) | LeagueMedia;
+  /**
+   * Final standing for the season, e.g. "8. Platz". Filled in after the season ends.
+   */
+  overallPlacement?: string | null;
+  /**
+   * Sort order within a season (lower numbers first).
+   */
+  displayOrder?: number | null;
+  events?: {
+    docs?: (number | LeagueEvent)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "league-events".
+ */
+export interface LeagueEvent {
+  id: number;
+  league: number | LeagueTeam;
+  eventName: string;
+  eventDate: string;
+  /**
+   * Optional, e.g. "Supersprint mit Mannschaftsverfolgung".
+   */
+  eventType?: string | null;
+  /**
+   * Final placement, e.g. "9". Leave empty until the event has happened. Text so DNF/DNS can be recorded.
+   */
+  place?: string | null;
+  /**
+   * Athletes competing in this event.
+   */
+  participants?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Sort order within a team (lower numbers first).
+   */
+  displayOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -269,6 +392,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'trainings';
         value: number | Training;
+      } | null)
+    | ({
+        relationTo: 'league-media';
+        value: number | LeagueMedia;
+      } | null)
+    | ({
+        relationTo: 'league-seasons';
+        value: number | LeagueSeason;
+      } | null)
+    | ({
+        relationTo: 'league-teams';
+        value: number | LeagueTeam;
+      } | null)
+    | ({
+        relationTo: 'league-events';
+        value: number | LeagueEvent;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -387,6 +526,72 @@ export interface TrainingsSelect<T extends boolean = true> {
   location?: T;
   isDisabled?: T;
   capacity?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "league-media_select".
+ */
+export interface LeagueMediaSelect<T extends boolean = true> {
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "league-seasons_select".
+ */
+export interface LeagueSeasonsSelect<T extends boolean = true> {
+  year?: T;
+  heading?: T;
+  caption?: T;
+  teams?: T;
+  published?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "league-teams_select".
+ */
+export interface LeagueTeamsSelect<T extends boolean = true> {
+  name?: T;
+  season?: T;
+  image?: T;
+  overallPlacement?: T;
+  displayOrder?: T;
+  events?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "league-events_select".
+ */
+export interface LeagueEventsSelect<T extends boolean = true> {
+  league?: T;
+  eventName?: T;
+  eventDate?: T;
+  eventType?: T;
+  place?: T;
+  participants?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  displayOrder?: T;
   updatedAt?: T;
   createdAt?: T;
 }

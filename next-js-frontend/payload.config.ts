@@ -11,9 +11,21 @@ import { Media } from "./collections/Media";
 import { Locations } from "./collections/Locations";
 import { EmailTemplates } from "./collections/EmailTemplates";
 import { Trainings } from "./collections/Trainings";
+import { LeagueMedia } from "./collections/LeagueMedia";
+import { LeagueSeasons } from "./collections/LeagueSeasons";
+import { LeagueTeams } from "./collections/LeagueTeams";
+import { LeagueEvents } from "./collections/LeagueEvents";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+const s3GenerateFileURL =
+  (prefix?: string) =>
+  ({ filename, prefix: filePrefix }: { filename: string; prefix?: string }) => {
+    const folder = filePrefix ?? prefix;
+    const key = folder ? `${folder}/${filename}` : filename;
+    return `${process.env.R2_PUBLIC_URL}/${key}`;
+  };
 
 export default buildConfig({
   admin: {
@@ -22,7 +34,17 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Locations, EmailTemplates, Trainings],
+  collections: [
+    Users,
+    Media,
+    Locations,
+    EmailTemplates,
+    Trainings,
+    LeagueMedia,
+    LeagueSeasons,
+    LeagueTeams,
+    LeagueEvents,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
@@ -40,10 +62,12 @@ export default buildConfig({
       collections: {
         media: {
           disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) => {
-            const key = prefix ? `${prefix}/${filename}` : filename
-            return `${process.env.R2_PUBLIC_URL}/${key}`
-          },
+          generateFileURL: s3GenerateFileURL(),
+        },
+        'league-media': {
+          prefix: 'league',
+          disablePayloadAccessControl: true,
+          generateFileURL: s3GenerateFileURL('league'),
         },
       },
       bucket: process.env.R2_BUCKET || '',
