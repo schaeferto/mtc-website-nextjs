@@ -49,7 +49,11 @@ function TeamCard({
   season: LeagueSeason;
   defaultOpen: boolean;
 }) {
-  const events: LeagueEvent[] = team.events?.docs ?? [];
+  const events: LeagueEvent[] = (team.events?.docs ?? []).slice().sort((a, b) => {
+    if (!a.eventDate) return 1;
+    if (!b.eventDate) return -1;
+    return a.eventDate < b.eventDate ? -1 : a.eventDate > b.eventDate ? 1 : 0;
+  });
 
   return (
     <div className="bg-white rounded-lg p-4 flex flex-col">
