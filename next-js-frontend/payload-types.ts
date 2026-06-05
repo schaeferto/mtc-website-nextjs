@@ -360,6 +360,7 @@ export interface LeagueEvent {
 export interface NewsMedia {
   id: number;
   alt: string;
+  focalPoint?: ('center' | 'top' | 'bottom' | 'left' | 'right') | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -683,6 +684,7 @@ export interface LeagueEventsSelect<T extends boolean = true> {
  */
 export interface NewsMediaSelect<T extends boolean = true> {
   alt?: T;
+  focalPoint?: T;
   prefix?: T;
   updatedAt?: T;
   createdAt?: T;

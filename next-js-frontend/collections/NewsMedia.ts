@@ -11,6 +11,18 @@ export const NewsMedia: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'focalPoint',
+      type: 'select',
+      defaultValue: 'center',
+      options: [
+        { label: 'Center', value: 'center' },
+        { label: 'Top', value: 'top' },
+        { label: 'Bottom', value: 'bottom' },
+        { label: 'Left', value: 'left' },
+        { label: 'Right', value: 'right' },
+      ],
+    },
   ],
   upload: true,
 };
