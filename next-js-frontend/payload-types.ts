@@ -76,6 +76,8 @@ export interface Config {
     'league-seasons': LeagueSeason;
     'league-teams': LeagueTeam;
     'league-events': LeagueEvent;
+    'news-media': NewsMedia;
+    news: News;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -99,6 +101,8 @@ export interface Config {
     'league-seasons': LeagueSeasonsSelect<false> | LeagueSeasonsSelect<true>;
     'league-teams': LeagueTeamsSelect<false> | LeagueTeamsSelect<true>;
     'league-events': LeagueEventsSelect<false> | LeagueEventsSelect<true>;
+    'news-media': NewsMediaSelect<false> | NewsMediaSelect<true>;
+    news: NewsSelect<false> | NewsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -351,6 +355,76 @@ export interface LeagueEvent {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news-media".
+ */
+export interface NewsMedia {
+  id: number;
+  alt: string;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news".
+ */
+export interface News {
+  id: number;
+  header: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Event or article date (shown on the news page).
+   */
+  date?: string | null;
+  /**
+   * Publication date (used for the "NEU" badge). Defaults to createdAt if not set.
+   */
+  releaseDate?: string | null;
+  /**
+   * Only published articles appear on the news page.
+   */
+  published?: boolean | null;
+  /**
+   * Article images. Mark one as cover — it appears in the news list and as the first lightbox slide.
+   */
+  images?:
+    | {
+        image: number | NewsMedia;
+        /**
+         * Mark as cover image (shown in the news list).
+         */
+        isCover?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -408,6 +482,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'league-events';
         value: number | LeagueEvent;
+      } | null)
+    | ({
+        relationTo: 'news-media';
+        value: number | NewsMedia;
+      } | null)
+    | ({
+        relationTo: 'news';
+        value: number | News;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -592,6 +674,45 @@ export interface LeagueEventsSelect<T extends boolean = true> {
         id?: T;
       };
   displayOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news-media_select".
+ */
+export interface NewsMediaSelect<T extends boolean = true> {
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news_select".
+ */
+export interface NewsSelect<T extends boolean = true> {
+  header?: T;
+  content?: T;
+  date?: T;
+  releaseDate?: T;
+  published?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        isCover?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

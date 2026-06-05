@@ -8,6 +8,7 @@ import {
 import { NewsContent } from "@/app/(frontend)/news/news-content";
 import { Video } from "@/app/(frontend)/video";
 import { SectionLinks } from "@/app/(frontend)/section-links";
+import { getPublishedNews } from "@/lib/news";
 
 const ScrollIndicator = () => {
   return (
@@ -169,13 +170,14 @@ const Apply = () => {
   );
 };
 
-export default function Home() {
+export default async function Home() {
+  const articles = await getPublishedNews(2);
   return (
     <div>
       <Cover />
       <Motto />
       <SectionLinks />
-      <NewsContent isShortVersion={true} newsCount={2} />
+      <NewsContent isShortVersion={true} articles={articles} />
       <Apply />
     </div>
   );
