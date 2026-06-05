@@ -15,6 +15,8 @@ import { LeagueMedia } from "./collections/LeagueMedia";
 import { LeagueSeasons } from "./collections/LeagueSeasons";
 import { LeagueTeams } from "./collections/LeagueTeams";
 import { LeagueEvents } from "./collections/LeagueEvents";
+import { NewsMedia } from "./collections/NewsMedia";
+import { News } from "./collections/News";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -44,6 +46,8 @@ export default buildConfig({
     LeagueSeasons,
     LeagueTeams,
     LeagueEvents,
+    NewsMedia,
+    News,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
@@ -70,6 +74,11 @@ export default buildConfig({
           prefix: 'league',
           disablePayloadAccessControl: true,
           generateFileURL: s3GenerateFileURL('league'),
+        },
+        'news-media': {
+          prefix: 'news',
+          disablePayloadAccessControl: true,
+          generateFileURL: s3GenerateFileURL('news'),
         },
       },
       bucket: process.env.R2_BUCKET || '',

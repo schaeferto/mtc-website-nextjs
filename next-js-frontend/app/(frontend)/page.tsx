@@ -8,10 +8,11 @@ import {
 import { NewsContent } from "@/app/(frontend)/news/news-content";
 import { Video } from "@/app/(frontend)/video";
 import { SectionLinks } from "@/app/(frontend)/section-links";
+import { getPublishedNews } from "@/lib/news";
 
 const ScrollIndicator = () => {
   return (
-    <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center animate-bounce">
+    <div className="absolute bottom-20 md:bottom-8 left-0 right-0 z-20 flex flex-col items-center animate-bounce">
       <span className="text-white text-sm font-medium mb-2 tracking-wider">
         Scroll
       </span>
@@ -169,13 +170,14 @@ const Apply = () => {
   );
 };
 
-export default function Home() {
+export default async function Home() {
+  const articles = await getPublishedNews(2);
   return (
     <div>
       <Cover />
       <Motto />
       <SectionLinks />
-      <NewsContent isShortVersion={true} newsCount={2} />
+      <NewsContent isShortVersion={true} articles={articles} />
       <Apply />
     </div>
   );
