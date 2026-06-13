@@ -4,10 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a monorepo for the Munich Triathlon Club (MTC) website containing:
-- **next-js-frontend/** - Next.js 16 frontend with React 19, App Router, and Payload CMS v3
-- **strapi-cms-backend/** - Legacy Strapi v5 backend (superseded by Payload CMS, kept for reference)
-- **utils/** - Data import/conversion scripts (legacy, used during Strapi era)
+This is the Munich Triathlon Club (MTC) website — a Next.js 16 app with React 19, App Router, and Payload CMS v3, located in **next-js-frontend/**.
 
 ## Commands
 
@@ -19,7 +16,6 @@ pnpm lint            # ESLint
 pnpm payload generate:types   # Regenerate payload-types.ts after collection changes
 pnpm payload migrate:create <name>  # Generate a new DB migration
 pnpm payload migrate              # Apply pending migrations
-pnpm import:league   # One-shot import of league data (idempotent)
 ```
 
 ## Architecture

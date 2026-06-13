@@ -8,10 +8,7 @@
     "build": "payload migrate && next build",
     "start": "next start",
     "lint": "next lint",
-    "payload": "PAYLOAD_CONFIG_PATH=payload.config.ts payload",
-    "migrate:from-strapi": "PAYLOAD_CONFIG_PATH=payload.config.ts payload run scripts/migrate-from-strapi.ts",
-    "import:league": "PAYLOAD_CONFIG_PATH=payload.config.ts payload run scripts/import-league-data.ts",
-    "import:news": "PAYLOAD_CONFIG_PATH=payload.config.ts payload run scripts/import-news-data.ts"
+    "payload": "PAYLOAD_CONFIG_PATH=payload.config.ts payload"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.84.1",
