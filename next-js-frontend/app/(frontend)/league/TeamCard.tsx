@@ -71,7 +71,7 @@ export function TeamCard({
             src={team.image.url}
             alt={team.image.alt ?? team.name}
             fill
-            className="object-cover"
+            className="object-cover object-top"
           />
         </div>
       )}
