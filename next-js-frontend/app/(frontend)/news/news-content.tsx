@@ -7,9 +7,44 @@ import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
 import Link from "next/link";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import { FiChevronDown } from "react-icons/fi";
 import type { News, NewsMedia } from "@/payload-types";
 
 type ImageEntry = { image: NewsMedia; isCover?: boolean | null; id?: string | null };
+
+function ArticleBody({ children, className }: { children: React.ReactNode; className?: string }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    setIsOverflowing(el.scrollHeight > el.clientHeight + 1);
+  }, []);
+
+  return (
+    <div className="relative">
+      <div
+        ref={contentRef}
+        className={`${isExpanded ? "" : "max-h-[280px] md:max-h-[400px] overflow-hidden"} ${className ?? ""}`}
+      >
+        {children}
+      </div>
+      {isOverflowing && !isExpanded && (
+        <button
+          onClick={() => setIsExpanded(true)}
+          className="absolute bottom-0 left-0 right-0 h-28 flex flex-col justify-end items-center backdrop-blur-sm bg-gradient-to-t from-mtc-background via-mtc-background/60 to-transparent w-full"
+        >
+          <hr className="border-mtc-black w-full mb-2" />
+          <span className="flex items-center gap-1 text-sm font-semibold text-mtc-black pb-3">
+            MEHR <FiChevronDown className="w-4 h-4" />
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
 
 const focalPointClass: Record<string, string> = {
   center: "object-center",
@@ -296,7 +331,11 @@ export function NewsContent({
                         })}
                       </p>
                     )}
-                    {news.content && <RichText data={news.content} className="[&_p]:pb-4" />}
+                    {news.content && (
+                      <ArticleBody>
+                        <RichText data={news.content} className="[&_p]:pb-4" />
+                      </ArticleBody>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -326,7 +365,9 @@ export function NewsContent({
                   />
 
                   {news.content && (
-                    <RichText data={news.content} className="[&_p]:text-center [&_p]:m-8" />
+                    <ArticleBody>
+                      <RichText data={news.content} className="[&_p]:text-center [&_p]:m-8" />
+                    </ArticleBody>
                   )}
                 </div>
               )}
