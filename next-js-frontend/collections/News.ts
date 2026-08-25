@@ -1,4 +1,10 @@
 import type { CollectionConfig } from 'payload';
+import { revalidatePath } from 'next/cache';
+
+const revalidateNews = () => {
+  revalidatePath('/');
+  revalidatePath('/news');
+};
 
 export const News: CollectionConfig = {
   slug: 'news',
@@ -8,6 +14,10 @@ export const News: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateNews],
+    afterDelete: [revalidateNews],
   },
   fields: [
     {

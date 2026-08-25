@@ -10,8 +10,6 @@ import { Video } from "@/app/(frontend)/video";
 import { SectionLinks } from "@/app/(frontend)/section-links";
 import { getPublishedNews } from "@/lib/news";
 
-export const revalidate = 120;
-
 const ScrollIndicator = () => {
   return (
     <div className="absolute bottom-20 md:bottom-8 left-0 right-0 z-20 flex flex-col items-center animate-bounce">
