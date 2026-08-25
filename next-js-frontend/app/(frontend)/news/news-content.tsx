@@ -7,7 +7,7 @@ import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
 import Link from "next/link";
 import { RichText } from "@payloadcms/richtext-lexical/react";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { PiCaretDownLight, PiCaretUpLight } from "react-icons/pi";
 import type { News, NewsMedia } from "@/payload-types";
 
 type ImageEntry = { image: NewsMedia; isCover?: boolean | null; id?: string | null };
@@ -34,20 +34,22 @@ function ArticleBody({ children, className }: { children: React.ReactNode; class
       {isLong && !isExpanded && (
         <button
           onClick={() => setIsExpanded(true)}
-          className="absolute bottom-0 left-0 right-0 h-28 flex flex-col justify-end items-center w-full bg-[radial-gradient(ellipse_150%_100%_at_50%_100%,#ECECEC_35%,transparent_100%)]"
+          aria-label="Mehr anzeigen"
+          className="absolute bottom-0 left-0 right-0 h-24 flex flex-col justify-end items-center w-full bg-[radial-gradient(ellipse_150%_100%_at_50%_100%,#ECECEC_35%,transparent_100%)]"
         >
-          <span className="flex items-center gap-1 bg-mtc-yellow text-mtc-black text-xs font-semibold rounded-full px-3 py-1 mb-3">
-            MEHR <FiChevronDown className="w-3 h-3" />
+          <span className="flex items-center justify-center text-mtc-black/50 hover:text-mtc-black transition-colors mb-2">
+            <PiCaretDownLight className="w-5 h-5" />
           </span>
         </button>
       )}
       {isLong && isExpanded && (
         <button
           onClick={() => setIsExpanded(false)}
+          aria-label="Weniger anzeigen"
           className="flex w-full items-center justify-center mt-1"
         >
-          <span className="flex items-center gap-1 bg-mtc-yellow text-mtc-black text-xs font-semibold rounded-full px-3 py-1">
-            WENIGER <FiChevronUp className="w-3 h-3" />
+          <span className="flex items-center justify-center text-mtc-black/50 hover:text-mtc-black transition-colors">
+            <PiCaretUpLight className="w-5 h-5" />
           </span>
         </button>
       )}
