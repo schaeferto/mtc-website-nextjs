@@ -7,9 +7,55 @@ import "yet-another-react-lightbox/styles.css";
 import Image from "next/image";
 import Link from "next/link";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import { PiCaretDownLight, PiCaretUpLight } from "react-icons/pi";
 import type { News, NewsMedia } from "@/payload-types";
 
 type ImageEntry = { image: NewsMedia; isCover?: boolean | null; id?: string | null };
+
+function ArticleBody({ children, className }: { children: React.ReactNode; className?: string }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isLong, setIsLong] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    setIsLong(el.scrollHeight > el.clientHeight + 1);
+  }, []);
+
+  return (
+    <div className="relative">
+      <div
+        ref={contentRef}
+        className={`${isExpanded ? "" : "max-h-[280px] md:max-h-[350px] overflow-hidden"} ${className ?? ""}`}
+      >
+        {children}
+      </div>
+      {isLong && !isExpanded && (
+        <button
+          onClick={() => setIsExpanded(true)}
+          aria-label="Mehr anzeigen"
+          className="absolute bottom-0 left-0 right-0 h-24 flex flex-col justify-end items-center w-full bg-[radial-gradient(ellipse_150%_100%_at_50%_100%,#ECECEC_35%,transparent_100%)]"
+        >
+          <span className="flex items-center justify-center text-mtc-black/50 hover:text-mtc-black transition-colors mb-2">
+            <PiCaretDownLight className="w-5 h-5" />
+          </span>
+        </button>
+      )}
+      {isLong && isExpanded && (
+        <button
+          onClick={() => setIsExpanded(false)}
+          aria-label="Weniger anzeigen"
+          className="flex w-full items-center justify-center mt-1"
+        >
+          <span className="flex items-center justify-center text-mtc-black/50 hover:text-mtc-black transition-colors">
+            <PiCaretUpLight className="w-5 h-5" />
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
 
 const focalPointClass: Record<string, string> = {
   center: "object-center",
@@ -210,6 +256,94 @@ function MobileCarousel({
   );
 }
 
+function MobileArticleRow({
+  news,
+  recentIds,
+  openLightbox,
+  orderedImages,
+}: {
+  news: News;
+  recentIds: Set<number>;
+  openLightbox: (article: News, index: number) => void;
+  orderedImages: ImageEntry[];
+}) {
+  return (
+    <div className="flex flex-col w-full">
+      <div className="flex justify-center gap-2 w-full mt-8 mb-1 relative">
+        <h3 className="text-xl font-bold text-center">{news.header}</h3>
+        {recentIds.has(news.id) && (
+          <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow self-center leading-none absolute -top-6 right-2">
+            NEU
+          </span>
+        )}
+      </div>
+      {news.date && (
+        <p className="text-sm text-mtc-black/70 text-center mb-4">
+          {new Date(news.date).toLocaleDateString("de-DE", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            timeZone: "Europe/Berlin",
+          })}
+        </p>
+      )}
+      <MobileCarousel images={orderedImages} onImageClick={(i) => openLightbox(news, i)} />
+      {news.content && (
+        <ArticleBody>
+          <RichText data={news.content} className="[&_p]:text-center [&_p]:m-8" />
+        </ArticleBody>
+      )}
+    </div>
+  );
+}
+
+function DesktopArticleRow({
+  news,
+  isReversed,
+  recentIds,
+  openLightbox,
+  orderedImages,
+}: {
+  news: News;
+  isReversed: boolean;
+  recentIds: Set<number>;
+  openLightbox: (article: News, index: number) => void;
+  orderedImages: ImageEntry[];
+}) {
+  return (
+    <div className={`flex w-full gap-8 ${isReversed ? "flex-row-reverse" : "flex-row"}`}>
+      <div className="w-2/5 shrink-0">
+        <DesktopImageGrid images={orderedImages} onImageClick={(i) => openLightbox(news, i)} />
+      </div>
+      <div className="flex flex-col flex-1 justify-center">
+        <div className="flex items-center gap-2 mb-1">
+          <h3 className="text-xl font-bold text-mtc-black">{news.header}</h3>
+          {recentIds.has(news.id) && (
+            <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow flex-shrink-0 leading-none">
+              NEU
+            </span>
+          )}
+        </div>
+        {news.date && (
+          <p className="text-sm text-mtc-black/70 mb-4">
+            {new Date(news.date).toLocaleDateString("de-DE", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              timeZone: "Europe/Berlin",
+            })}
+          </p>
+        )}
+        {news.content && (
+          <ArticleBody>
+            <RichText data={news.content} className="[&_p]:pb-4" />
+          </ArticleBody>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function NewsContent({
   isShortVersion = false,
   newsCount,
@@ -267,68 +401,20 @@ export function NewsContent({
           return (
             <div key={news.id} className="flex flex-col items-center w-full">
               {isBigScreen ? (
-                <div className={`flex w-full gap-8 ${isReversed ? "flex-row-reverse" : "flex-row"}`}>
-                  {/* Image column */}
-                  <div className="w-2/5 shrink-0">
-                    <DesktopImageGrid
-                      images={orderedImages}
-                      onImageClick={(i) => openLightbox(news, i)}
-                    />
-                  </div>
-
-                  {/* Text column */}
-                  <div className="flex flex-col flex-1 justify-center">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-xl font-bold text-mtc-black">{news.header}</h3>
-                      {recentIds.has(news.id) && (
-                        <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow flex-shrink-0 leading-none">
-                          NEU
-                        </span>
-                      )}
-                    </div>
-                    {news.date && (
-                      <p className="text-sm text-mtc-black/70 mb-4">
-                        {new Date(news.date).toLocaleDateString("de-DE", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                          timeZone: "Europe/Berlin",
-                        })}
-                      </p>
-                    )}
-                    {news.content && <RichText data={news.content} className="[&_p]:pb-4" />}
-                  </div>
-                </div>
+                <DesktopArticleRow
+                  news={news}
+                  isReversed={isReversed}
+                  recentIds={recentIds}
+                  openLightbox={openLightbox}
+                  orderedImages={orderedImages}
+                />
               ) : (
-                <div className="flex flex-col w-full">
-                  <div className="flex justify-center gap-2 w-full mt-8 mb-1 relative">
-                    <h3 className="text-xl font-bold text-center">{news.header}</h3>
-                    {recentIds.has(news.id) && (
-                      <span className="inline-flex items-center justify-center bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow self-center leading-none absolute -top-6 right-2">
-                        NEU
-                      </span>
-                    )}
-                  </div>
-                  {news.date && (
-                    <p className="text-sm text-mtc-black/70 text-center mb-4">
-                      {new Date(news.date).toLocaleDateString("de-DE", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                        timeZone: "Europe/Berlin",
-                      })}
-                    </p>
-                  )}
-
-                  <MobileCarousel
-                    images={orderedImages}
-                    onImageClick={(i) => openLightbox(news, i)}
-                  />
-
-                  {news.content && (
-                    <RichText data={news.content} className="[&_p]:text-center [&_p]:m-8" />
-                  )}
-                </div>
+                <MobileArticleRow
+                  news={news}
+                  recentIds={recentIds}
+                  openLightbox={openLightbox}
+                  orderedImages={orderedImages}
+                />
               )}
 
               {index !== displayedArticles.length - 1 && (
