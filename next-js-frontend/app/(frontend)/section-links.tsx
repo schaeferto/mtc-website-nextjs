@@ -1,70 +1,53 @@
-"use client";
-
-import useEmblaCarousel from "embla-carousel-react";
-import { useCallback } from "react";
+import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 import homeLeagueImage from "@/public/home_liga.jpg";
 import homeTrainingImage from "@/public/home_training.jpg";
 import homeContactImage from "@/public/home_contact.jpg";
-import { PiCaretLeft, PiCaretRight } from "react-icons/pi";
-import { ImageWithTextAndLink } from "@/app/(frontend)/image-with-textoverlay";
 
+type Tile = { href: string; src: StaticImageData; label: string };
+
+const tiles: Tile[] = [
+  { href: "/league", src: homeLeagueImage, label: "Liga" },
+  { href: "/join", src: homeTrainingImage, label: "Training" },
+  { href: "/join", src: homeContactImage, label: "Kontakt" },
+];
+
+/** Drei Waben, auf großen Screens wie in einem Bienenstock versetzt. */
 export function SectionLinks() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
   return (
-    <div className={"flex flex-col items-center my-16 "}>
-      <div className="embla md:max-w-[768px]">
-        <div className="embla__viewport overflow-hidden" ref={emblaRef}>
-          <div className="embla__container flex">
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0">
-              <ImageWithTextAndLink
-                href={"/league"}
-                src={homeLeagueImage}
-                alt={"Liga"}
-                text={"Liga"}
+    <section className="px-4 my-16" aria-label="Bereiche">
+      <ul className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0">
+        {tiles.map((tile, i) => (
+          <li
+            key={tile.label}
+            className={`w-[280px] md:w-[300px] ${
+              i === 1 ? "md:mt-[150px] md:-mx-[60px]" : ""
+            } ${i % 2 === 1 ? "self-end md:self-auto" : "self-start md:self-auto"}`}
+          >
+            <Link
+              href={tile.href}
+              className="group relative block aspect-[1.15] focus-visible:outline-none"
+            >
+              <span
+                className="wabe absolute inset-0 bg-hummel-pollen scale-[1.04] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity"
+                aria-hidden="true"
               />
-            </div>
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0">
-              <ImageWithTextAndLink
-                href={"/join"}
-                src={homeTrainingImage}
-                alt={"Training"}
-                text={"Training"}
-              />
-            </div>
-            <div className="embla__slide basis-10/12 px-2 shrink-0 grow-0">
-              <ImageWithTextAndLink
-                href={"/join"}
-                src={homeContactImage}
-                alt={"Kontakt"}
-                text={"Kontakt"}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={"hidden md:flex items-center mt-4 gap-4"}>
-        <button
-          className="embla__prev text-black border-solid border-mtc-black border-2 rounded-full"
-          onClick={scrollPrev}
-        >
-          <PiCaretLeft size={30} />
-        </button>
-        <button
-          className="embla__next text-black border-solid border-mtc-black border-2 rounded-full"
-          onClick={scrollNext}
-        >
-          <PiCaretRight size={30} />
-        </button>
-      </div>
-    </div>
+              <span className="wabe absolute inset-0 overflow-hidden">
+                <Image
+                  src={tile.src}
+                  alt=""
+                  sizes="300px"
+                  className="w-full h-full object-cover motion-safe:group-hover:scale-105 transition-transform duration-500"
+                />
+                <span className="absolute inset-0 bg-hummel-pelz/45 group-hover:bg-hummel-pelz/25 transition-colors" />
+              </span>
+              <span className="absolute inset-0 flex items-center justify-center text-3xl md:text-4xl font-extrabold text-white">
+                {tile.label}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

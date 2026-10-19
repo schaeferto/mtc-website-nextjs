@@ -41,6 +41,20 @@ body {
 }
 
 @layer components {
+  /* Hummel-Design: Streifenband wie ein Hummelkörper */
+  .hummel-band {
+    background: repeating-linear-gradient(
+      -45deg,
+      #231c12 0 22px,
+      #f7c948 22px 44px
+    );
+  }
+
+  /* Wabe: Sechseck-Maske für Bilder und Kacheln */
+  .wabe {
+    clip-path: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0% 50%);
+  }
+
   .header {
     @apply text-2xl font-bold text-center mb-8;
   }

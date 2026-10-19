@@ -19,6 +19,11 @@ const config: Config = {
         "mtc-black": "#464646",
         "mtc-yellow": "#FDE480",
         "mtc-background": "#ECECEC",
+        // Hummel-Design
+        "hummel-pelz": "#231C12",
+        "hummel-pollen": "#F7C948",
+        "hummel-honig": "#D98E04",
+        "hummel-klee": "#8E6AA8",
       },
     },
   },
